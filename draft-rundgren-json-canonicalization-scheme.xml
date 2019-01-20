@@ -256,7 +256,7 @@
             <t>
               For JSON String data (which includes
               JSON&nbsp;Object property names as well), each character MUST be serialized as
-              described below (also matching section <xref target="ES6" format="none">24.3.2.2</xref> of ES6):
+              described below (also matching section 24.3.2.2 of ES6):
             </t>
             <t>
               <list style="symbols">
@@ -293,7 +293,7 @@
           <section anchor="json.ser.number" title="Serialization of Numbers">
             <t>
               JSON data of the type Number MUST be serialized according to
-              section <xref target="ES6" format="none">7.1.12.1</xref> of ES6 including the "Note 2" enhancement.
+              section 7.1.12.1 of ES6 including the "Note 2" enhancement.
               <vspace blankLines="1"/>
               Due to the relative complexity of this part, the algorithm itself is not included in this document.
               However, the specification is fully implemented by for example Google's V8 <xref target="V8"/>.
