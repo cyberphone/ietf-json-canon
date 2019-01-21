@@ -169,10 +169,10 @@
 <pre>Network Working Group                                        A. Rundgren
 Internet-Draft                                               Independent
 Intended status: Standards Track                               B. Jordan
-Expires: July 24, 2019                              Symantec Corporation
+Expires: July 25, 2019                              Symantec Corporation
                                                               S. Erdtman
                                                               Spotify AB
-                                                        January 20, 2019
+                                                        January 21, 2019
 
 
                    <span class="h1"><h1>JSON Canonicalization Scheme (JCS)</h1></span>
@@ -181,10 +181,10 @@ Expires: July 24, 2019                              Symantec Corporation
 Abstract
 
    Cryptographic operations like hashing and signing requires that the
-   target data does not change during serialization or parsing.  By
+   original data does not change during serialization or parsing.  By
    applying the rules defined by the JSON Canonicalization Scheme (JCS),
    data provided in JSON [<a href="http://tools.ietf.org/html//rfc8259" title="&quot;The JavaScript Object Notation (JSON) Data Interchange Format&quot;">RFC8259</a>] format can be exchanged "as is",
-   while still being subject to secure cryptographic operations.  JCS
+   while still being usable by secure cryptographic operations.  JCS
    achieves this by building on the serialization formats for JSON
    primitives as defined by ECMAScript [<a href="#ref-ES6" title="&quot;ECMAScript 2015 Language Specification&quot;">ES6</a>], constraining JSON data to
    the I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>] subset, and through a platform independent
@@ -208,7 +208,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 24, 2019.
+   This Internet-Draft will expire on July 25, 2019.
 
 
 
@@ -217,7 +217,7 @@ Status of This Memo
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 1]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 1]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-2" id="page-2" href="#page-2" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -273,7 +273,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 2]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 2]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -284,19 +284,19 @@ Table of Contents
    target data does not change during serialization or parsing.  One way
    of accomplishing this is converting the data into a format that has a
    simple and fixed representation like Base64Url [<a href="http://tools.ietf.org/html//rfc4648" title="&quot;The Base16, Base32, and Base64 Data Encodings&quot;">RFC4648</a>], which is
-   used in JWS [<a href="http://tools.ietf.org/html//rfc7515" title="&quot;JSON Web Signature (JWS)&quot;">RFC7515</a>].
+   how JWS [<a href="http://tools.ietf.org/html//rfc7515" title="&quot;JSON Web Signature (JWS)&quot;">RFC7515</a>] addressed this issue.
 
-   Another solution is creating a canonical version of the data, which
-   is used in XML Signature [<a href="#ref-XMLDSIG" title="&quot;XML Signature Syntax and Processing Version 1.1&quot;">XMLDSIG</a>].  The primary advantage with
-   canonicalizing schemes is that data can be kept in its original form
-   which is the core rationale behind JCS.  Put another way: by using
-   canonicalization a JSON Object may remain a JSON Object even after
-   being signed which simplifies system design, documentation and
-   logging.
+   Another solution is to create a canonical version of the data,
+   similar to what was done for the XML Signature [<a href="#ref-XMLDSIG" title="&quot;XML Signature Syntax and Processing Version 1.1&quot;">XMLDSIG</a>] standard.
+   The primary advantage with a canonicalizing scheme is that data can
+   be kept in its original form.  This is the core rationale behind JCS.
+   Put another way: by using canonicalization a JSON Object may remain a
+   JSON Object even after being signed which simplifies system design,
+   documentation and logging.
 
    To avoid "reinventing the wheel", JCS relies on serialization of JSON
    primitives compatible with ECMAScript (aka JavaScript) beginning with
-   version 6 [<a href="#ref-ES6" title="&quot;ECMAScript 2015 Language Specification&quot;">ES6</a>], from now on simply referred to as "ES6".
+   version 6 [<a href="#ref-ES6" title="&quot;ECMAScript 2015 Language Specification&quot;">ES6</a>], hereafter referred to as "ES6".
 
    Seasoned XML developers recalling difficulties getting signatures to
    validate (usually due to different interpretations of the quite
@@ -329,7 +329,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 3]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 3]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-4" id="page-4" href="#page-4" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -344,25 +344,25 @@ Table of Contents
 
 <span class="h3"><h3><a class="selflink" name="section-3.1" href="#section-3.1">3.1</a>.  Creation of Input Data</h3></span>
 
-   In order to serialize JSON data, you need data that is adapted for
+   In order to serialize JSON data, one needs data that is adapted for
    JSON serialization.  This is usually achieved by:
 
    o  Parsing previously generated JSON data.
 
    o  Programmatically creating data.
 
-   Irrespective of method used, the data to be serialized MUST be
+   Irrespective of the method used, the data to be serialized MUST be
    compatible both with ES6 and I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>], which implies the
    following:
 
    o  There MUST NOT be any duplicate property names within an element
       to be serialized as a JSON Object.
 
-   o  String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>].  Also see
-      <a href="#section-3.2.2.2">Section 3.2.2.2</a>.
+   o  String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>].  For more
+      information see <a href="#section-3.2.2.2">Section 3.2.2.2</a>.
 
    o  Numeric data MUST be expressible as IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] double
-      precision values.  Also see <a href="#section-3.2.2.3">Section 3.2.2.3</a>.
+      precision values.  For more information see <a href="#section-3.2.2.3">Section 3.2.2.3</a>.
 
 <span class="h3"><h3><a class="selflink" name="section-3.2" href="#section-3.2">3.2</a>.  Generation of Canonical JSON Data</h3></span>
 
@@ -385,7 +385,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 4]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 4]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-5" id="page-5" href="#page-5" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -441,7 +441,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 5]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 5]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -464,7 +464,7 @@ Table of Contents
 
 <span class="h5"><h5><a class="selflink" name="section-3.2.2.3" href="#section-3.2.2.3">3.2.2.3</a>.  Serialization of Numbers</h5></span>
 
-   JSON data of the type Number MUST be serialized according to
+   JSON data of type Number MUST be serialized according to
    Section 7.1.12.1 of [<a href="#ref-ES6" title="&quot;ECMAScript 2015 Language Specification&quot;">ES6</a>] including the "Note 2" enhancement.
 
    Due to the relative complexity of this part, the algorithm itself is
@@ -484,9 +484,9 @@ Table of Contents
 <span class="h4"><h4><a class="selflink" name="section-3.2.3" href="#section-3.2.3">3.2.3</a>.  Sorting of Object Properties</h4></span>
 
    Although the previous step indeed normalized the representation of
-   primitive JSON data types, the result would not qualify as canonical
-   since JSON Object properties are not in lexicographic (alphabetical)
-   order.
+   primitive JSON data types, the result would not qualify as
+   "canonical" since JSON Object properties are not in lexicographic
+   (alphabetical) order.
 
    Applied to the sample in <a href="#section-3.2.2">Section 3.2.2</a>, a properly canonicalized
    version should (with a line wrap added for display purposes only),
@@ -497,7 +497,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 6]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 6]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-7" id="page-7" href="#page-7" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -553,7 +553,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 7]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 7]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-8" id="page-8" href="#page-8" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -609,7 +609,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 8]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 8]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -665,7 +665,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                 [Page 9]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                 [Page 9]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -721,7 +721,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 10]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 10]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-11" id="page-11" href="#page-11" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -777,7 +777,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 11]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 11]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-12" id="page-12" href="#page-12" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -833,7 +833,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 12]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 12]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-13" id="page-13" href="#page-13" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -889,7 +889,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 13]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 13]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-14" id="page-14" href="#page-14" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -945,7 +945,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 14]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 14]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-15" id="page-15" href="#page-15" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -1001,7 +1001,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 15]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 15]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -1057,7 +1057,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 16]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 16]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -1113,7 +1113,7 @@ Authors' Addresses
 
 
 
-<span class="grey">Rundgren, et al.          Expires July 24, 2019                [Page 17]</span></pre>
+<span class="grey">Rundgren, et al.          Expires July 25, 2019                [Page 17]</span></pre>
 <hr class="noprint" style="width: 96ex;" align="left"><!--NewPage--><pre class="newpage"><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
@@ -1169,7 +1169,7 @@ Authors' Addresses
 
 
 
-Rundgren, et al.          Expires July 24, 2019                [Page 18]
+Rundgren, et al.          Expires July 25, 2019                [Page 18]
 
 </pre><br>
     <span class="noprint"><small><small>Html markup produced by rfcmarkup 1.129b, available from
