@@ -180,12 +180,12 @@
             <t>
               String data MUST be expressible
               as Unicode <xref target="UNICODE"/>.
-              For more information <xref target="json.ser.string"/>.
+              For more information see <xref target="json.ser.string"/>.
             </t>
             <t>
               Numeric data MUST be expressible
               as IEEE-754 <xref target="IEEE754"/> double precision values.
-              For more information <xref target="json.ser.number"/>.
+              For more information see <xref target="json.ser.number"/>.
             </t>
           </list>
         </t>
