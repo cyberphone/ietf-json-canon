@@ -199,7 +199,7 @@
           <xref target="canonicalize.js"/> shows sample code for an ES6 based canonicalizer,
           matching the JCS specification.
         </t>
-        <section anchor="json.whitespace" title="Whitespace Handling">
+        <section anchor="json.whitespace" title="Whitespace">
           <t>
             Whitespace between JSON elements MUST NOT be emitted.
           </t>
@@ -887,11 +887,14 @@
 
     <section anchor="json.development" title="Development Portal">
       <t>
-        The JSC specification is currently developed at
-        <eref target="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</eref>.
+        The JCS specification is currently developed at:
+        <eref target="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</eref>.
         <vspace blankLines="1"/>
-        The portal also provides software for on-line testing as well as
-        test data for implementers.
+        The most recent &quot;editors' copy&quot; can be found at:
+        <eref target="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</eref>.
+        <vspace blankLines="1"/>
+        JCS source code and test data is available at:
+        <eref target="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</eref>
       </t>
     </section>
   </back>
