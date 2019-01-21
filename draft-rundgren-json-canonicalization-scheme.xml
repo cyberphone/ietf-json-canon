@@ -89,7 +89,7 @@
     <section anchor="Introduction" title="Introduction">
       <t>
         Cryptographic operations like hashing and signing requires that the
-        target data does not change during serialization or parsing.
+        original data does not change during serialization or parsing.
         One way of accomplishing this is converting the data into
         a format that has a simple and fixed representation like Base64Url <xref target="RFC4648"/>,
         which is how JWS <xref target="RFC7515"/> addressed this issue.

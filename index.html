@@ -281,10 +281,10 @@ Table of Contents
 <span class="h2"><h2><a class="selflink" name="section-1" href="#section-1">1</a>.  Introduction</h2></span>
 
    Cryptographic operations like hashing and signing requires that the
-   target data does not change during serialization or parsing.  One way
-   of accomplishing this is converting the data into a format that has a
-   simple and fixed representation like Base64Url [<a href="http://tools.ietf.org/html//rfc4648" title="&quot;The Base16, Base32, and Base64 Data Encodings&quot;">RFC4648</a>], which is
-   how JWS [<a href="http://tools.ietf.org/html//rfc7515" title="&quot;JSON Web Signature (JWS)&quot;">RFC7515</a>] addressed this issue.
+   original data does not change during serialization or parsing.  One
+   way of accomplishing this is converting the data into a format that
+   has a simple and fixed representation like Base64Url [<a href="http://tools.ietf.org/html//rfc4648" title="&quot;The Base16, Base32, and Base64 Data Encodings&quot;">RFC4648</a>], which
+   is how JWS [<a href="http://tools.ietf.org/html//rfc7515" title="&quot;JSON Web Signature (JWS)&quot;">RFC7515</a>] addressed this issue.
 
    Another solution is to create a canonical version of the data,
    similar to what was done for the XML Signature [<a href="#ref-XMLDSIG" title="&quot;XML Signature Syntax and Processing Version 1.1&quot;">XMLDSIG</a>] standard.
