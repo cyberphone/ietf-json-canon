@@ -124,7 +124,7 @@
             current Web browsers and as well as by Node.js <xref target="NODEJS"/>,
             while the full JCS specification is supported by multiple
             Open Source implementations (see <xref target="open.source"/>).
-            Also see <xref target="impl.guidelines"/>.
+            See also <xref target="impl.guidelines"/>.
           </t>
         </list>
       </t>
