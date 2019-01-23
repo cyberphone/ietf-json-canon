@@ -748,7 +748,7 @@
             systems like ES6, at the expense of lost precision.
           </t>
           <t>
-            Another issue is that applications normally would use different data types for
+            Another issue is that applications would normally use different data types for
             "giantNumber" and "int64Max".  In addition, monetary data like "payMeThis" would
             presumably not rely on floating point data types due to rounding issues with respect
             to decimal arithmetic.
