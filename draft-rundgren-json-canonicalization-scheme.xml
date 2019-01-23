@@ -753,7 +753,7 @@
             presumably not rely on a floating point system due to rounding issues with respect
             to decimal arithmetic.
             <vspace blankLines="1"/>
-            The (to the author NB), only known way handling this kind of "overloading" of the
+            The established way handling this kind of "overloading" of the
             JSON Number type (at least in an extensible manner), is through 
             mapping mechanisms, instructing parsers what to do with different properties
             based on their name.  However, this greatly limits the value of using the
