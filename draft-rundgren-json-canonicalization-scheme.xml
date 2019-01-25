@@ -10,7 +10,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-rundgren-json-canonicalization-scheme-03" ipr="trust200902">
+<rfc category="std" docName="draft-rundgren-json-canonicalization-scheme-04" ipr="trust200902">
   <front>
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
