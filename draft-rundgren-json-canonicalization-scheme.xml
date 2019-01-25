@@ -131,7 +131,7 @@
       <t>
         In summary, the JCS specification describes how serialization of JSON primitives compliant
         with ES6, combined with an elementary property sorting scheme, can be used for
-        supporting &quot;Crypto&nbsp;Safe&quot; JSON.
+        supporting &quot;Hashable&quot; JSON.
       </t>
       <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
@@ -416,8 +416,7 @@
   30 66 5c 6e 41 27 42 5c 22 5c 5c 5c 5c 5c 22 2f 22 7d]]></artwork></figure>
           </t>
           <t>
-            This data is intended to be usable as input to cryptographic methods as well
-            as for value comparisons of JSON objects.
+            This data is intended to be usable as input to cryptographic methods.
           </t>
           <t>
             For other uses see <xref target="json.wireformat"/>.
