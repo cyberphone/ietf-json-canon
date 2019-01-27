@@ -189,6 +189,12 @@
             </t>
           </list>
         </t>
+        <t>
+          Note: if strings are holding embedded subtypes
+          which may have variant representations (like a &quot;DateTime&quot;
+          type), such data MUST be normalized before applying JCS.
+          For more information see <xref target="string.subtypes"/>.
+        </t>
       </section>
       <section anchor="json.canonicalization" title="Generation of Canonical JSON Data">
         <t>
@@ -375,7 +381,7 @@
                 If there is no index position at which they differ,
                 then the shorter string lexicographically precedes the longer string.
                 <vspace blankLines="1"/>
-                In plain english this means that property names are sorted in ascending order like the following:
+                In plain English this means that property names are sorted in ascending order like the following:
               </t>
             </list>
           </t>
@@ -446,7 +452,8 @@
         adoption of the entire ES6 serialization scheme for JSON primitives.
         <vspace blankLines="1"/>
         Other people who have contributed with valuable input to this specification include
-        Bron Gondwana, John-Mark Gurney, Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
+        Bron Gondwana, Jim Schaad, John-Mark Gurney, Mark Nottingham,
+        Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
         Richard Gibson, Robert Tupelo-Schneck and Scott Ananian.
       </t>
     </section>
@@ -558,9 +565,10 @@
       return buffer;
   
       function serialize(object) {
-          if (object === null || typeof object !== 'object') {
+          if (object === null || typeof object !== 'object' ||
+              object.toJSON) {
               /////////////////////////////////////////////////
-              // Primitive data type - Use ES6/JSON          //
+              // Primitive type or toJSON - Use ES6/JSON     //
               /////////////////////////////////////////////////
               buffer += JSON.stringify(object);
   
@@ -779,6 +787,123 @@
       <t>
         or declarative schemes like OpenAPI <xref target="OPENAPI"/>,
         there are no real limits, not even when using ES6.
+      </t>
+    </section>
+
+    <section anchor="string.subtypes" title="String Subtypes">
+      <t>
+        It is quite common using the JSON String type for holding subtypes.
+        This appendix shows that this can lead to interoperability problems
+        depending on JSON parsing method, which MUST be dealt with by
+        JCS compliant applications targeting a wider audience.
+      </t>
+      <t>
+        Assume you want to parse the following JSON string holding two subtypes
+        and a JSON number:
+      </t>
+      <t>
+        <figure align="center">
+          <artwork><![CDATA[    const jstring = 
+      '{"time": "2018-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork>
+        </figure>
+      </t>
+      <t>This can accomplished by the following ES6 statement:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    var object = JSON.parse(jstring);]]></artwork>
+        </figure>
+      </t>
+      <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
+      step using the parsed string argument as input:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    ... = new Date(object.time); // Date object
+    ... = BigInt(object.big);    // Big integer
+    ... = object.val;            // JSON/JS number]]></artwork></figure>
+      </t>
+      <t>Canonicalization of &quot;object&quot; using the sample code in <xref target="canonicalize.js"/> would return the
+      following string:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}]]></artwork>
+        </figure>
+      </t>
+      <t>
+        Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
+        which also can be used in ES6 as shown here:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    // Currently required to JSON-serialize BigInt
+    BigInt.prototype.toJSON = function() {
+      return this.toString();
+    };
+
+    // Parsing is here performed using a "stream" based method
+    var object = JSON.parse(jstring, 
+      (k,v) => k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
+    );]]></artwork></figure>
+      </t>
+      <t>
+        If you now apply the canonicalizer in <xref target="canonicalize.js"/> to  &quot;object&quot;, the
+        following string would be generated:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}]]></artwork>
+      </figure>
+      </t>
+      <t>
+        In this case the string arguments for &quot;big&quot; and &quot;time&quot;
+        have changed with respect to the original,
+        making systems depending on JCS fail.
+      </t>
+      <t>
+        The reason for the deviation is that in stream- and schema-based JSON parsers,
+        the original &quot;string&quot; argument is typically replaced on-the-fly
+        by the native subtype which when serialized, may exhibit a different
+        and platform dependent pattern.
+      </t>
+      <t>
+        The above may at first look like an insurmountable obstacle.  However,
+        there is a fairly straightforward process making subtype serialization
+        independent of parsing scheme. This though requires two measures, which MUST
+        be adhered to:
+        <list style="symbols">
+          <t>
+            Canonical forms for all used subtypes are defined by the
+            community or standard using the specific JSON schema.
+          </t>
+          <t>
+            Compatible serializers are created for each subtype.
+          </t>
+        </list>
+        By adding a dedicated serializer for the &quot;Date&quot; subtype,
+        the sample JSON ecosystem became compatible with JCS:
+      </t>
+      <t>
+        <figure align="center">
+          <artwork><![CDATA[    Date.prototype.toJSON = function() {
+      let date = this.toISOString();
+      // In this particular case we selected a UTC notation
+      // yyyy-mm-ddThh:mm:ssZ
+      return date.substring(0, date.indexOf('.')) + 'Z';
+    };]]></artwork></figure>
+      </t>
+      <t>
+        The canonical string will after this upgrade read as:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[    {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}]]></artwork>
+      </figure>
+      </t>
+      <t>
+        The observant reader will note that &quot;big&quot; still is in error but that is
+        to be expected since the &quot;055&quot; argument in the input data
+        clearly is not a proper canonical form for a big integer!
+      </t>
+      <t>
+        A positive side effect of this arrangement is that it enforces strict definitions
+        of subtypes which improves interoperability in general as well.
+      </t>
+      <t>
+        Defining specific subtypes and their canonical form is out of scope for
+        this specification.
       </t>
     </section>
 
