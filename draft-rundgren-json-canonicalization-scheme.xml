@@ -866,8 +866,8 @@
         be adhered to:
         <list style="symbols">
           <t>
-            Canonical forms for all used subtypes are defined by the
-            community or standard using the specific JSON schema.
+            The community or standard utilizing a specific JSON schema
+            defines a strict normalized form for each of the used subtypes.
           </t>
           <t>
             Compatible serializers are created for each subtype.
