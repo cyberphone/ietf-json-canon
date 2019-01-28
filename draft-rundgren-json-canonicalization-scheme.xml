@@ -824,26 +824,26 @@
       </t>
       <t>
         <figure align="center">
-          <artwork><![CDATA[    const jstring = 
+          <artwork><![CDATA[  const jstring = 
       '{"time": "2018-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork>
         </figure>
       </t>
       <t>This can accomplished by the following ES6 statement:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[    var object = JSON.parse(jstring);]]></artwork>
+        <figure align="center"><artwork><![CDATA[  var object = JSON.parse(jstring);]]></artwork>
         </figure>
       </t>
       <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
       step using the parsed string argument as input:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[    ... = new Date(object.time); // Date object
-    ... = BigInt(object.big);    // Big integer
-    ... = object.val;            // JSON/JS number]]></artwork></figure>
+        <figure align="center"><artwork><![CDATA[  ... = new Date(object.time); // Date object
+  ... = BigInt(object.big);    // Big integer
+  ... = object.val;            // JSON/JS number]]></artwork></figure>
       </t>
       <t>Canonicalization of &quot;object&quot; using the sample code in <xref target="canonicalize.js"/> would return the
       following string:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[    {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}]]></artwork>
         </figure>
       </t>
       <t>
@@ -851,28 +851,28 @@
         which also can be used in ES6 as shown below:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[    // Currently required to make BigInt JSON serializable
-    BigInt.prototype.toJSON = function() {
+        <figure align="center"><artwork><![CDATA[  // Currently required to make BigInt JSON serializable
+  BigInt.prototype.toJSON = function() {
       return this.toString();
-    };
+  };
 
-    // JSON parsing using a "stream" based method
-    var object = JSON.parse(jstring, 
+  // JSON parsing using a "stream" based method
+  var object = JSON.parse(jstring, 
       (k,v) => k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
-    );]]></artwork></figure>
+  );]]></artwork></figure>
       </t>
       <t>
         If you now apply the canonicalizer in <xref target="canonicalize.js"/> to  &quot;object&quot;, the
         following string would be generated:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[    {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}]]></artwork>
       </figure>
       </t>
       <t>
         In this case the string arguments for &quot;big&quot; and &quot;time&quot;
         have changed with respect to the original,
-        making systems depending on JCS fail.
+        presumable making an application depending on JCS fail.
       </t>
       <t>
         The reason for the deviation is that in stream and schema based JSON parsers,
@@ -899,18 +899,18 @@
       </t>
       <t>
         <figure align="center">
-          <artwork><![CDATA[    Date.prototype.toJSON = function() {
+          <artwork><![CDATA[  Date.prototype.toJSON = function() {
       let date = this.toISOString();
       // In this particular case we selected a UTC notation
       // yyyy-mm-ddThh:mm:ssZ
       return date.substring(0, date.indexOf('.')) + 'Z';
-    };]]></artwork></figure>
+  };]]></artwork></figure>
       </t>
       <t>
         The canonical string will after this upgrade read as:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[    {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}]]></artwork>
       </figure>
       </t>
       <t>
