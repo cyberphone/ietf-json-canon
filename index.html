@@ -1000,7 +1000,7 @@ Table of Contents
    subtypes and a JSON number:
 
      const jstring =
-         '{"time": "2018-01-28T07:45:10Z", "big": "055", "val": 3.5}';
+         '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';
 
    This can accomplished by the following ES6 statement:
 
@@ -1025,7 +1025,7 @@ Table of Contents
    Canonicalization of "object" using the sample code in <a href="#appendix-A">Appendix A</a>
    would return the following string:
 
-     {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}
+     {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}
 
    Although this is (with respect to JCS) technically correct, there is
    another way parsing JSON data which also can be used in ES6 as shown
@@ -1044,7 +1044,7 @@ Table of Contents
    If you now apply the canonicalizer in <a href="#appendix-A">Appendix A</a> to "object", the
    following string would be generated:
 
-     {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}
+     {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}
 
    In this case the string arguments for "big" and "time" have changed
    with respect to the original, presumable making an application
@@ -1086,7 +1086,7 @@ Table of Contents
 
    The canonical string will after this upgrade read as:
 
-     {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}
+     {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}
 
    The observant reader will note that "big" still is in error but that
    is to be expected since the "055" argument in the input data clearly
