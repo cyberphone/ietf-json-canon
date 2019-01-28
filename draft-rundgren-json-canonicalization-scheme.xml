@@ -825,7 +825,7 @@
       <t>
         <figure align="center">
           <artwork><![CDATA[  const jstring = 
-      '{"time": "2018-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork>
+      '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork>
         </figure>
       </t>
       <t>This can accomplished by the following ES6 statement:</t>
@@ -843,7 +843,7 @@
       <t>Canonicalization of &quot;object&quot; using the sample code in <xref target="canonicalize.js"/> would return the
       following string:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork>
         </figure>
       </t>
       <t>
@@ -866,7 +866,7 @@
         following string would be generated:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork>
       </figure>
       </t>
       <t>
@@ -910,7 +910,7 @@
         The canonical string will after this upgrade read as:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}]]></artwork>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
       </figure>
       </t>
       <t>
