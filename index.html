@@ -999,12 +999,12 @@ Table of Contents
    Assume you want to parse the following JSON string holding two
    subtypes and a JSON number:
 
-       const jstring =
+     const jstring =
          '{"time": "2018-01-28T07:45:10Z", "big": "055", "val": 3.5}';
 
    This can accomplished by the following ES6 statement:
 
-       var object = JSON.parse(jstring);
+     var object = JSON.parse(jstring);
 
    After parsing the actual data can be extracted which for subtypes
    also involve a conversion step using the parsed string argument as
@@ -1018,33 +1018,33 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
 
-       ... = new Date(object.time); // Date object
-       ... = BigInt(object.big);    // Big integer
-       ... = object.val;            // JSON/JS number
+     ... = new Date(object.time); // Date object
+     ... = BigInt(object.big);    // Big integer
+     ... = object.val;            // JSON/JS number
 
    Canonicalization of "object" using the sample code in <a href="#appendix-A">Appendix A</a>
    would return the following string:
 
-       {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}
+     {"big":"055","time":"2018-01-28T07:45:10Z",val:3.5}
 
    Although this is (with respect to JCS) technically correct, there is
    another way parsing JSON data which also can be used in ES6 as shown
    below:
 
-       // Currently required to make BigInt JSON serializable
-       BigInt.prototype.toJSON = function() {
+     // Currently required to make BigInt JSON serializable
+     BigInt.prototype.toJSON = function() {
          return this.toString();
-       };
+     };
 
-       // JSON parsing using a "stream" based method
-       var object = JSON.parse(jstring,
+     // JSON parsing using a "stream" based method
+     var object = JSON.parse(jstring,
          (k,v) =&gt; k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
-       );
+     );
 
    If you now apply the canonicalizer in <a href="#appendix-A">Appendix A</a> to "object", the
    following string would be generated:
 
-       {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}
+     {"big":"55","time":"2018-01-28T07:45:10.000Z","val":3.5}
 
    In this case the string arguments for "big" and "time" have changed
    with respect to the original, presumable making an application
@@ -1077,16 +1077,16 @@ Table of Contents
    By adding a dedicated serializer for the "Date" subtype, the sample
    JSON schema becomes compatible with JCS:
 
-       Date.prototype.toJSON = function() {
+     Date.prototype.toJSON = function() {
          let date = this.toISOString();
          // In this particular case we selected a UTC notation
          // yyyy-mm-ddThh:mm:ssZ
          return date.substring(0, date.indexOf('.')) + 'Z';
-       };
+     };
 
    The canonical string will after this upgrade read as:
 
-       {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}
+     {"big":"55","time":"2018-01-28T07:45:10Z","val":3.5}
 
    The observant reader will note that "big" still is in error but that
    is to be expected since the "055" argument in the input data clearly
