@@ -195,6 +195,12 @@
           type), such data MUST be normalized before applying JCS.
           For more information see <xref target="string.subtypes"/>.
         </t>
+        <t>
+          Note: although the Unicode standard offers a possibility combining
+          certain characters into one, referred to as "Unicode Normalization"
+          (<eref target="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</eref>),
+          such functionality MUST be delegated to the application layer.
+        </t>
       </section>
       <section anchor="json.canonicalization" title="Generation of Canonical JSON Data">
         <t>
@@ -247,7 +253,8 @@
             by JSON <xref target="RFC8259"/>), while output data (as defined by ES6),
             has a fixed representation.  As can be seen by the example,
             numbers are subject to rounding as well.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             The following subsections describe serialization of primitive JSON data types
             according to JCS.  This part is identical to that of ES6.
           </t>
@@ -285,14 +292,10 @@
             </t>
             <t>
               Note: some JSON systems permit the use of invalid Unicode data
-              like "lone&nbsp;surrogates" (e.g. U+DEAD), which also is dealt with in a platform specific way.
+              including "lone&nbsp;surrogates" (e.g. U+DEAD).
               Since this leads to interoperability issues including broken signatures,
-              such usages MUST be avoided.
-              <vspace blankLines="1"/>
-              Note: although the Unicode standard offers a possibility combining
-              certain characters into one, referred to as "Unicode Normalization"
-              (<eref target="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</eref>),
-              such functionality MUST be delegated to the application layer.
+              occurrences of such data MUST cause the JCS algorithm to terminate
+              with an error indication.
             </t>
           </section>
 
@@ -300,17 +303,20 @@
             <t>
               JSON data of type Number MUST be serialized according to
               Section 7.1.12.1 of <xref target="ES6"/> including the "Note 2" enhancement.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               Due to the relative complexity of this part, the algorithm itself is not included in this document.
               However, the specification is fully implemented by for example Google's V8 <xref target="V8"/>.
               The open source Java implementation mentioned in <xref target="open.source"/>
               uses a recently developed number serialization algorithm called Ryu <xref target="RYU"/>.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               ES6 builds on the IEEE-754 <xref target="IEEE754"/> double precision
               standard for representing JSON Number data.
               <xref target="json.ieee754.test"/> holds a set of IEEE-754 sample values and their
               corresponding JSON serialization.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               Occasionally applications need higher precision or longer integers than
               offered by IEEE-754 double precision.
               <xref target="json.bignumbers"/> outlines how this can be achieved
@@ -323,7 +329,8 @@
             Although the previous step indeed normalized the representation of primitive
             JSON data types, the result would not qualify as &quot;canonical&quot; since JSON
             Object properties are not in lexicographic (alphabetical) order.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Applied to the sample in <xref target="json.serialization.data"/>,
             a properly canonicalized version should (with a
             line wrap added for display purposes only), read as:
@@ -380,7 +387,8 @@
                 the &lt; operator, lexicographically precedes the other string.
                 If there is no index position at which they differ,
                 then the shorter string lexicographically precedes the longer string.
-                <vspace blankLines="1"/>
+              </t>
+              <t>
                 In plain English this means that property names are sorted in ascending order like the following:
               </t>
             </list>
@@ -399,7 +407,8 @@
             JSON property strings into arrays of UTF-16 code units before sorting.
             The conversion from UTF-8 or UTF-32 to UTF-16 is defined by the
             Unicode <xref target="UNICODE"/> standard.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Note: for the purpose of obtaining a deterministic property order, sorting on
             UTF-8 or UTF-32 encoded data would also work, but the result would differ
             (and thus be incompatible with this specification).
@@ -409,7 +418,8 @@
           <t>
             Finally, in order to create a platform independent representation,
             the resulting JSON string data MUST be encoded in UTF-8.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Applied to the sample in <xref target="json.sorting.properties"/> this
             should yield the following bytes here shown in hexadecimal notation:
           </t>
@@ -450,7 +460,8 @@
         Building on ES6 Number serialization was
         originally proposed by James Manger. This ultimately led to the
         adoption of the entire ES6 serialization scheme for JSON primitives.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Other people who have contributed with valuable input to this specification include
         Bron Gondwana, Jim Schaad, John-Mark Gurney, Mark Nottingham,
         Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
@@ -552,7 +563,8 @@
       <t>
         Below is a functionally complete example of a JCS compliant canonicalizer
         for usage with ES6 based systems.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Note: the primary purpose of this code is highlighting the canonicalization algorithm.
         Using the full power of ES6 would reduce the code size considerably
         but would also be more difficult to follow by non-experts.
@@ -647,9 +659,9 @@
 |--------------------------------------------------------------------|
 | c340000000000000 | -9007199254740992         | Largest neg integer |
 |--------------------------------------------------------------------|
-| 7fffffffffffffff |                           | Error (NaN)         |
+| 7fffffffffffffff |                           | NaN - Invalid       |
 |--------------------------------------------------------------------|
-| 7ff0000000000000 |                           | Error (Infinity)    |
+| 7ff0000000000000 |                           | Infinity - Invalid  |
 |--------------------------------------------------------------------|
 | 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
 |--------------------------------------------------------------------|
@@ -683,7 +695,13 @@
         Note: for maximum compliance with ECMAScript's <spanx style="verb">JSON</spanx> object, values that are
         to be interpreted as true integers,
         SHOULD be in the range -9007199254740991 to 9007199254740991.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
+        Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
+        occurrences of such values MUST cause the JCS algorithm to terminate
+        with an error indication.
+      </t>
+      <t>
         Note: although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
         could be regarded as having extended precision, the JCS/ES6 number serialization
         algorithm does not take this in consideration.
@@ -697,7 +715,8 @@
         However, this is just an option since cryptographic schemes
         based on JCS, in most cases would not depend on that externally
         supplied JSON data already is canonicalized.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         In fact, the ES6 standard way of serializing objects using
         <spanx style="verb">JSON.stringify()</spanx> produces a
         more "logical" format, where properties are
@@ -759,9 +778,10 @@
             "giantNumber" and "int64Max".  In addition, monetary data like "payMeThis" would
             presumably not rely on floating point data types due to rounding issues with respect
             to decimal arithmetic.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             The established way handling this kind of "overloading" of the
-            JSON Number type (at least in an extensible manner), is through 
+            JSON Number type (at least in an extensible manner), is through
             mapping mechanisms, instructing parsers what to do with different properties
             based on their name.  However, this greatly limits the value of using the
             Number type outside of its original
@@ -775,7 +795,8 @@
         not have a natural place in the current JSON ecosystem MUST be wrapped
         using the JSON String type.  This is close to
         a de-facto standard for open systems.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Aided by a mapping system; be it programmatic like
       </t>
       <t>
@@ -830,12 +851,12 @@
         which also can be used in ES6 as shown below:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[    // Currently required to JSON-serialize BigInt
+        <figure align="center"><artwork><![CDATA[    // Currently required to make BigInt JSON serializable
     BigInt.prototype.toJSON = function() {
       return this.toString();
     };
 
-    // Parsing is here performed using a "stream" based method
+    // JSON parsing using a "stream" based method
     var object = JSON.parse(jstring, 
       (k,v) => k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
     );]]></artwork></figure>
@@ -854,7 +875,7 @@
         making systems depending on JCS fail.
       </t>
       <t>
-        The reason for the deviation is that in stream- and schema-based JSON parsers,
+        The reason for the deviation is that in stream and schema based JSON parsers,
         the original &quot;string&quot; argument is typically replaced on-the-fly
         by the native subtype which when serialized, may exhibit a different
         and platform dependent pattern.
@@ -862,7 +883,7 @@
       <t>
         The above may at first look like an insurmountable obstacle.  However,
         there is a fairly straightforward process making subtype serialization
-        independent of parsing scheme. This though requires two measures, which MUST
+        independent of parsing scheme. This though requires two measures which MUST
         be adhered to:
         <list style="symbols">
           <t>
@@ -874,7 +895,7 @@
           </t>
         </list>
         By adding a dedicated serializer for the &quot;Date&quot; subtype,
-        the sample JSON ecosystem became compatible with JCS:
+        the sample JSON schema becomes compatible with JCS:
       </t>
       <t>
         <figure align="center">
@@ -895,14 +916,14 @@
       <t>
         The observant reader will note that &quot;big&quot; still is in error but that is
         to be expected since the &quot;055&quot; argument in the input data
-        clearly is not a proper canonical form for a big integer!
+        clearly is not a normalized form for a big integer!
       </t>
       <t>
         A positive side effect of this arrangement is that it enforces strict definitions
         of subtypes which improves interoperability in general as well.
       </t>
       <t>
-        Defining specific subtypes and their canonical form is out of scope for
+        Defining specific subtypes and their normalized form is out of scope for
         this specification.
       </t>
     </section>
@@ -961,7 +982,8 @@
       <t>
         A canonicalizer like above is effectively only a &quot;filter&quot;, potentially usable with
         a multitude of quite different cryptographic schemes.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Using a JSON serializer with integrated JCS support, the serialization performed
         before the canonicalization step could be eliminated for both processes.
       </t>
@@ -1013,10 +1035,12 @@
       <t>
         The JCS specification is currently developed at:
         <eref target="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</eref>.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         The most recent &quot;editors' copy&quot; can be found at:
         <eref target="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</eref>.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         JCS source code and test data is available at:
         <eref target="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</eref>
       </t>

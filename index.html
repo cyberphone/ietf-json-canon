@@ -256,7 +256,7 @@ Table of Contents
    <a href="#section-3">3</a>.  Detailed Operation  . . . . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
      <a href="#section-3.1">3.1</a>.  Creation of Input Data  . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
      <a href="#section-3.2">3.2</a>.  Generation of Canonical JSON Data . . . . . . . . . . . .   <a href="#page-4">4</a>
-       <a href="#section-3.2.1">3.2.1</a>.  Whitespace  . . . . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
+       <a href="#section-3.2.1">3.2.1</a>.  Whitespace  . . . . . . . . . . . . . . . . . . . . .   <a href="#page-5">5</a>
        <a href="#section-3.2.2">3.2.2</a>.  Serialization of Primitive Data Types . . . . . . . .   <a href="#page-5">5</a>
          <a href="#section-3.2.2.1">3.2.2.1</a>.  Serialization of Literals . . . . . . . . . . . .   <a href="#page-5">5</a>
          <a href="#section-3.2.2.2">3.2.2.2</a>.  Serialization of Strings  . . . . . . . . . . . .   <a href="#page-5">5</a>
@@ -380,6 +380,11 @@ Table of Contents
    representations (like a "DateTime" type), such data MUST be
    normalized before applying JCS.  For more information see <a href="#appendix-E">Appendix E</a>.
 
+   Note: although the Unicode standard offers a possibility combining
+   certain characters into one, referred to as "Unicode Normalization"
+   (<a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a> [<a href="#ref-1">1</a>]), such functionality MUST
+   be delegated to the application layer.
+
 <span class="h3"><a class="selflink" name="section-3.2" href="#section-3.2">3.2</a>.  Generation of Canonical JSON Data</span>
 
    The following subsections describe the steps required for creating a
@@ -389,11 +394,6 @@ Table of Contents
    <a href="#appendix-A">Appendix A</a> shows sample code for an ES6 based canonicalizer, matching
    the JCS specification.
 
-<span class="h4"><a class="selflink" name="section-3.2.1" href="#section-3.2.1">3.2.1</a>.  Whitespace</span>
-
-   Whitespace between JSON elements MUST NOT be emitted.
-
-
 
 
 
@@ -401,6 +401,10 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-5" id="page-5" href="#page-5" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
+
+<span class="h4"><a class="selflink" name="section-3.2.1" href="#section-3.2.1">3.2.1</a>.  Whitespace</span>
+
+   Whitespace between JSON elements MUST NOT be emitted.
 
 <span class="h4"><a class="selflink" name="section-3.2.2" href="#section-3.2.2">3.2.2</a>.  Serialization of Primitive Data Types</span>
 
@@ -446,10 +450,6 @@ Table of Contents
 
    o  If the Unicode value falls within the traditional ASCII control
       character range (U+0000 through U+001F), it MUST be serialized
-      using lowercase hexadecimal Unicode notation (\uhhhh) unless it is
-      in the set of predefined JSON control characters U+0008, U+0009,
-      U+000A, U+000C or U+000D which MUST be serialized as \b, \t, \n,
-      \f and \r respectively.
 
 
 
@@ -457,6 +457,11 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
+
+      using lowercase hexadecimal Unicode notation (\uhhhh) unless it is
+      in the set of predefined JSON control characters U+0008, U+0009,
+      U+000A, U+000C or U+000D which MUST be serialized as \b, \t, \n,
+      \f and \r respectively.
 
    o  If the Unicode value is outside of the ASCII control character
       range, it MUST be serialized "as is" unless it is equivalent to
@@ -466,15 +471,11 @@ Table of Contents
    Finally, the serialized string value MUST be enclosed in double
    quotes (").
 
-   Note: some JSON systems permit the use of invalid Unicode data like
-   "lone surrogates" (e.g.  U+DEAD), which also is dealt with in a
-   platform specific way.  Since this leads to interoperability issues
-   including broken signatures, such usages MUST be avoided.
-
-   Note: although the Unicode standard offers a possibility combining
-   certain characters into one, referred to as "Unicode Normalization"
-   (<a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a> [<a href="#ref-1">1</a>]), such functionality MUST
-   be delegated to the application layer.
+   Note: some JSON systems permit the use of invalid Unicode data
+   including "lone surrogates" (e.g.  U+DEAD).  Since this leads to
+   interoperability issues including broken signatures, occurrences of
+   such data MUST cause the JCS algorithm to terminate with an error
+   indication.
 
 <span class="h5"><a class="selflink" name="section-3.2.2.3" href="#section-3.2.2.3">3.2.2.3</a>.  Serialization of Numbers</span>
 
@@ -505,7 +506,6 @@ Table of Contents
    Applied to the sample in <a href="#section-3.2.2">Section 3.2.2</a>, a properly canonicalized
    version should (with a line wrap added for display purposes only),
    read as:
-
 
 
 
@@ -552,7 +552,7 @@ Table of Contents
       there is no index position at which they differ, then the shorter
       string lexicographically precedes the longer string.
 
-      In plain English this means that property names are sorted in
+   o  In plain English this means that property names are sorted in
       ascending order like the following:
 
            ""
@@ -841,7 +841,7 @@ Table of Contents
   |--------------------------------------------------------------------|
   | c340000000000000 | -9007199254740992         | Largest neg integer |
   |--------------------------------------------------------------------|
-  | 7fffffffffffffff |                           | Error (NaN)         |
+  | 7fffffffffffffff |                           | NaN - Invalid       |
 
 
 
@@ -851,7 +851,7 @@ Table of Contents
 
 
   |--------------------------------------------------------------------|
-  | 7ff0000000000000 |                           | Error (Infinity)    |
+  | 7ff0000000000000 |                           | Infinity - Invalid  |
   |--------------------------------------------------------------------|
   | 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
   |--------------------------------------------------------------------|
@@ -884,6 +884,10 @@ Table of Contents
    that are to be interpreted as true integers, SHOULD be in the range
    -9007199254740991 to 9007199254740991.
 
+   Note: since NaN (Not a Number) and Infinity are not permitted in
+   JSON, occurrences of such values MUST cause the JCS algorithm to
+   terminate with an error indication.
+
    Note: although a set of specific integers like 2**68
    (4430000000000000 in IEEE-754 format) could be regarded as having
    extended precision, the JCS/ES6 number serialization algorithm does
@@ -894,10 +898,6 @@ Table of Contents
    Since the result from the canonicalization process (see
    <a href="#section-3.2.4">Section 3.2.4</a>), is fully valid JSON, it can also be used as
    "Wire Format".  However, this is just an option since cryptographic
-   schemes based on JCS, in most cases would not depend on that
-   externally supplied JSON data already is canonicalized.
-
-
 
 
 
@@ -905,6 +905,9 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-14" id="page-14" href="#page-14" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
+
+   schemes based on JCS, in most cases would not depend on that
+   externally supplied JSON data already is canonicalized.
 
    In fact, the ES6 standard way of serializing objects using
    "JSON.stringify()" produces a more "logical" format, where properties
@@ -952,9 +955,6 @@ Table of Contents
       parsers, but in systems like ES6, at the expense of lost
       precision.
 
-   o  Another issue is that applications would normally use different
-      data types for "giantNumber" and "int64Max".  In addition,
-
 
 
 <span class="grey">Rundgren, et al.          Expires July 31, 2019                [Page 14]</span></pre>
@@ -962,11 +962,13 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
 
+   o  Another issue is that applications would normally use different
+      data types for "giantNumber" and "int64Max".  In addition,
       monetary data like "payMeThis" would presumably not rely on
       floating point data types due to rounding issues with respect to
       decimal arithmetic.
 
-      The established way handling this kind of "overloading" of the
+   o  The established way handling this kind of "overloading" of the
       JSON Number type (at least in an extensible manner), is through
       mapping mechanisms, instructing parsers what to do with different
       properties based on their name.  However, this greatly limits the
@@ -1011,8 +1013,6 @@ Table of Contents
 
 
 
-
-
 <span class="grey">Rundgren, et al.          Expires July 31, 2019                [Page 15]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
@@ -1029,14 +1029,14 @@ Table of Contents
 
    Although this is (with respect to JCS) technically correct, there is
    another way parsing JSON data which also can be used in ES6 as shown
-   here:
+   below:
 
-       // Currently required to JSON-serialize BigInt
+       // Currently required to make BigInt JSON serializable
        BigInt.prototype.toJSON = function() {
          return this.toString();
        };
 
-       // Parsing is here performed using a "stream" based method
+       // JSON parsing using a "stream" based method
        var object = JSON.parse(jstring,
          (k,v) =&gt; k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
        );
@@ -1049,7 +1049,7 @@ Table of Contents
    In this case the string arguments for "big" and "time" have changed
    with respect to the original, making systems depending on JCS fail.
 
-   The reason for the deviation is that in stream- and schema-based JSON
+   The reason for the deviation is that in stream and schema based JSON
    parsers, the original "string" argument is typically replaced on-the-
    fly by the native subtype which when serialized, may exhibit a
    different and platform dependent pattern.
@@ -1057,15 +1057,15 @@ Table of Contents
    The above may at first look like an insurmountable obstacle.
    However, there is a fairly straightforward process making subtype
    serialization independent of parsing scheme.  This though requires
-   two measures, which MUST be adhered to:
+   two measures which MUST be adhered to:
 
-   o  Canonical forms for all used subtypes are defined by the community
-      or standard using the specific JSON schema.
+   o  The community or standard utilizing a specific JSON schema defines
+      a strict normalized form for each of the used subtypes.
 
    o  Compatible serializers are created for each subtype.
 
    By adding a dedicated serializer for the "Date" subtype, the sample
-   JSON ecosystem became compatible with JCS:
+   JSON schema becomes compatible with JCS:
 
 
 
@@ -1087,13 +1087,13 @@ Table of Contents
 
    The observant reader will note that "big" still is in error but that
    is to be expected since the "055" argument in the input data clearly
-   is not a proper canonical form for a big integer!
+   is not a normalized form for a big integer!
 
    A positive side effect of this arrangement is that it enforces strict
    definitions of subtypes which improves interoperability in general as
    well.
 
-   Defining specific subtypes and their canonical form is out of scope
+   Defining specific subtypes and their normalized form is out of scope
    for this specification.
 
 <span class="h2"><a class="selflink" name="appendix-F" href="#appendix-F">Appendix F</a>.  Implementation Guidelines</span>
