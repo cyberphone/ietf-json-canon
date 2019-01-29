@@ -916,7 +916,8 @@
       <t>
         The observant reader will note that &quot;big&quot; still is in error but that is
         to be expected since the &quot;055&quot; argument in the input data
-        clearly is not a normalized form for a big integer!
+        clearly is not a normalized form for a big integer.
+        That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
       </t>
       <t>
         A positive side effect of this arrangement is that it enforces strict definitions
@@ -925,6 +926,32 @@
       <t>
         Defining specific subtypes and their normalized form is out of scope for
         this specification.
+      </t>
+      <t>
+        In addition to subtype normalization, there is another way to cope with
+        schema and stream based parsing, which is treating subtypes as immutable strings.
+        To accomplish this, subtype conversions must be performed outside of the parsing process.
+        In modern programming platforms like Go, Java and C# this can be achieved with
+        moderate efforts by combining annotations, getters and setters.
+        Below is an example in C# showing a part of class that is serializable
+        as a JSON Object:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  // The immutable string solution uses a local
+  // string variable for serialization while
+  // exposing another type to the application
+  [JsonProperty("amount")]
+  private string _amount { get; set; }
+
+  [JsonIgnore]
+  public decimal Amount {
+      get { return decimal.Parse(_amount); }
+      set { _amount = value.ToString(); }
+  }]]></artwork></figure>
+      </t>
+      <t>
+        Note that the example above also addresses the constraints on numeric data
+        implied by I-JSON.
       </t>
     </section>
 
