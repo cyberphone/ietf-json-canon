@@ -192,8 +192,7 @@
         <t>
           Note: if strings are holding embedded subtypes
           which may have variant representations (like a &quot;DateTime&quot;
-          type), such data MUST be normalized before applying JCS.
-          For more information see <xref target="string.subtypes"/>.
+          type), this MUST be dealt with as as described in <xref target="string.subtypes"/>.
         </t>
         <t>
           Note: although the Unicode standard offers a possibility combining
