@@ -933,7 +933,7 @@
         To accomplish this, subtype conversions must be performed outside of the parsing process.
         In modern programming platforms like Go, Java and C# this can be achieved with
         moderate efforts by combining annotations, getters and setters.
-        Below is an example in C# showing a part of class that is serializable
+        Below is an example in C#/Json.NET showing a part of class that is serializable
         as a JSON Object:
       </t>
       <t>
@@ -950,8 +950,13 @@
   }]]></artwork></figure>
       </t>
       <t>
+        In an application &quot;Amount&quot; can be accessed as any other property
+        while it is actually represented by a quoted string in JSON contexts.
+      </t>
+      <t>
         Note that the example above also addresses the constraints on numeric data
-        implied by I-JSON.
+        implied by I-JSON (the &quot;decimal&quot; data type has quite different
+        characteristics compared to IEEE-754 double precision).
       </t>
     </section>
 
