@@ -801,8 +801,7 @@
       <t>
           <figure align="center">
             <artwork><![CDATA[  var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
-  var biggie = new BigNumber(obj.giantNumber);]]></artwork>
-          </figure>
+  var biggie = new BigNumber(obj.giantNumber);]]></artwork></figure>
       </t>
       <t>
         or declarative schemes like OpenAPI <xref target="OPENAPI"/>,
@@ -824,13 +823,11 @@
       <t>
         <figure align="center">
           <artwork><![CDATA[  const jstring = 
-      '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork>
-        </figure>
+      '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork></figure>
       </t>
       <t>This can accomplished by the following ES6 statement:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[  var object = JSON.parse(jstring);]]></artwork>
-        </figure>
+        <figure align="center"><artwork><![CDATA[  var object = JSON.parse(jstring);]]></artwork></figure>
       </t>
       <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
       step using the parsed string argument as input:</t>
@@ -842,8 +839,7 @@
       <t>Canonicalization of &quot;object&quot; using the sample code in <xref target="canonicalize.js"/> would return the
       following string:</t>
       <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork>
-        </figure>
+        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork></figure>
       </t>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
@@ -865,8 +861,7 @@
         following string would be generated:
       </t>
       <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork>
-      </figure>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork></figure>
       </t>
       <t>
         In this case the string arguments for &quot;big&quot; and &quot;time&quot;
@@ -885,64 +880,15 @@
         independent of parsing scheme elaboroated on in the following
         subsections.
       </t>
-      <section anchor="string.subtypes.normalization" title="Data Normalization Method">
-        <t>
-          One way of eliminating variant data is to normalize data.
-          This requires two measures which MUST be adhered to:
-          <list style="symbols">
-            <t>
-              The community or standard utilizing a specific JSON schema
-              defines a strict normalized form for each of the used subtypes.
-            </t>
-            <t>
-              Compatible serializers are created for each subtype.
-            </t>
-          </list>
-          By adding a dedicated serializer for the &quot;Date&quot; subtype,
-          the sample JSON schema becomes compatible with JCS:
-        </t>
-        <t>
-          <figure align="center"><artwork><![CDATA[  Date.prototype.toJSON = function() {
-      let date = this.toISOString();
-      // In this particular case we selected a UTC notation
-      // yyyy-mm-ddThh:mm:ssZ
-      return date.substring(0, date.indexOf('.')) + 'Z';
-  };]]></artwork>
-          </figure>
-        </t>
-        <t>
-          The canonical string will after this upgrade read as:
-        </t>
-        <t>
-          <figure align="center">
-            <artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
-          </figure>
-        </t>
-        <t>
-          The observant reader will note that &quot;big&quot; still is in error but that is
-          to be expected since the &quot;055&quot; argument in the input data
-          clearly is not a normalized form for a big integer.
-          That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
-        </t>
-        <t>
-          A positive side effect of this arrangement is that it enforces strict definitions
-          of subtypes which improves interoperability in general as well.
-        </t>
-        <t>
-          Defining specific subtypes and their normalized form is out of scope for
-          this specification.
-        </t>
-      </section>
       <section anchor="string.subtypes.immutablestring" title="Immutable String Method">
         <t>
-        In addition to data normalization, there is another way to cope with
-        schema and stream based parsing, which is treating subtypes as immutable strings.
-        To accomplish this, subtype conversions must be performed outside of the parsing process.
-        In modern programming platforms like Go, Java and C# this can be achieved with
-        moderate efforts by combining annotations, getters and setters.
-        Below is an example in C#/Json.NET showing a part of class that is serializable
-        as a JSON Object:
-      </t>
+          One method for coping with stream and schema based parsers is treating subtypes as immutable strings.
+          To accomplish this, subtype conversions must be performed outside of the parsing process.
+          In modern programming platforms like Go, Java and C# this can be achieved with
+          moderate efforts by combining annotations, getters and setters.
+          Below is an example in C#/Json.NET showing a part of class that is serializable
+          as a JSON Object:
+        </t>
       <t>
         <figure align="center"><artwork><![CDATA[  // The immutable string solution uses a local
   // string variable for serialization while
@@ -965,6 +911,52 @@
         implied by I-JSON (the &quot;decimal&quot; data type has quite different
         characteristics compared to IEEE-754 double precision).
       </t>
+      </section>
+      <section anchor="string.subtypes.normalization" title="Data Normalization Method">
+        <t>
+          Another method for handling stream and schema based parsing
+          is to normalize data. This requires that the following measures are adhered to:
+          <list style="symbols">
+            <t>
+              The community or standard utilizing a specific JSON schema
+              defines a strict normalized form for each of the used subtypes.
+            </t>
+            <t>
+              Compatible serializers are created for each subtype.
+            </t>
+          </list>
+          By adding a dedicated serializer for the &quot;Date&quot; subtype,
+          the sample JSON schema becomes compatible with JCS:
+        </t>
+        <t>
+          <figure align="center"><artwork><![CDATA[  Date.prototype.toJSON = function() {
+      let date = this.toISOString();
+      // In this particular case we selected a UTC notation
+      // yyyy-mm-ddThh:mm:ssZ
+      return date.substring(0, date.indexOf('.')) + 'Z';
+  };]]></artwork></figure>
+        </t>
+        <t>
+          The canonical string will after this upgrade read as:
+        </t>
+        <t>
+          <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
+          </figure>
+        </t>
+        <t>
+          The observant reader will note that &quot;big&quot; still is in error but that is
+          to be expected since the &quot;055&quot; argument in the input data
+          clearly is not a normalized form for a big integer.
+          That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
+        </t>
+        <t>
+          A positive side effect of this arrangement is that it enforces strict definitions
+          of subtypes which improves interoperability in general as well.
+        </t>
+        <t>
+          Defining specific subtypes and their normalized form is out of scope for
+          this specification.
+        </t>
       </section>
     </section>
 
