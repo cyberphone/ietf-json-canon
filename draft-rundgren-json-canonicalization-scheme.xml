@@ -882,53 +882,61 @@
       </t>
       <t>
         The above may at first look like an insurmountable obstacle.  However,
-        there is a fairly straightforward process making subtype serialization
-        independent of parsing scheme. This though requires two measures which MUST
-        be adhered to:
-        <list style="symbols">
-          <t>
-            The community or standard utilizing a specific JSON schema
-            defines a strict normalized form for each of the used subtypes.
-          </t>
-          <t>
-            Compatible serializers are created for each subtype.
-          </t>
-        </list>
-        By adding a dedicated serializer for the &quot;Date&quot; subtype,
-        the sample JSON schema becomes compatible with JCS:
+        there are two fairly straightforward ways making subtype serialization
+        independent of parsing scheme elaboroated on in the following
+        subsections.
       </t>
-      <t>
-        <figure align="center">
-          <artwork><![CDATA[  Date.prototype.toJSON = function() {
+      <section anchor="string.subtypes.normalization" title="Data Normalization Method">
+        <t>
+          One way of eliminating variant data is to normalize data.
+          This requires two measures which MUST be adhered to:
+          <list style="symbols">
+            <t>
+              The community or standard utilizing a specific JSON schema
+              defines a strict normalized form for each of the used subtypes.
+            </t>
+            <t>
+              Compatible serializers are created for each subtype.
+            </t>
+          </list>
+          By adding a dedicated serializer for the &quot;Date&quot; subtype,
+          the sample JSON schema becomes compatible with JCS:
+        </t>
+        <t>
+          <figure align="center"><artwork><![CDATA[  Date.prototype.toJSON = function() {
       let date = this.toISOString();
       // In this particular case we selected a UTC notation
       // yyyy-mm-ddThh:mm:ssZ
       return date.substring(0, date.indexOf('.')) + 'Z';
-  };]]></artwork></figure>
-      </t>
-      <t>
-        The canonical string will after this upgrade read as:
-      </t>
-      <t>
-        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
-      </figure>
-      </t>
-      <t>
-        The observant reader will note that &quot;big&quot; still is in error but that is
-        to be expected since the &quot;055&quot; argument in the input data
-        clearly is not a normalized form for a big integer.
-        That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
-      </t>
-      <t>
-        A positive side effect of this arrangement is that it enforces strict definitions
-        of subtypes which improves interoperability in general as well.
-      </t>
-      <t>
-        Defining specific subtypes and their normalized form is out of scope for
-        this specification.
-      </t>
-      <t>
-        In addition to subtype normalization, there is another way to cope with
+  };]]></artwork>
+          </figure>
+        </t>
+        <t>
+          The canonical string will after this upgrade read as:
+        </t>
+        <t>
+          <figure align="center">
+            <artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
+          </figure>
+        </t>
+        <t>
+          The observant reader will note that &quot;big&quot; still is in error but that is
+          to be expected since the &quot;055&quot; argument in the input data
+          clearly is not a normalized form for a big integer.
+          That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
+        </t>
+        <t>
+          A positive side effect of this arrangement is that it enforces strict definitions
+          of subtypes which improves interoperability in general as well.
+        </t>
+        <t>
+          Defining specific subtypes and their normalized form is out of scope for
+          this specification.
+        </t>
+      </section>
+      <section anchor="string.subtypes.immutablestring" title="Immutable String Method">
+        <t>
+        In addition to data normalization, there is another way to cope with
         schema and stream based parsing, which is treating subtypes as immutable strings.
         To accomplish this, subtype conversions must be performed outside of the parsing process.
         In modern programming platforms like Go, Java and C# this can be achieved with
@@ -958,6 +966,7 @@
         implied by I-JSON (the &quot;decimal&quot; data type has quite different
         characteristics compared to IEEE-754 double precision).
       </t>
+      </section>
     </section>
 
     <section anchor="impl.guidelines" title="Implementation Guidelines">
