@@ -275,13 +275,13 @@ Table of Contents
    <a href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"  . . . . . . . .  <a href="#page-13">13</a>
    <a href="#appendix-D">Appendix D</a>.  Dealing with Big Numbers . . . . . . . . . . . . . .  <a href="#page-14">14</a>
    <a href="#appendix-E">Appendix E</a>.  String Subtypes  . . . . . . . . . . . . . . . . . .  <a href="#page-15">15</a>
+     <a href="#appendix-E.1">E.1</a>.  Data Normalization Method . . . . . . . . . . . . . . . .  <a href="#page-16">16</a>
+     <a href="#appendix-E.2">E.2</a>.  Immutable String Method . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
    <a href="#appendix-F">Appendix F</a>.  Implementation Guidelines  . . . . . . . . . . . . .  <a href="#page-18">18</a>
    <a href="#appendix-G">Appendix G</a>.  Open Source Implementations  . . . . . . . . . . . .  <a href="#page-19">19</a>
    <a href="#appendix-H">Appendix H</a>.  Other JSON Canonicalization Efforts  . . . . . . . .  <a href="#page-19">19</a>
-   <a href="#appendix-I">Appendix I</a>.  Development Portal . . . . . . . . . . . . . . . . .  <a href="#page-19">19</a>
+   <a href="#appendix-I">Appendix I</a>.  Development Portal . . . . . . . . . . . . . . . . .  <a href="#page-20">20</a>
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-20">20</a>
-
-
 
 
 
@@ -1056,14 +1056,14 @@ Table of Contents
    different and platform dependent pattern.
 
    The above may at first look like an insurmountable obstacle.
-   However, there is a fairly straightforward process making subtype
-   serialization independent of parsing scheme.  This though requires
-   two measures which MUST be adhered to:
+   However, there are two fairly straightforward ways making subtype
+   serialization independent of parsing scheme elaboroated on in the
+   following subsections.
 
-   o  The community or standard utilizing a specific JSON schema defines
-      a strict normalized form for each of the used subtypes.
+<span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Data Normalization Method</span>
 
-   o  Compatible serializers are created for each subtype.
+   One way of eliminating variant data is to normalize data.  This
+   requires two measures which MUST be adhered to:
 
 
 
@@ -1073,6 +1073,11 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
+
+   o  The community or standard utilizing a specific JSON schema defines
+      a strict normalized form for each of the used subtypes.
+
+   o  Compatible serializers are created for each subtype.
 
    By adding a dedicated serializer for the "Date" subtype, the sample
    JSON schema becomes compatible with JCS:
@@ -1100,14 +1105,30 @@ Table of Contents
    Defining specific subtypes and their normalized form is out of scope
    for this specification.
 
-   In addition to subtype normalization, there is another way to cope
-   with schema and stream based parsing, which is treating subtypes as
+<span class="h3"><a class="selflink" name="appendix-E.2" href="#appendix-E.2">E.2</a>.  Immutable String Method</span>
+
+   In addition to data normalization, there is another way to cope with
+   schema and stream based parsing, which is treating subtypes as
    immutable strings.  To accomplish this, subtype conversions must be
    performed outside of the parsing process.  In modern programming
    platforms like Go, Java and C# this can be achieved with moderate
    efforts by combining annotations, getters and setters.  Below is an
    example in C#/Json.NET showing a part of class that is serializable
    as a JSON Object:
+
+
+
+
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 17]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
+
 
      // The immutable string solution uses a local
      // string variable for serialization while
@@ -1120,15 +1141,6 @@ Table of Contents
          get { return decimal.Parse(_amount); }
          set { _amount = value.ToString(); }
      }
-
-
-
-
-
-<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 17]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
-
 
    In an application "Amount" can be accessed as any other property
    while it is actually represented by a quoted string in JSON contexts.
@@ -1165,6 +1177,15 @@ Table of Contents
 
    1.  Parse the signed JSON data using existing JSON tools.
 
+
+
+
+
+<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 18]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
+
+
    2.  Read and save the signature value from the designated signature
        property.
 
@@ -1178,13 +1199,6 @@ Table of Contents
    6.  Verify that the canonicalized data matches the saved signature
        value using the algorithm and key used for creating the
        signature.
-
-
-
-<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 18]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
-
 
    A canonicalizer like above is effectively only a "filter",
    potentially usable with a multitude of quite different cryptographic
@@ -1220,6 +1234,14 @@ Table of Contents
    o  <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">https://tools.ietf.org/html/draft-staykov-hu-json-canonical-</a>
       <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">form-00</a> [<a href="#ref-7">7</a>]
 
+
+
+
+<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 19]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
+
+
    o  <a href="https://gibson042.github.io/canonicaljson-spec/">https://gibson042.github.io/canonicaljson-spec/</a> [<a href="#ref-8">8</a>]
 
    o  <a href="http://wiki.laptop.org/go/Canonical_JSON">http://wiki.laptop.org/go/Canonical_JSON</a> [<a href="#ref-9">9</a>]
@@ -1234,13 +1256,6 @@ Table of Contents
 
    JCS source code and test data is available at:
    <a href="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</a> [<a href="#ref-12">12</a>]
-
-
-
-<span class="grey">Rundgren, et al.         Expires August 2, 2019                [Page 19]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
-
 
 Authors' Addresses
 
@@ -1269,21 +1284,6 @@ Authors' Addresses
    Sweden
 
    Email: erdtman@spotify.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
