@@ -1063,9 +1063,9 @@ Table of Contents
 <span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Immutable String Method</span>
 
    One method for coping with stream and schema based parsers is
-   treating subtypes as immutable strings.  To accomplish this, subtype
-   conversions must be performed outside of the parsing process.  In
-   modern programming platforms like Go, Java and C# this can be
+   treating subtypes as immutable strings with respect to JSON.  To
+   accomplish this, subtype conversions must be performed outside of the
+   parsing process.  In modern programming platforms like Go, Java and
 
 
 
@@ -1074,9 +1074,9 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>  January 2019</span>
 
 
-   achieved with moderate efforts by combining annotations, getters and
-   setters.  Below is an example in C#/Json.NET showing a part of class
-   that is serializable as a JSON Object:
+   C# this can be achieved with moderate efforts by combining
+   annotations, getters and setters.  Below is an example in C#/Json.NET
+   showing a part of a class that is serializable as a JSON Object:
 
      // The immutable string solution uses a local
      // string variable for serialization while
