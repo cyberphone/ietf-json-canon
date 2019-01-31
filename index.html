@@ -329,7 +329,7 @@ Table of Contents
    primitives compliant with ES6, combined with an elementary property
    sorting scheme, can be used for supporting "Hashable" JSON.  Note
    that "true" canonicalization is an optional JCS feature, usually not
-   needed for cryptographic operations.  See also <a href="#appendix-E.2">Appendix E.2</a>.
+   needed for cryptographic operations.  See <a href="#appendix-E">Appendix E</a> for details.
 
    JCS is compatible with some existing systems relying on JSON
    canonicalization such as JWK Thumbprint [<a href="http://tools.ietf.org/html//rfc7638" title="&quot;JSON Web Key (JWK) Thumbprint&quot;">RFC7638</a>] and Keybase
@@ -1136,8 +1136,8 @@ Table of Contents
 <span class="h3"><a class="selflink" name="appendix-E.2" href="#appendix-E.2">E.2</a>.  Data Normalization Method</span>
 
    Another method for handling stream and schema based parsing is to
-   normalize data.  This requires that the following measures are
-   adhered to:
+   normalize subtype data.  This requires that the following measures
+   are adhered to:
 
    o  The community or standard utilizing a specific JSON schema defines
       a strict normalized form for each of the used subtypes.
@@ -1161,7 +1161,7 @@ Table of Contents
    The observant reader will note that "big" still is in error but that
    is to be expected since the "055" argument in the input data clearly
    is not a normalized form for a big integer.  That is, the originator
-   of the JSON data didn't stick to the "contract".
+   of the JSON data did not follow the "contract".
 
    A positive side effect of this arrangement is that it enforces strict
    definitions of subtypes which improves interoperability in general as
