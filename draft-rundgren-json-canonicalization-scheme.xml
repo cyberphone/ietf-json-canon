@@ -886,7 +886,7 @@
         <t>
           One method for coping with stream and schema based parsers is treating subtypes as
           immutable strings with respect to JSON.
-          To accomplish this, subtype conversions must be performed outside of the parsing process.
+          To accomplish this, subtype conversions are performed outside of the parsing process.
           In modern programming platforms like Go, Java and C# this can be achieved with
           moderate efforts by combining annotations, getters and setters.
           Below is an example in C#/Json.NET showing a part of a class that is serializable
