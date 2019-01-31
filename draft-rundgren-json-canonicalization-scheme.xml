@@ -133,7 +133,7 @@
         with ES6, combined with an elementary property sorting scheme, can be used for
         supporting &quot;Hashable&quot; JSON.  Note that &quot;true&quot; canonicalization
         is an optional JCS feature, usually not needed for cryptographic operations.
-        See also <xref target="string.subtypes.normalization"/>.
+        See <xref target="string.subtypes"/> for details.
     </t>
       <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
@@ -922,7 +922,7 @@
       <section anchor="string.subtypes.normalization" title="Data Normalization Method">
         <t>
           Another method for handling stream and schema based parsing
-          is to normalize data. This requires that the following measures are adhered to:
+          is to normalize subtype data. This requires that the following measures are adhered to:
           <list style="symbols">
             <t>
               The community or standard utilizing a specific JSON schema
@@ -954,7 +954,7 @@
           The observant reader will note that &quot;big&quot; still is in error but that is
           to be expected since the &quot;055&quot; argument in the input data
           clearly is not a normalized form for a big integer.
-          That is, the originator of the JSON data didn't stick to the &quot;contract&quot;.
+          That is, the originator of the JSON data did not follow the &quot;contract&quot;.
         </t>
         <t>
           A positive side effect of this arrangement is that it enforces strict definitions
