@@ -966,7 +966,7 @@
         </t>
         <t>
           Unlike the immutable string method, the data normalization method accomplishes &quot;true&quot;
-          canonicalization which may be used for a wider range of applications than "Hashable" JSON.
+          canonicalization which may be usable by a wider range of applications than "Hashable" JSON.
         </t>
       </section>
     </section>
