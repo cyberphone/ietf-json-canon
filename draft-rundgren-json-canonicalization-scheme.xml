@@ -117,7 +117,7 @@
           <t>
             The absence of a namespace concept and default values, as well
             as constraining data to the I&nbhy;JSON subset eliminate the need for specific
-            parsing schemes for dealing with canonicalization.
+            number parsing schemes for dealing with canonicalization.
           </t>
           <t>
             JCS compatible serialization of JSON primitives is supported by most
@@ -131,8 +131,10 @@
       <t>
         In summary, the JCS specification describes how serialization of JSON primitives compliant
         with ES6, combined with an elementary property sorting scheme, can be used for
-        supporting &quot;Hashable&quot; JSON.
-      </t>
+        supporting &quot;Hashable&quot; JSON.  Note that &quot;true&quot; canonicalization
+        is an optional JCS feature, usually not needed for cryptographic operations.
+        See also <xref target="string.subtypes.normalization"/>.
+    </t>
       <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
         such as JWK Thumbprint <xref target="RFC7638"/> and Keybase <xref target="KEYBASE"/>. 
@@ -809,7 +811,7 @@
       </t>
     </section>
 
-    <section anchor="string.subtypes" title="String Subtypes">
+    <section anchor="string.subtypes" title="String Subtype Handling">
       <t>
         It is quite common using the JSON String type for holding subtypes.
         This appendix shows that this can lead to interoperability problems
@@ -908,10 +910,14 @@
         while it is actually represented by a quoted string in JSON contexts.
       </t>
       <t>
-        Note that the example above also addresses the constraints on numeric data
+        Note: the example above also addresses the constraints on numeric data
         implied by I-JSON (the &quot;decimal&quot; data type has quite different
         characteristics compared to IEEE-754 double precision).
       </t>
+        <t>
+          Note: the intial example in this appendix showing parsing using ES6,
+          faithfully implements the immutable string method.
+        </t>
       </section>
       <section anchor="string.subtypes.normalization" title="Data Normalization Method">
         <t>
@@ -957,6 +963,10 @@
         <t>
           Defining specific subtypes and their normalized form is out of scope for
           this specification.
+        </t>
+        <t>
+          Unlike the immutable string method, the data normalization method accomplishes &quot;true&quot;
+          canonicalization which may be used for a wider range of applications than "Hashable" JSON.
         </t>
       </section>
     </section>
