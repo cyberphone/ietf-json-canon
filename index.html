@@ -1052,8 +1052,8 @@ Table of Contents
      {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}
 
    Although this is (with respect to JCS) technically correct, there is
-   another way parsing JSON data which also can be used in ES6 as shown
-   below:
+   another way parsing JSON data which also can be used with ES6 as
+   shown below:
 
      // Currently required to make BigInt JSON serializable
      BigInt.prototype.toJSON = function() {
@@ -1107,7 +1107,7 @@ Table of Contents
      // string variable for serialization while
      // exposing another type to the application
      [JsonProperty("amount")]
-     private string _amount { get; set; }
+     private string _amount;
 
      [<a name="ref-JsonIgnore" id="ref-JsonIgnore">JsonIgnore</a>]
      public decimal Amount {
