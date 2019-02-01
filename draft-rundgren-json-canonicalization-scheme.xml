@@ -845,7 +845,7 @@
       </t>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
-        which also can be used in ES6 as shown below:
+        which also can be used with ES6 as shown below:
       </t>
       <t>
         <figure align="center"><artwork><![CDATA[  // Currently required to make BigInt JSON serializable
