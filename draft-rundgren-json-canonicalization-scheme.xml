@@ -897,7 +897,7 @@
   // string variable for serialization while
   // exposing another type to the application
   [JsonProperty("amount")]
-  private string _amount { get; set; }
+  private string _amount;
 
   [JsonIgnore]
   public decimal Amount {
