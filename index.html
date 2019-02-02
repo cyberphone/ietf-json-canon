@@ -275,7 +275,7 @@ Table of Contents
    <a href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"  . . . . . . . .  <a href="#page-14">14</a>
    <a href="#appendix-D">Appendix D</a>.  Dealing with Big Numbers . . . . . . . . . . . . . .  <a href="#page-15">15</a>
    <a href="#appendix-E">Appendix E</a>.  String Subtype Handling  . . . . . . . . . . . . . .  <a href="#page-16">16</a>
-     <a href="#appendix-E.1">E.1</a>.  Immutable String Method . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
+     <a href="#appendix-E.1">E.1</a>.  Lazy Evaluation Method  . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
      <a href="#appendix-E.2">E.2</a>.  Data Normalization Method . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
      <a href="#appendix-E.3">E.3</a>.  Subtypes in Arrays  . . . . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
    <a href="#appendix-F">Appendix F</a>.  Implementation Guidelines  . . . . . . . . . . . . .  <a href="#page-19">19</a>
@@ -1088,18 +1088,18 @@ Table of Contents
    serialization independent of parsing scheme elaboroated on in the
    following subsections.
 
-<span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Immutable String Method</span>
+<span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Lazy Evaluation Method</span>
 
    One method for coping with stream and schema based parsers is
-   treating subtypes as immutable strings with respect to JSON.  To
+   treating subtypes as "pure" strings with respect to JSON.  To
    accomplish this, subtype conversions are performed outside of the
    parsing process.  In modern programming platforms like Go, Java and
    C# this can be achieved with moderate efforts by combining
    annotations, getters and setters.  Below is an example in C#/Json.NET
    showing a part of a class that is serializable as a JSON Object:
 
-     // The immutable string solution uses a local
-     // string variable for serialization while
+     // The lazy evaluation solution uses a local
+     // string variable for JSON serialization while
      // exposing another type to the application
      [JsonProperty("amount")]
      private string _amount;
@@ -1114,11 +1114,11 @@ Table of Contents
    while it is actually represented by a quoted string in JSON contexts.
 
    Note: the example above also addresses the constraints on numeric
-   data implied by I-JSON (the "decimal" data type has quite different
-   characteristics compared to IEEE-754 double precision).
+   data implied by I-JSON (the C# "decimal" data type has quite
+   different characteristics compared to IEEE-754 double precision).
 
    Note: the intial example in this appendix showing parsing using ES6,
-   faithfully implements the immutable string method.
+   faithfully implements the lazy evaluation method.
 
 
 
@@ -1167,7 +1167,7 @@ Table of Contents
    Defining specific subtypes and their normalized form is out of scope
    for this specification.
 
-   Unlike the immutable string method, the data normalization method
+   Unlike the lazy evaluation method, the data normalization method
    accomplishes "true" canonicalization which may be usable by a wider
    range of applications than "Hashable" JSON.
 
