@@ -968,6 +968,14 @@
           canonicalization which may be usable by a wider range of applications than "Hashable" JSON.
         </t>
       </section>
+      <section anchor="string.subtypes.arrays" title="Subtypes in Arrays">
+        <t>
+          Since the JSON Array construct permits mixing arbitrary JSON elements,
+          custom parsing and serialization code MUST be used to
+          support one (or both) of the methods described in the previous
+          subsections.
+        </t>
+      </section>
     </section>
 
     <section anchor="impl.guidelines" title="Implementation Guidelines">
