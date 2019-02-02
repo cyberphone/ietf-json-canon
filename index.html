@@ -277,11 +277,11 @@ Table of Contents
    <a href="#appendix-E">Appendix E</a>.  String Subtype Handling  . . . . . . . . . . . . . .  <a href="#page-16">16</a>
      <a href="#appendix-E.1">E.1</a>.  Immutable String Method . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
      <a href="#appendix-E.2">E.2</a>.  Data Normalization Method . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
-   <a href="#appendix-F">Appendix F</a>.  Implementation Guidelines  . . . . . . . . . . . . .  <a href="#page-18">18</a>
+     <a href="#appendix-E.3">E.3</a>.  Subtypes in Arrays  . . . . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
+   <a href="#appendix-F">Appendix F</a>.  Implementation Guidelines  . . . . . . . . . . . . .  <a href="#page-19">19</a>
    <a href="#appendix-G">Appendix G</a>.  Open Source Implementations  . . . . . . . . . . . .  <a href="#page-20">20</a>
    <a href="#appendix-H">Appendix H</a>.  Other JSON Canonicalization Efforts  . . . . . . . .  <a href="#page-20">20</a>
    <a href="#appendix-I">Appendix I</a>.  Development Portal . . . . . . . . . . . . . . . . .  <a href="#page-20">20</a>
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-20">20</a>
 
 
 
@@ -289,6 +289,8 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-21">21</a>
 
 <span class="h2"><a class="selflink" name="section-1" href="#section-1">1</a>.  Introduction</span>
 
@@ -334,8 +336,6 @@ Table of Contents
    JCS is compatible with some existing systems relying on JSON
    canonicalization such as JWK Thumbprint [<a href="http://tools.ietf.org/html//rfc7638" title="&quot;JSON Web Key (JWK) Thumbprint&quot;">RFC7638</a>] and Keybase
    [<a href="#ref-KEYBASE" title="&quot;Keybase&quot;">KEYBASE</a>].
-
-
 
 
 
@@ -1171,12 +1171,12 @@ Table of Contents
    accomplishes "true" canonicalization which may be usable by a wider
    range of applications than "Hashable" JSON.
 
-<span class="h2"><a class="selflink" name="appendix-F" href="#appendix-F">Appendix F</a>.  Implementation Guidelines</span>
+<span class="h3"><a class="selflink" name="appendix-E.3" href="#appendix-E.3">E.3</a>.  Subtypes in Arrays</span>
 
-   The optimal solution is integrating support for JCS directly in JSON
-   serializers (parsers need no changes).  That is, canonicalization
-   would just be an additional "mode" for a JSON serializer.  However,
-   this is currently not the case.  Fortunately JCS support can be
+   Since the JSON Array construct permits mixing arbitrary JSON
+   elements, custom parsing and serialization code MUST be used to
+   support one (or both) of the methods described in the previous
+   subsections.
 
 
 
@@ -1186,6 +1186,12 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+<span class="h2"><a class="selflink" name="appendix-F" href="#appendix-F">Appendix F</a>.  Implementation Guidelines</span>
+
+   The optimal solution is integrating support for JCS directly in JSON
+   serializers (parsers need no changes).  That is, canonicalization
+   would just be an additional "mode" for a JSON serializer.  However,
+   this is currently not the case.  Fortunately JCS support can be
    performed through externally supplied canonicalizer software,
    enabling signature creation schemes like the following:
 
@@ -1226,12 +1232,6 @@ Table of Contents
    potentially usable with a multitude of quite different cryptographic
    schemes.
 
-   Using a JSON serializer with integrated JCS support, the
-   serialization performed before the canonicalization step could be
-   eliminated for both processes.
-
-
-
 
 
 
@@ -1241,6 +1241,10 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   Using a JSON serializer with integrated JCS support, the
+   serialization performed before the canonicalization step could be
+   eliminated for both processes.
 
 <span class="h2"><a class="selflink" name="appendix-G" href="#appendix-G">Appendix G</a>.  Open Source Implementations</span>
 
@@ -1283,10 +1287,6 @@ Table of Contents
    JCS source code and test data is available at:
    <a href="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</a> [<a href="#ref-12">12</a>]
 
-Authors' Addresses
-
-
-
 
 
 
@@ -1297,6 +1297,8 @@ Authors' Addresses
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-21" id="page-21" href="#page-21" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+Authors' Addresses
 
    Anders Rundgren
    Independent
@@ -1323,8 +1325,6 @@ Authors' Addresses
    Sweden
 
    Email: erdtman@spotify.com
-
-
 
 
 
