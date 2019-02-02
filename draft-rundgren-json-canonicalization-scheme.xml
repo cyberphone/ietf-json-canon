@@ -881,10 +881,10 @@
         independent of parsing scheme elaboroated on in the following
         subsections.
       </t>
-      <section anchor="string.subtypes.immutablestring" title="Immutable String Method">
+      <section anchor="string.subtypes.lazyevalutation" title="Lazy Evaluation Method">
         <t>
           One method for coping with stream and schema based parsers is treating subtypes as
-          immutable strings with respect to JSON.
+          &quot;pure&quot; strings with respect to JSON.
           To accomplish this, subtype conversions are performed outside of the parsing process.
           In modern programming platforms like Go, Java and C# this can be achieved with
           moderate efforts by combining annotations, getters and setters.
@@ -892,8 +892,8 @@
           as a JSON Object:
         </t>
       <t>
-        <figure align="center"><artwork><![CDATA[  // The immutable string solution uses a local
-  // string variable for serialization while
+        <figure align="center"><artwork><![CDATA[  // The lazy evaluation solution uses a local
+  // string variable for JSON serialization while
   // exposing another type to the application
   [JsonProperty("amount")]
   private string _amount;
@@ -910,12 +910,12 @@
       </t>
       <t>
         Note: the example above also addresses the constraints on numeric data
-        implied by I-JSON (the &quot;decimal&quot; data type has quite different
+        implied by I-JSON (the C# &quot;decimal&quot; data type has quite different
         characteristics compared to IEEE-754 double precision).
       </t>
         <t>
           Note: the intial example in this appendix showing parsing using ES6,
-          faithfully implements the immutable string method.
+          faithfully implements the lazy evaluation method.
         </t>
       </section>
       <section anchor="string.subtypes.normalization" title="Data Normalization Method">
@@ -964,7 +964,7 @@
           this specification.
         </t>
         <t>
-          Unlike the immutable string method, the data normalization method accomplishes &quot;true&quot;
+          Unlike the lazy evaluation method, the data normalization method accomplishes &quot;true&quot;
           canonicalization which may be usable by a wider range of applications than "Hashable" JSON.
         </t>
       </section>
