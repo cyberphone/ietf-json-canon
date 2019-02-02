@@ -192,9 +192,8 @@
           </list>
         </t>
         <t>
-          Note: if strings are holding embedded subtypes
-          which may have variant representations (like a &quot;DateTime&quot;
-          type), this MUST be dealt with as as described in <xref target="string.subtypes"/>.
+          Note: parsed String data MUST NOT be altered during subsequent serializations.
+          For more information see <xref target="string.subtypes"/>.
         </t>
         <t>
           Note: although the Unicode standard offers a possibility combining
