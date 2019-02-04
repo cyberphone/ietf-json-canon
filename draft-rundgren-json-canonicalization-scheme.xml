@@ -881,18 +881,18 @@
         independent of parsing scheme elaboroated on in the following
         subsections.
       </t>
-      <section anchor="string.subtypes.lazyevalutation" title="Lazy Evaluation Method">
+      <section anchor="string.subtypes.immutable" title="Immutable String Method">
         <t>
           One method for coping with stream and schema based parsers is treating subtypes as
           &quot;pure&quot; strings with respect to JSON.
-          To accomplish this, subtype conversions are performed outside of the parsing process.
+          To accomplish this, subtype conversions are performed outside of the core parsing process.
           In modern programming platforms like Go, Java and C# this can be achieved with
           moderate efforts by combining annotations, getters and setters.
           Below is an example in C#/Json.NET showing a part of a class that is serializable
           as a JSON Object:
         </t>
       <t>
-        <figure align="center"><artwork><![CDATA[  // The lazy evaluation solution uses a local
+        <figure align="center"><artwork><![CDATA[  // The immutable string solution uses a local
   // string variable for JSON serialization while
   // exposing another type to the application
   [JsonProperty("amount")]
@@ -915,7 +915,7 @@
       </t>
         <t>
           Note: the intial example in this appendix showing parsing using ES6,
-          faithfully implements the lazy evaluation method.
+          faithfully implements the immutable string method.
         </t>
       </section>
       <section anchor="string.subtypes.normalization" title="Data Normalization Method">
@@ -964,7 +964,7 @@
           this specification.
         </t>
         <t>
-          Unlike the lazy evaluation method, the data normalization method accomplishes &quot;true&quot;
+          Unlike the immutable string method, the data normalization method accomplishes &quot;true&quot;
           canonicalization which may be usable by a wider range of applications than "Hashable" JSON.
         </t>
       </section>
