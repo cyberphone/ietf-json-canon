@@ -181,10 +181,10 @@
 Network Working Group                                        A. Rundgren
 Internet-Draft                                               Independent
 Intended status: Standards Track                               B. Jordan
-Expires: August 5, 2019                             Symantec Corporation
+Expires: August 8, 2019                             Symantec Corporation
                                                               S. Erdtman
                                                               Spotify AB
-                                                        February 1, 2019
+                                                        February 4, 2019
 
 
                    <span class="h1">JSON Canonicalization Scheme (JCS)</span>
@@ -220,7 +220,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 5, 2019.
+   This Internet-Draft will expire on August 8, 2019.
 
 
 
@@ -229,7 +229,7 @@ Status of This Memo
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 1]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 1]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-2" id="page-2" href="#page-2" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -275,7 +275,7 @@ Table of Contents
    <a href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"  . . . . . . . .  <a href="#page-14">14</a>
    <a href="#appendix-D">Appendix D</a>.  Dealing with Big Numbers . . . . . . . . . . . . . .  <a href="#page-15">15</a>
    <a href="#appendix-E">Appendix E</a>.  String Subtype Handling  . . . . . . . . . . . . . .  <a href="#page-16">16</a>
-     <a href="#appendix-E.1">E.1</a>.  Lazy Evaluation Method  . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
+     <a href="#appendix-E.1">E.1</a>.  Immutable String Method . . . . . . . . . . . . . . . . .  <a href="#page-17">17</a>
      <a href="#appendix-E.2">E.2</a>.  Data Normalization Method . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
      <a href="#appendix-E.3">E.3</a>.  Subtypes in Arrays  . . . . . . . . . . . . . . . . . . .  <a href="#page-18">18</a>
    <a href="#appendix-F">Appendix F</a>.  Implementation Guidelines  . . . . . . . . . . . . .  <a href="#page-19">19</a>
@@ -285,7 +285,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 2]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 2]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -341,7 +341,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 3]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 3]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-4" id="page-4" href="#page-4" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -397,7 +397,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 4]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 4]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-5" id="page-5" href="#page-5" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -453,7 +453,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 5]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 5]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -509,7 +509,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 6]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 6]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-7" id="page-7" href="#page-7" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -565,7 +565,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 7]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 7]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-8" id="page-8" href="#page-8" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -621,7 +621,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 8]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 8]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -677,7 +677,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                 [Page 9]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                 [Page 9]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -733,7 +733,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 10]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 10]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-11" id="page-11" href="#page-11" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -789,7 +789,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 11]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 11]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-12" id="page-12" href="#page-12" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -845,7 +845,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 12]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 12]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-13" id="page-13" href="#page-13" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -901,7 +901,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 13]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 13]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-14" id="page-14" href="#page-14" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -957,7 +957,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 14]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 14]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-15" id="page-15" href="#page-15" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1013,7 +1013,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 15]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 15]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1069,7 +1069,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 16]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 16]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1088,17 +1088,17 @@ Table of Contents
    serialization independent of parsing scheme elaboroated on in the
    following subsections.
 
-<span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Lazy Evaluation Method</span>
+<span class="h3"><a class="selflink" name="appendix-E.1" href="#appendix-E.1">E.1</a>.  Immutable String Method</span>
 
    One method for coping with stream and schema based parsers is
    treating subtypes as "pure" strings with respect to JSON.  To
    accomplish this, subtype conversions are performed outside of the
-   parsing process.  In modern programming platforms like Go, Java and
-   C# this can be achieved with moderate efforts by combining
+   core parsing process.  In modern programming platforms like Go, Java
+   and C# this can be achieved with moderate efforts by combining
    annotations, getters and setters.  Below is an example in C#/Json.NET
    showing a part of a class that is serializable as a JSON Object:
 
-     // The lazy evaluation solution uses a local
+     // The immutable string solution uses a local
      // string variable for JSON serialization while
      // exposing another type to the application
      [JsonProperty("amount")]
@@ -1118,14 +1118,14 @@ Table of Contents
    different characteristics compared to IEEE-754 double precision).
 
    Note: the intial example in this appendix showing parsing using ES6,
-   faithfully implements the lazy evaluation method.
+   faithfully implements the immutable string method.
 
 
 
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 17]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 17]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1167,7 +1167,7 @@ Table of Contents
    Defining specific subtypes and their normalized form is out of scope
    for this specification.
 
-   Unlike the lazy evaluation method, the data normalization method
+   Unlike the immutable string method, the data normalization method
    accomplishes "true" canonicalization which may be usable by a wider
    range of applications than "Hashable" JSON.
 
@@ -1181,7 +1181,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 18]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 18]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1237,7 +1237,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 19]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 19]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1293,7 +1293,7 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.         Expires August 5, 2019                [Page 20]</span></pre>
+<span class="grey">Rundgren, et al.         Expires August 8, 2019                [Page 20]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-21" id="page-21" href="#page-21" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
@@ -1349,7 +1349,7 @@ Authors' Addresses
 
 
 
-Rundgren, et al.         Expires August 5, 2019                [Page 21]
+Rundgren, et al.         Expires August 8, 2019                [Page 21]
 
 </pre><br />
     <span class="noprint"><small><small>Html markup produced by rfcmarkup 1.129b, available from
