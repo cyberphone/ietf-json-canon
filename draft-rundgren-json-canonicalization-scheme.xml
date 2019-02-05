@@ -117,7 +117,7 @@
           <t>
             The absence of a namespace concept and default values, as well
             as constraining data to the I&nbhy;JSON subset eliminate the need for specific
-            parsing schemes for dealing with canonicalization.
+            number parsing schemes for dealing with canonicalization.
           </t>
           <t>
             JCS compatible serialization of JSON primitives is supported by most
@@ -131,8 +131,10 @@
       <t>
         In summary, the JCS specification describes how serialization of JSON primitives compliant
         with ES6, combined with an elementary property sorting scheme, can be used for
-        supporting &quot;Hashable&quot; JSON.
-      </t>
+        supporting &quot;Hashable&quot; JSON.  Note that &quot;true&quot; canonicalization
+        is an optional JCS feature, usually not needed for cryptographic operations.
+        See <xref target="string.subtypes"/> for details.
+    </t>
       <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
         such as JWK Thumbprint <xref target="RFC7638"/> and Keybase <xref target="KEYBASE"/>. 
@@ -189,6 +191,16 @@
             </t>
           </list>
         </t>
+        <t>
+          Note: parsed String data MUST NOT be altered during subsequent serializations.
+          For more information see <xref target="string.subtypes"/>.
+        </t>
+        <t>
+          Note: although the Unicode standard offers a possibility combining
+          certain characters into one, referred to as "Unicode Normalization"
+          (<eref target="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</eref>),
+          such functionality MUST be delegated to the application layer.
+        </t>
       </section>
       <section anchor="json.canonicalization" title="Generation of Canonical JSON Data">
         <t>
@@ -241,7 +253,8 @@
             by JSON <xref target="RFC8259"/>), while output data (as defined by ES6),
             has a fixed representation.  As can be seen by the example,
             numbers are subject to rounding as well.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             The following subsections describe serialization of primitive JSON data types
             according to JCS.  This part is identical to that of ES6.
           </t>
@@ -279,14 +292,10 @@
             </t>
             <t>
               Note: some JSON systems permit the use of invalid Unicode data
-              like "lone&nbsp;surrogates" (e.g. U+DEAD), which also is dealt with in a platform specific way.
+              including "lone&nbsp;surrogates" (e.g. U+DEAD).
               Since this leads to interoperability issues including broken signatures,
-              such usages MUST be avoided.
-              <vspace blankLines="1"/>
-              Note: although the Unicode standard offers a possibility combining
-              certain characters into one, referred to as "Unicode Normalization"
-              (<eref target="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</eref>),
-              such functionality MUST be delegated to the application layer.
+              occurrences of such data MUST cause the JCS algorithm to terminate
+              with an error indication.
             </t>
           </section>
 
@@ -294,17 +303,20 @@
             <t>
               JSON data of type Number MUST be serialized according to
               Section 7.1.12.1 of <xref target="ES6"/> including the "Note 2" enhancement.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               Due to the relative complexity of this part, the algorithm itself is not included in this document.
               However, the specification is fully implemented by for example Google's V8 <xref target="V8"/>.
               The open source Java implementation mentioned in <xref target="open.source"/>
               uses a recently developed number serialization algorithm called Ryu <xref target="RYU"/>.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               ES6 builds on the IEEE-754 <xref target="IEEE754"/> double precision
               standard for representing JSON Number data.
               <xref target="json.ieee754.test"/> holds a set of IEEE-754 sample values and their
               corresponding JSON serialization.
-              <vspace blankLines="1"/>
+            </t>
+            <t>
               Occasionally applications need higher precision or longer integers than
               offered by IEEE-754 double precision.
               <xref target="json.bignumbers"/> outlines how this can be achieved
@@ -317,7 +329,8 @@
             Although the previous step indeed normalized the representation of primitive
             JSON data types, the result would not qualify as &quot;canonical&quot; since JSON
             Object properties are not in lexicographic (alphabetical) order.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Applied to the sample in <xref target="json.serialization.data"/>,
             a properly canonicalized version should (with a
             line wrap added for display purposes only), read as:
@@ -374,8 +387,9 @@
                 the &lt; operator, lexicographically precedes the other string.
                 If there is no index position at which they differ,
                 then the shorter string lexicographically precedes the longer string.
-                <vspace blankLines="1"/>
-                In plain english this means that property names are sorted in ascending order like the following:
+              </t>
+              <t>
+                In plain English this means that property names are sorted in ascending order like the following:
               </t>
             </list>
           </t>
@@ -388,12 +402,13 @@
           </t>
           <t>
             The rationale for basing the sort algorithm on UTF-16 code units is that
-            it maps directly to the string type in ECMAScript, Java and .NET.
+            it maps directly to the string type in ECMAScript (includes Web browsers), Java and .NET.
             Systems using another internal representation of string data will need to convert
             JSON property strings into arrays of UTF-16 code units before sorting.
             The conversion from UTF-8 or UTF-32 to UTF-16 is defined by the
             Unicode <xref target="UNICODE"/> standard.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Note: for the purpose of obtaining a deterministic property order, sorting on
             UTF-8 or UTF-32 encoded data would also work, but the result would differ
             (and thus be incompatible with this specification).
@@ -403,7 +418,8 @@
           <t>
             Finally, in order to create a platform independent representation,
             the resulting JSON string data MUST be encoded in UTF-8.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             Applied to the sample in <xref target="json.sorting.properties"/> this
             should yield the following bytes here shown in hexadecimal notation:
           </t>
@@ -444,9 +460,11 @@
         Building on ES6 Number serialization was
         originally proposed by James Manger. This ultimately led to the
         adoption of the entire ES6 serialization scheme for JSON primitives.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Other people who have contributed with valuable input to this specification include
-        Bron Gondwana, John-Mark Gurney, Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
+        Bron Gondwana, Jim Schaad, John-Mark Gurney, Mark Nottingham,
+        Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
         Richard Gibson, Robert Tupelo-Schneck and Scott Ananian.
       </t>
     </section>
@@ -545,7 +563,8 @@
       <t>
         Below is a functionally complete example of a JCS compliant canonicalizer
         for usage with ES6 based systems.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Note: the primary purpose of this code is highlighting the canonicalization algorithm.
         Using the full power of ES6 would reduce the code size considerably
         but would also be more difficult to follow by non-experts.
@@ -558,9 +577,10 @@
       return buffer;
   
       function serialize(object) {
-          if (object === null || typeof object !== 'object') {
+          if (object === null || typeof object !== 'object' ||
+              object.toJSON != null) {
               /////////////////////////////////////////////////
-              // Primitive data type - Use ES6/JSON          //
+              // Primitive type or toJSON - Use ES6/JSON     //
               /////////////////////////////////////////////////
               buffer += JSON.stringify(object);
   
@@ -639,9 +659,9 @@
 |--------------------------------------------------------------------|
 | c340000000000000 | -9007199254740992         | Largest neg integer |
 |--------------------------------------------------------------------|
-| 7fffffffffffffff |                           | Error (NaN)         |
+| 7fffffffffffffff |                           | NaN - Invalid       |
 |--------------------------------------------------------------------|
-| 7ff0000000000000 |                           | Error (Infinity)    |
+| 7ff0000000000000 |                           | Infinity - Invalid  |
 |--------------------------------------------------------------------|
 | 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
 |--------------------------------------------------------------------|
@@ -675,7 +695,13 @@
         Note: for maximum compliance with ECMAScript's <spanx style="verb">JSON</spanx> object, values that are
         to be interpreted as true integers,
         SHOULD be in the range -9007199254740991 to 9007199254740991.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
+        Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
+        occurrences of such values MUST cause the JCS algorithm to terminate
+        with an error indication.
+      </t>
+      <t>
         Note: although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
         could be regarded as having extended precision, the JCS/ES6 number serialization
         algorithm does not take this in consideration.
@@ -689,7 +715,8 @@
         However, this is just an option since cryptographic schemes
         based on JCS, in most cases would not depend on that externally
         supplied JSON data already is canonicalized.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         In fact, the ES6 standard way of serializing objects using
         <spanx style="verb">JSON.stringify()</spanx> produces a
         more "logical" format, where properties are
@@ -751,9 +778,10 @@
             "giantNumber" and "int64Max".  In addition, monetary data like "payMeThis" would
             presumably not rely on floating point data types due to rounding issues with respect
             to decimal arithmetic.
-            <vspace blankLines="1"/>
+          </t>
+          <t>
             The established way handling this kind of "overloading" of the
-            JSON Number type (at least in an extensible manner), is through 
+            JSON Number type (at least in an extensible manner), is through
             mapping mechanisms, instructing parsers what to do with different properties
             based on their name.  However, this greatly limits the value of using the
             Number type outside of its original
@@ -767,19 +795,187 @@
         not have a natural place in the current JSON ecosystem MUST be wrapped
         using the JSON String type.  This is close to
         a de-facto standard for open systems.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Aided by a mapping system; be it programmatic like
       </t>
       <t>
           <figure align="center">
             <artwork><![CDATA[  var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
-  var biggie = new BigNumber(obj.giantNumber);]]></artwork>
-          </figure>
+  var biggie = new BigNumber(obj.giantNumber);]]></artwork></figure>
       </t>
       <t>
         or declarative schemes like OpenAPI <xref target="OPENAPI"/>,
         there are no real limits, not even when using ES6.
       </t>
+    </section>
+
+    <section anchor="string.subtypes" title="String Subtype Handling">
+      <t>
+        It is quite common using the JSON String type for holding subtypes.
+        This appendix shows that this can lead to interoperability problems
+        depending on JSON parsing method, which MUST be dealt with by
+        JCS compliant applications targeting a wider audience.
+      </t>
+      <t>
+        Assume you want to parse the following JSON string holding two subtypes
+        and a JSON number:
+      </t>
+      <t>
+        <figure align="center">
+          <artwork><![CDATA[  const jstring = 
+      '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';]]></artwork></figure>
+      </t>
+      <t>This can accomplished by the following ES6 statement:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  var object = JSON.parse(jstring);]]></artwork></figure>
+      </t>
+      <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
+      step using the parsed string argument as input:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  ... = new Date(object.time); // Date object
+  ... = BigInt(object.big);    // Big integer
+  ... = object.val;            // JSON/JS number]]></artwork></figure>
+      </t>
+      <t>Canonicalization of &quot;object&quot; using the sample code in <xref target="canonicalize.js"/> would return the
+      following string:</t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork></figure>
+      </t>
+      <t>
+        Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
+        which also can be used with ES6 as shown below:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  // Currently required to make BigInt JSON serializable
+  BigInt.prototype.toJSON = function() {
+      return this.toString();
+  };
+
+  // JSON parsing using a "stream" based method
+  var object = JSON.parse(jstring, 
+      (k,v) => k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
+  );]]></artwork></figure>
+      </t>
+      <t>
+        If you now apply the canonicalizer in <xref target="canonicalize.js"/> to  &quot;object&quot;, the
+        following string would be generated:
+      </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork></figure>
+      </t>
+      <t>
+        In this case the string arguments for &quot;big&quot; and &quot;time&quot;
+        have changed with respect to the original,
+        presumable making an application depending on JCS fail.
+      </t>
+      <t>
+        The reason for the deviation is that in stream and schema based JSON parsers,
+        the original &quot;string&quot; argument is typically replaced on-the-fly
+        by the native subtype which when serialized, may exhibit a different
+        and platform dependent pattern.
+      </t>
+      <t>
+        The above may at first look like an insurmountable obstacle.  However,
+        there are two fairly straightforward ways making subtype serialization
+        independent of parsing scheme elaboroated on in the following
+        subsections.
+      </t>
+      <section anchor="string.subtypes.immutable" title="Immutable String Method">
+        <t>
+          One method for coping with stream and schema based parsers is treating subtypes as
+          &quot;pure&quot; strings with respect to JSON.
+          To accomplish this, subtype conversions are performed outside of the core parsing process.
+          In modern programming platforms like Go, Java and C# this can be achieved with
+          moderate efforts by combining annotations, getters and setters.
+          Below is an example in C#/Json.NET showing a part of a class that is serializable
+          as a JSON Object:
+        </t>
+      <t>
+        <figure align="center"><artwork><![CDATA[  // The immutable string solution uses a local
+  // string variable for JSON serialization while
+  // exposing another type to the application
+  [JsonProperty("amount")]
+  private string _amount;
+
+  [JsonIgnore]
+  public decimal Amount {
+      get { return decimal.Parse(_amount); }
+      set { _amount = value.ToString(); }
+  }]]></artwork></figure>
+      </t>
+      <t>
+        In an application &quot;Amount&quot; can be accessed as any other property
+        while it is actually represented by a quoted string in JSON contexts.
+      </t>
+      <t>
+        Note: the example above also addresses the constraints on numeric data
+        implied by I-JSON (the C# &quot;decimal&quot; data type has quite different
+        characteristics compared to IEEE-754 double precision).
+      </t>
+        <t>
+          Note: the intial example in this appendix showing parsing using ES6,
+          faithfully implements the immutable string method.
+        </t>
+      </section>
+      <section anchor="string.subtypes.normalization" title="Data Normalization Method">
+        <t>
+          Another method for handling stream and schema based parsing
+          is to normalize subtype data. This requires that the following measures are adhered to:
+          <list style="symbols">
+            <t>
+              The community or standard utilizing a specific JSON schema
+              defines a strict normalized form for each of the used subtypes.
+            </t>
+            <t>
+              Compatible serializers are created for each subtype.
+            </t>
+          </list>
+          By adding a dedicated serializer for the &quot;Date&quot; subtype,
+          the sample JSON schema becomes compatible with JCS:
+        </t>
+        <t>
+          <figure align="center"><artwork><![CDATA[  Date.prototype.toJSON = function() {
+      let date = this.toISOString();
+      // In this particular case we selected a UTC notation
+      // yyyy-mm-ddThh:mm:ssZ
+      return date.substring(0, date.indexOf('.')) + 'Z';
+  };]]></artwork></figure>
+        </t>
+        <t>
+          The canonical string will after this upgrade read as:
+        </t>
+        <t>
+          <figure align="center"><artwork><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
+          </figure>
+        </t>
+        <t>
+          The observant reader will note that &quot;big&quot; still is in error but that is
+          to be expected since the &quot;055&quot; argument in the input data
+          clearly is not a normalized form for a big integer.
+          That is, the originator of the JSON data did not follow the &quot;contract&quot;.
+        </t>
+        <t>
+          A positive side effect of this arrangement is that it enforces strict definitions
+          of subtypes which improves interoperability in general as well.
+        </t>
+        <t>
+          Defining specific subtypes and their normalized form is out of scope for
+          this specification.
+        </t>
+        <t>
+          Unlike the immutable string method, the data normalization method accomplishes &quot;true&quot;
+          canonicalization which may be usable by a wider range of applications than "Hashable" JSON.
+        </t>
+      </section>
+      <section anchor="string.subtypes.arrays" title="Subtypes in Arrays">
+        <t>
+          Since the JSON Array construct permits mixing arbitrary JSON elements,
+          custom parsing and serialization code MUST be used to
+          support one (or both) of the methods described in the previous
+          subsections.
+        </t>
+      </section>
     </section>
 
     <section anchor="impl.guidelines" title="Implementation Guidelines">
@@ -836,7 +1032,8 @@
       <t>
         A canonicalizer like above is effectively only a &quot;filter&quot;, potentially usable with
         a multitude of quite different cryptographic schemes.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         Using a JSON serializer with integrated JCS support, the serialization performed
         before the canonicalization step could be eliminated for both processes.
       </t>
@@ -888,10 +1085,12 @@
       <t>
         The JCS specification is currently developed at:
         <eref target="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</eref>.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         The most recent &quot;editors' copy&quot; can be found at:
         <eref target="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</eref>.
-        <vspace blankLines="1"/>
+      </t>
+      <t>
         JCS source code and test data is available at:
         <eref target="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</eref>
       </t>
