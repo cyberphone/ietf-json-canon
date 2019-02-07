@@ -186,10 +186,10 @@
             <t>
               Numeric data MUST be expressible
               as IEEE-754 <xref target="IEEE754"/> double precision values.
-              Occasionally applications need higher precision or longer integers than
-              offered by IEEE-754 double precision.
-              <xref target="json.bignumbers"/> outlines how this can be achieved
-              in a portable and extensible way.
+              For applications needing higher precision or longer integers than
+              offered by IEEE-754 double precision,
+              <xref target="json.bignumbers"/> outlines how
+              such requirements can be supported in an interoperable and extensible way.
             </t>
           </list>
         </t>
