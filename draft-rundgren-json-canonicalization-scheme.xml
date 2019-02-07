@@ -863,7 +863,7 @@
       <t>
         The above may at first look like an insurmountable obstacle.  However,
         there are two fairly straightforward ways making subtype serialization
-        independent of parsing scheme elaboroated on in the following
+        independent of parsing scheme elaborated on in the following
         subsections.
       </t>
       <section anchor="string.subtypes.immutable" title="Immutable String Method">
