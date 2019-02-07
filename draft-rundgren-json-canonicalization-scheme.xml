@@ -10,7 +10,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-rundgren-json-canonicalization-scheme-04" ipr="trust200902">
+<rfc category="std" docName="draft-rundgren-json-canonicalization-scheme-05" ipr="trust200902">
   <front>
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
@@ -383,8 +383,7 @@
                 the &lt; operator, lexicographically precedes the other string.
                 If there is no index position at which they differ,
                 then the shorter string lexicographically precedes the longer string.
-              </t>
-              <t>
+                <vspace blankLines="1"/>
                 In plain English this means that property names are sorted in ascending order like the following:
               </t>
             </list>
