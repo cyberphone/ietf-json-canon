@@ -1003,13 +1003,13 @@ Table of Contents
 
 <span class="h2"><a class="selflink" name="appendix-E" href="#appendix-E">Appendix E</a>.  String Subtype Handling</span>
 
-   It is quite common using the JSON String type for holding subtypes.
-   This appendix shows that this can lead to interoperability problems
-   depending on JSON parsing method, which MUST be dealt with by JCS
-   compliant applications targeting a wider audience.
+   Due to the limited set of data types featured in JSON, the JSON
+   String type is commonly used for holding subtypes.  This appendix
+   shows that this can lead to interoperability problems depending on
+   JSON parsing method, which MUST be dealt with by JCS compliant
+   applications targeting a wider audience.
 
-   Assume you want to parse the following JSON string holding two
-   subtypes and a JSON number:
+
 
 
 
@@ -1017,6 +1017,9 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   Assume you want to parse the following JSON string holding two
+   subtypes and a JSON number:
 
      const jstring =
          '{"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}';
@@ -1063,9 +1066,6 @@ Table of Contents
 
    The reason for the deviation is that in stream and schema based JSON
    parsers, the original "string" argument is typically replaced on-the-
-   fly by the native subtype which when serialized, may exhibit a
-   different and platform dependent pattern.
-
 
 
 
@@ -1073,6 +1073,9 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   fly by the native subtype which when serialized, may exhibit a
+   different and platform dependent pattern.
 
    The above may at first look like an insurmountable obstacle.
    However, there are two fairly straightforward ways making subtype
@@ -1120,15 +1123,14 @@ Table of Contents
    o  The community or standard utilizing a specific JSON schema defines
       a strict normalized form for each of the used subtypes.
 
-   o  Compatible serializers are created for each subtype.
-
-
 
 
 <span class="grey">Rundgren, et al.         Expires August 10, 2019               [Page 17]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   o  Compatible serializers are created for each subtype.
 
    By adding a dedicated serializer for the "Date" subtype, the sample
    JSON schema becomes compatible with JCS:
@@ -1176,8 +1178,6 @@ Table of Contents
    performed through externally supplied canonicalizer software,
    enabling signature creation schemes like the following:
 
-   1.  Create the data to be signed.
-
 
 
 
@@ -1185,6 +1185,8 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   1.  Create the data to be signed.
 
    2.  Serialize the data using existing JSON tools.
 
@@ -1232,8 +1234,6 @@ Table of Contents
 
    o  JavaScript: <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a> [<a href="#ref-2">2</a>]
 
-   o  Java: <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a> [<a href="#ref-3">3</a>]
-
 
 
 
@@ -1241,6 +1241,8 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   o  Java: <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a> [<a href="#ref-3">3</a>]
 
    o  Go: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">https://github.com/cyberphone/json-</a>
       <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">canonicalization/tree/master/go</a> [<a href="#ref-4">4</a>]
@@ -1283,8 +1285,6 @@ Authors' Addresses
 
    Email: anders.rundgren.net@gmail.com
    URI:   <a href="https://www.linkedin.com/in/andersrundgren/">https://www.linkedin.com/in/andersrundgren/</a>
-
-
 
 
 

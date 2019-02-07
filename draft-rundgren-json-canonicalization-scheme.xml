@@ -796,7 +796,8 @@
 
     <section anchor="string.subtypes" title="String Subtype Handling">
       <t>
-        It is quite common using the JSON String type for holding subtypes.
+        Due to the limited set of data types featured in JSON,
+        the JSON String type is commonly used for holding subtypes.
         This appendix shows that this can lead to interoperability problems
         depending on JSON parsing method, which MUST be dealt with by
         JCS compliant applications targeting a wider audience.
