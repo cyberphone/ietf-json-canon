@@ -430,7 +430,8 @@
             This data is intended to be usable as input to cryptographic methods.
           </t>
           <t>
-            For other uses see <xref target="json.wireformat"/>.
+            For applications needing to compare JSON data (using "true" canonicalization),
+            additional requirements apply as described in <xref target="string.subtypes.normalization"/>.
           </t>
         </section>
       </section>
@@ -777,7 +778,7 @@
         JSON ecosystem MUST be wrapped using the JSON String type.  This is close to
         a de-facto standard for open systems.  This is also applicable for
         other data types that do not have direct support in JSON, like "DateTime"
-        objects.  Also see <xref target="string.subtypes"/>.
+        objects as described in <xref target="string.subtypes"/>.
       </t>
       <t>
         Aided by a system using the JSON String type; be it programmatic like
