@@ -454,14 +454,14 @@
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>
         Building on ES6 Number serialization was
-        originally proposed by James Manger. This ultimately led to the
+        originally proposed by James&nbsp;Manger. This ultimately led to the
         adoption of the entire ES6 serialization scheme for JSON primitives.
       </t>
       <t>
         Other people who have contributed with valuable input to this specification include
-        Bron Gondwana, Jim Schaad, John-Mark Gurney, Mark Nottingham,
-        Mike Jones, Mike Miller, Mike Samuel, Michal Wadas,
-        Richard Gibson, Robert Tupelo-Schneck and Scott Ananian.
+        Scott&nbsp;Ananian, Richard&nbsp;Gibson, Bron&nbsp;Gondwana, John-Mark&nbsp;Gurney, Mike&nbsp;Jones,
+        Mike&nbsp;Miller, Mark&nbsp;Nottingham, Mike&nbsp;Samuel, Jim&nbsp;Schaad,
+        Robert&nbsp;Tupelo-Schneck and Michal&nbsp;Wadas.
       </t>
     </section>
   </middle>
