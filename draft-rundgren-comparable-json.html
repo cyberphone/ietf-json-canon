@@ -185,7 +185,7 @@ Expires: August 13, 2019
 
 
                       "Comparable" JSON (JSONCOMP)
-                   <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json-00">draft-rundgren-comparable-json-00</a>
+                   <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json-01">draft-rundgren-comparable-json-01</a>
 
 Abstract
 
@@ -242,7 +242,7 @@ Table of Contents
    <a href="#section-4">4</a>.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   <a href="#page-3">3</a>
    <a href="#section-5">5</a>.  Security Considerations . . . . . . . . . . . . . . . . . . .   <a href="#page-3">3</a>
    <a href="#section-6">6</a>.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-3">3</a>
-   <a href="#section-7">7</a>.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-3">3</a>
+   <a href="#section-7">7</a>.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
      <a href="#section-7.1">7.1</a>.  Normative References  . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
      <a href="#section-7.2">7.2</a>.  Informal References . . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-4">4</a>
@@ -280,7 +280,7 @@ Table of Contents
    designer assigned the property "big" for holding a "BigInteger"
    subtype and "time" for holding a "DateTime" subtype, while "val" is
    supposed to be a JSON Number compliant with JCS.  The example below
-   shows such a string:
+   shows such an object:
 
 
 
@@ -290,7 +290,11 @@ Table of Contents
 <span class="grey">Internet-Draft       <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json">draft-rundgren-comparable-json</a>        February 2019</span>
 
 
-     {"time": "2019-01-28T07:45:10Z", "big": "055", "val": 3.5}
+     {
+       "time": "2019-01-28T07:45:10Z",
+       "big": "055",
+       "val": 3.5
+     }
 
    A problem here is that "055" clearly is not a canonical form for a
    "BigInteger" while a "DateTme" object like "2019-01-28T07:45:10Z"
@@ -333,10 +337,6 @@ Table of Contents
 
    TBD.
 
-<span class="h2"><a class="selflink" name="section-7" href="#section-7">7</a>.  References</span>
-
-
-
 
 
 
@@ -345,6 +345,8 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-4" id="page-4" href="#page-4" class="invisible"> </a>
 <span class="grey">Internet-Draft       <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json">draft-rundgren-comparable-json</a>        February 2019</span>
 
+
+<span class="h2"><a class="selflink" name="section-7" href="#section-7">7</a>.  References</span>
 
 <span class="h3"><a class="selflink" name="section-7.1" href="#section-7.1">7.1</a>.  Normative References</span>
 
@@ -386,8 +388,6 @@ Author's Address
 
    Email: anders.rundgren.net@gmail.com
    URI:   <a href="https://www.linkedin.com/in/andersrundgren/">https://www.linkedin.com/in/andersrundgren/</a>
-
-
 
 
 
