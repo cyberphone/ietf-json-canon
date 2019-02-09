@@ -185,7 +185,7 @@ Expires: August 13, 2019
 
 
                       "Comparable" JSON (JSONCOMP)
-                   <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json-01">draft-rundgren-comparable-json-01</a>
+                   <a href="http://tools.ietf.org/html//draft-rundgren-comparable-json-02">draft-rundgren-comparable-json-02</a>
 
 Abstract
 
@@ -249,13 +249,13 @@ Table of Contents
 
 <span class="h2"><a class="selflink" name="section-1" href="#section-1">1</a>.  Introduction</span>
 
-   The purpose of JCS [<a href="#ref-JCS" title="&quot;JSON Canonicalization Scheme - Work in progress&quot;">JCS</a>] is creating "Hashable" JSON [<a href="http://tools.ietf.org/html//rfc8259" title="&quot;The JavaScript Object Notation (JSON) Data Interchange Format&quot;">RFC8259</a>] data
-   intended for cryptographic solutions.  JCS accomplishes this by
-   combining normalization of the native JSON String and Number
-   primitives with a deterministic property sorting scheme.  That is,
-   JCS provides canonicalization at the core JSON level.  For
-   interoperability reasons JCS also constrains data to the I-JSON
-   [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>] subset.
+   The purpose of JCS [<a href="#ref-JCS" title="&quot;JSON Canonicalization Scheme - Work in progress&quot;">JCS</a>] is creating "Hashable" representations of
+   JSON [<a href="http://tools.ietf.org/html//rfc8259" title="&quot;The JavaScript Object Notation (JSON) Data Interchange Format&quot;">RFC8259</a>] data intended for cryptographic solutions.  JCS
+   accomplishes this by combining normalization of the native JSON
+   String and Number primitives with a deterministic property sorting
+   scheme.  That is, JCS provides canonicalization at the core JSON
+   level.  For interoperability reasons JCS also constrains data to the
+   I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>] subset.
 
    However, if you rather would like to compare JSON data from different
    sources or runs, JCS would in many cases be inadequate since the JSON
@@ -279,8 +279,8 @@ Table of Contents
    Assume you want to compare productions of JSON data where the schema
    designer assigned the property "big" for holding a "BigInteger"
    subtype and "time" for holding a "DateTime" subtype, while "val" is
-   supposed to be a JSON Number compliant with JCS.  The example below
-   shows such an object:
+   supposed to be a JSON Number compliant with JCS.  The following
+   example shows such an object:
 
 
 
@@ -297,7 +297,7 @@ Table of Contents
      }
 
    A problem here is that "055" clearly is not a canonical form for a
-   "BigInteger" while a "DateTme" object like "2019-01-28T07:45:10Z"
+   "BigInteger" while a "DateTime" object like "2019-01-28T07:45:10Z"
    might as well be expressed as "2019-01-28T08:45:10.000+01:00" making
    comparisons based on JCS canonicalization fail.
 

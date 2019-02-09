@@ -53,8 +53,8 @@
   <middle>
     <section anchor="Introduction" title="Introduction">
       <t>
-        The purpose of JCS <xref target="JCS"/> is creating "Hashable" JSON <xref target="RFC8259"/>
-        data intended for cryptographic solutions.
+        The purpose of JCS <xref target="JCS"/> is creating "Hashable" representations
+        of JSON <xref target="RFC8259"/> data intended for cryptographic solutions.
         JCS accomplishes this by combining normalization of the native JSON
         String and Number primitives with a deterministic property sorting scheme.
         That is, JCS provides canonicalization at the core JSON level.
