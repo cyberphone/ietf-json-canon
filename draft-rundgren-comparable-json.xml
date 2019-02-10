@@ -10,7 +10,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="info" docName="draft-rundgren-comparable-json-03" ipr="trust200902">
+<rfc category="info" docName="draft-rundgren-comparable-json-04" ipr="trust200902">
   <front>
     <title abbrev="draft-rundgren-comparable-json">
       "Comparable" JSON (JSONCOMP)
@@ -130,10 +130,10 @@
         </t>
         <t>
           Defining specific subtypes and their normalized form is out of scope for
-          this application note.  Although the example illustrates a "BigInteger" in
+          this application note.  Although the JSON example illustrates a "BigInteger" in
           decimal notation, applications transferring huge integers
           (like raw RSA keys) typically rather use Base64 <xref target="RFC4648"/>
-          notation to conserve space.
+          encoding to conserve space.
         </t>
       </section>
  
