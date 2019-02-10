@@ -10,7 +10,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="info" docName="draft-rundgren-comparable-json-02" ipr="trust200902">
+<rfc category="info" docName="draft-rundgren-comparable-json-03" ipr="trust200902">
   <front>
     <title abbrev="draft-rundgren-comparable-json">
       "Comparable" JSON (JSONCOMP)
@@ -64,7 +64,7 @@
         However, if you rather would like to compare JSON data from
         different sources or runs, JCS would in many cases be
         inadequate since the JSON String type is commonly used
-        for holding subtypes like "DateTime" or "BigNumber" objects.
+        for holding subtypes like "DateTime" or "BigInteger" objects.
       </t>
       <t>
         This application note outlines how JCS in spite of having a limited
@@ -130,7 +130,10 @@
         </t>
         <t>
           Defining specific subtypes and their normalized form is out of scope for
-          this application note.
+          this application note.  Although the example illustrates a "BigInteger" in
+          decimal notation, applications transferring huge integers
+          (like raw RSA keys) typically rather use Base64 <xref target="RFC4648"/>
+          notation to conserve space.
         </t>
       </section>
  
@@ -142,13 +145,15 @@
 
     <section anchor="Security" title="Security Considerations">
       <t>
-        TBD.
+        Systems implementing this application note are subject
+        to the same security considerations as JCS.
       </t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>
-        TBD.
+        This document was created based on feedback (on JCS) from many people
+        including Mark&nbsp;Nottingham and Jim&nbsp;Schaad.
       </t>
     </section>
   </middle>
@@ -170,6 +175,7 @@
       </reference>
     </references>
     <references title="Informal References">
+      <?rfc include='reference.RFC.4648'?>
       <reference anchor="ECMASCRIPT" target="https://www.ecma-international.org/ecma-262/6.0/index.html">
         <front>
           <title>ECMAScript 2015 Language Specification</title>
