@@ -113,27 +113,27 @@
             Compatible serializers are created for each subtype.
           </t>
         </list>
-          A positive side effect of this arrangement is that it enforces strict definitions
-          of subtypes which improves interoperability in general as well.
+        A positive side effect of this arrangement is that it enforces strict definitions
+        of subtypes which improves interoperability in general as well.
       </t>
       <t>
-        Below is an example how such a serializer could be expressed in ECMAScript <xref target="ECMASCRIPT"/> 
+        Defining specific subtypes and their normalized form is out of scope for
+        this application note.  Although the JSON example illustrated a "BigInteger" in
+        decimal notation, applications transferring huge integers
+        (like raw RSA keys) typically rather use Base64 <xref target="RFC4648"/>
+        encoding to conserve space.
+      </t>
+      <t>
+        Below is an example of a strict serializer expressed in ECMAScript <xref target="ECMASCRIPT"/> 
         for a "DateTime" subtype:
       </t>
         <t>
           <figure align="center"><artwork><![CDATA[  Date.prototype.toJSON = function() {
       let date = this.toISOString();
-      // In this particular case we selected a UTC notation
+      // In this particular case an ISO/UTC notation was selected
       // yyyy-mm-ddThh:mm:ssZ
       return date.substring(0, date.indexOf('.')) + 'Z';
   };]]></artwork></figure>
-        </t>
-        <t>
-          Defining specific subtypes and their normalized form is out of scope for
-          this application note.  Although the JSON example illustrates a "BigInteger" in
-          decimal notation, applications transferring huge integers
-          (like raw RSA keys) typically rather use Base64 <xref target="RFC4648"/>
-          encoding to conserve space.
         </t>
       </section>
  
@@ -164,7 +164,7 @@
       <?rfc include='reference.RFC.8259'?>
       <?rfc include='reference.RFC.8174'?>
       <?rfc include='reference.RFC.7493'?>
-      <reference anchor="JCS" target="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-04">
+      <reference anchor="JCS" target="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-05">
         <front>
           <title>JSON Canonicalization Scheme - Work in progress</title>
           <author>
