@@ -239,12 +239,12 @@
           </t>
           <t>
             <figure align="center"><artwork><![CDATA[  {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
-  "\u20ac$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}]]></artwork></figure>
+  "EURO$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}]]></artwork></figure>
           </t>
           <t>
             <list style="empty">
               <t>
-                Note: \u20ac denotes the Euro character, which not
+                Note: EURO denotes the Euro character (U+20AC), which not
                 <vspace blankLines="0"/>
                 being ASCII, is currently not displayable in RFCs.
               </t>
@@ -334,12 +334,12 @@
           </t>
           <t>
             <figure align="center"><artwork><![CDATA[  {"literals":[null,true,false],"numbers":[333333333.3333333,
-  1e+30,4.5,0.002,1e-27],"string":"\u20ac$\u000f\nA'B\"\\\\\"/"}]]></artwork></figure>
+  1e+30,4.5,0.002,1e-27],"string":"EURO$\u000f\nA'B\"\\\\\"/"}]]></artwork></figure>
           </t>
           <t>
             <list style="empty">
               <t>
-                Note: \u20ac denotes the Euro character, which not
+                Note: EURO denotes the Euro character (U+20AC), which not
                 <vspace blankLines="0"/>
                 being ASCII, is currently not displayable in RFCs.
               </t>

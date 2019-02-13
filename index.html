@@ -432,9 +432,9 @@ Table of Contents
    respect to representation of data:
 
      {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
-     "\u20ac$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}
+     "EURO$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}
 
-      Note: \u20ac denotes the Euro character, which not
+      Note: EURO denotes the Euro character (U+20AC), which not
       being ASCII, is currently not displayable in RFCs.
 
    The reason for the difference between the parsed data and its
@@ -526,9 +526,9 @@ Table of Contents
    read as:
 
      {"literals":[null,true,false],"numbers":[333333333.3333333,
-     1e+30,4.5,0.002,1e-27],"string":"\u20ac$\u000f\nA'B\"\\\\\"/"}
+     1e+30,4.5,0.002,1e-27],"string":"EURO$\u000f\nA'B\"\\\\\"/"}
 
-      Note: \u20ac denotes the Euro character, which not
+      Note: EURO denotes the Euro character (U+20AC), which not
       being ASCII, is currently not displayable in RFCs.
 
    The rules for lexicographic sorting of JSON Object properties
