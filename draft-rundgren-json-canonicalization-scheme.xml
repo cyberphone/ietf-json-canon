@@ -819,9 +819,7 @@
     "time": "2019-01-28T07:45:10Z",
     "big": "055", 
     "val": 3.5
-  }]]>
-          </artwork>
-        </figure>
+  }]]></artwork></figure>
       </t>
       <t>Parsing of this object can accomplished by the following ES6 statement:</t>
       <t>
