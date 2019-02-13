@@ -545,23 +545,23 @@ Table of Contents
    When a JSON Object is about to have its properties sorted, the
    following measures MUST be adhered to:
 
-   o  The sorting process is applied to property strings in their "raw"
-      (unescaped) form.  That is, a newline character is treated as
-      U+000A.
+   o  The sorting process is applied to property name strings in their
+      "raw" (unescaped) form.  That is, a newline character is treated
+      as U+000A.
 
-   o  Property strings to be sorted are formatted as arrays of UTF-16
-      [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] code units.  The sorting is based on pure value
+   o  Property name strings to be sorted are formatted as arrays of
+      UTF-16 [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] code units.  The sorting is based on pure value
       comparisons, where code units are treated as unsigned integers,
       independent of locale settings.
 
-   o  Property strings either have different values at some index that
-      is a valid index for both strings, or their lengths are different,
-      or both.  If they have different values at one or more index
-      positions, let k be the smallest such index; then the string whose
-      value at position k has the smaller value, as determined by using
-      the &lt; operator, lexicographically precedes the other string.  If
-      there is no index position at which they differ, then the shorter
-      string lexicographically precedes the longer string.
+   o  Property name strings either have different values at some index
+      that is a valid index for both strings, or their lengths are
+      different, or both.  If they have different values at one or more
+      index positions, let k be the smallest such index; then the string
+      whose value at position k has the smaller value, as determined by
+      using the &lt; operator, lexicographically precedes the other string.
+      If there is no index position at which they differ, then the
+      shorter string lexicographically precedes the longer string.
 
 
 
@@ -581,7 +581,7 @@ Table of Contents
    The rationale for basing the sort algorithm on UTF-16 code units is
    that it maps directly to the string type in ECMAScript (includes Web
    browsers), Java and .NET.  Systems using another internal
-   representation of string data will need to convert JSON property
+   representation of string data will need to convert JSON property name
    strings into arrays of UTF-16 code units before sorting.  The
    conversion from UTF-8 or UTF-32 to UTF-16 is defined by the Unicode
    [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] standard.

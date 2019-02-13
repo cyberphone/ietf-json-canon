@@ -366,17 +366,17 @@
             sorted, the following measures MUST be adhered to:
             <list style="symbols">
               <t>
-                The sorting process is applied to property strings in their "raw" (unescaped) form.
+                The sorting process is applied to property name strings in their "raw" (unescaped) form.
                 That is, a newline character is treated as U+000A.
               </t>
               <t>
-                Property strings to be sorted are formatted
+                Property name strings to be sorted are formatted
                 as arrays of UTF-16 <xref target="UNICODE"/> code units.
                 The sorting is based on pure value comparisons, where code units are treated as
                 unsigned integers, independent of locale settings.
               </t>
               <t>
-                Property strings either have different values at some index that is
+                Property name strings either have different values at some index that is
                 a valid index for both strings, or their lengths are different, or both.
                 If they have different values at one or more index
                 positions, let k be the smallest such index; then the string whose
@@ -400,7 +400,7 @@
             The rationale for basing the sort algorithm on UTF-16 code units is that
             it maps directly to the string type in ECMAScript (includes Web browsers), Java and .NET.
             Systems using another internal representation of string data will need to convert
-            JSON property strings into arrays of UTF-16 code units before sorting.
+            JSON property name strings into arrays of UTF-16 code units before sorting.
             The conversion from UTF-8 or UTF-32 to UTF-16 is defined by the
             Unicode <xref target="UNICODE"/> standard.
           </t>
