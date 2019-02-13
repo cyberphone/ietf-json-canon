@@ -905,7 +905,7 @@
         <t>
           Since the JSON Array construct permits mixing arbitrary JSON elements,
           custom parsing and serialization code must normally
-          be used to to cope with subtypes anyway.
+          be used to cope with subtypes anyway.
         </t>
       </section>
     </section>
