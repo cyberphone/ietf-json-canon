@@ -244,9 +244,9 @@
           <t>
             <list style="empty">
               <t>
-                Note: EURO denotes a single Euro character (U+20AC), which not
+                Note: EURO denotes a single Euro character (Unicode: U+20AC),
                 <vspace blankLines="0"/>
-                being ASCII, is currently not displayable in RFCs.
+                which not being ASCII, is currently not displayable in RFCs.
               </t>
             </list> 
           </t>
@@ -339,9 +339,9 @@
           <t>
             <list style="empty">
               <t>
-                Note: EURO denotes a single Euro character (U+20AC), which not
+                Note: EURO denotes a single Euro character (Unicode: U+20AC),
                 <vspace blankLines="0"/>
-                being ASCII, is currently not displayable in RFCs.
+                which not being ASCII, is currently not displayable in RFCs.
               </t>
             </list>
               </t>
