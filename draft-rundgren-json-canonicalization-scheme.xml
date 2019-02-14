@@ -195,7 +195,7 @@
           </list>
         </t>
         <t>
-          Note: parsed String data MUST NOT be altered during subsequent serializations.
+          Note: parsed JSON String data MUST NOT be altered during subsequent serializations.
           For more information see <xref target="string.subtypes"/>.
         </t>
         <t>
