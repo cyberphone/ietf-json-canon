@@ -694,7 +694,7 @@
         </figure>
       </t>
       <t>
-        Note: for maximum compliance with ECMAScript's <spanx style="verb">JSON</spanx> object, values that are
+        Note: for maximum compliance with the ES6 <spanx style="verb">JSON</spanx> object, values that are
         to be interpreted as true integers,
         SHOULD be in the range -9007199254740991 to 9007199254740991.
       </t>
@@ -777,7 +777,7 @@
         mapping mechanisms, instructing parsers what to do with different properties
         based on their name.  However, this greatly limits the value of using the
         Number type outside of its original somewhat constrained, JavaScript context.
-        The ES6 JSON object does not support mappings to JSON Number either.
+        The ES6 <spanx style="verb">JSON</spanx> object does not support mappings to JSON Number either.
       </t>
       <t>
         Due to the above, numbers that do not have a natural place in the current

@@ -906,8 +906,8 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
-   Note: for maximum compliance with ECMAScript's "JSON" object, values
-   that are to be interpreted as true integers, SHOULD be in the range
+   Note: for maximum compliance with the ES6 "JSON" object, values that
+   are to be interpreted as true integers, SHOULD be in the range
    -9007199254740991 to 9007199254740991.
 
    Note: since NaN (Not a Number) and Infinity are not permitted in
@@ -984,8 +984,8 @@ Table of Contents
    mechanisms, instructing parsers what to do with different properties
    based on their name.  However, this greatly limits the value of using
    the Number type outside of its original somewhat constrained,
-   JavaScript context.  The ES6 JSON object does not support mappings to
-   JSON Number either.
+   JavaScript context.  The ES6 "JSON" object does not support mappings
+   to JSON Number either.
 
    Due to the above, numbers that do not have a natural place in the
    current JSON ecosystem MUST be wrapped using the JSON String type.
