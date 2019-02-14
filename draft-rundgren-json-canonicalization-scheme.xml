@@ -413,7 +413,7 @@
         <section anchor="json.utf8" title="UTF-8 Generation">
           <t>
             Finally, in order to create a platform independent representation,
-            the resulting JSON string data MUST be encoded in UTF-8.
+            the canonincalized string MUST be encoded in UTF-8.
           </t>
           <t>
             Applied to the sample in <xref target="json.sorting.properties"/> this
