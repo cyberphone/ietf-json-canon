@@ -130,7 +130,7 @@
       </t>
       <t>
         In summary the JCS specification describes how serialization of JSON primitives compliant
-        with ES6 combined with an deterministic property sorting scheme can be used for
+        with ES6 combined with a deterministic property sorting scheme can be used for
         creating "Hashable" representations of JSON data intended for consumption by cryptographic methods.
     </t>
       <t>
