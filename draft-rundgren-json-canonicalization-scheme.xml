@@ -765,7 +765,7 @@
   }]]></artwork></figure>
       </t>
       <t>
-        Although the sample above conforms to JSON (according to <xref target="RFC8259"/>),
+        Although the sample above conforms to JSON <xref target="RFC8259"/>,
         applications would normally use different native data types for storing
         "giantNumber" and "int64Max".  In addition, monetary data like "payMeThis" would
         presumably not rely on floating point data types due to rounding issues with respect
