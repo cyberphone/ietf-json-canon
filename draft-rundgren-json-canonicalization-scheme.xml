@@ -304,7 +304,7 @@
 
           <section anchor="json.ser.number" title="Serialization of Numbers">
             <t>
-              JSON data of type Number MUST be serialized according to
+              JSON Number data MUST be serialized according to
               Section 7.1.12.1 of <xref target="ES6"/> including the "Note 2" enhancement.
             </t>
             <t>
