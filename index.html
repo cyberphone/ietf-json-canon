@@ -578,9 +578,9 @@ Table of Contents
            "aa"
            "ab"
 
-   The rationale for basing the sort algorithm on UTF-16 code units is
-   that it maps directly to the string type in ECMAScript (includes Web
-   browsers), Java and .NET.  Systems using another internal
+   The rationale for basing the sorting algorithm on UTF-16 code units
+   is that it maps directly to the string type in ECMAScript (includes
+   Web browsers), Java and .NET.  Systems using another internal
    representation of string data will need to convert JSON property name
    strings into arrays of UTF-16 code units before sorting.  The
    conversion from UTF-8 or UTF-32 to UTF-16 is defined by the Unicode
