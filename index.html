@@ -372,11 +372,11 @@ Table of Contents
    compatible both with ES6 and I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>], which implies the
    following:
 
-   o  There MUST NOT be any duplicate property names.
+   o  JSON Objects MUST NOT exhibit duplicate property names.
 
-   o  String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>].
+   o  JSON String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>].
 
-   o  Numeric data MUST be expressible as IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] double
+   o  JSON Number data MUST be expressible as IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] double
       precision values.  For applications needing higher precision or
       longer integers than offered by IEEE-754 double precision,
       <a href="#appendix-D">Appendix D</a> outlines how such requirements can be supported in an
