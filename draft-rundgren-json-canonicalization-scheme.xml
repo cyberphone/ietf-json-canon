@@ -178,14 +178,14 @@
         <t>
           <list style="symbols">
             <t>
-              There MUST NOT be any duplicate property names. 
+              JSON Objects MUST NOT exhibit duplicate property names. 
             </t>
             <t>
-              String data MUST be expressible
+              JSON String data MUST be expressible
               as Unicode <xref target="UNICODE"/>.
             </t>
             <t>
-              Numeric data MUST be expressible
+              JSON Number data MUST be expressible
               as IEEE-754 <xref target="IEEE754"/> double precision values.
               For applications needing higher precision or longer integers than
               offered by IEEE-754 double precision,
