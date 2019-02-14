@@ -747,7 +747,7 @@
       </t>
       <t>
         Note: if message size is not a concern, you may even send "Pretty&nbsp;Printed"
-        JSON data on the wire (since whitespace always is ignored by the canonicalization process).
+        JSON data on the wire.
       </t>
     </section>
 
