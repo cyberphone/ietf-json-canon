@@ -1008,6 +1008,8 @@
             <eref target="http://wiki.laptop.org/go/Canonical_JSON">http://wiki.laptop.org/go/Canonical_JSON</eref>
           </t>
         </list>
+        In contrast to JCS which is a serialization scheme, the listed efforts build on text level JSON to JSON
+        transformations. 
       </t>
     </section>
 
