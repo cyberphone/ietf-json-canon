@@ -319,7 +319,12 @@
               <xref target="json.ieee754.test"/> holds a set of IEEE-754 sample values and their
               corresponding JSON serialization.
             </t>
-          </section>
+            <t>
+              Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
+              occurrences of such values MUST cause the JCS algorithm to terminate
+              with an error indication.
+            </t>
+        </section>
         </section>
         <section anchor="json.sorting.properties" title="Sorting of Object Properties">
           <t>
@@ -697,11 +702,6 @@
         Note: for maximum compliance with the ES6 <spanx style="verb">JSON</spanx> object, values that are
         to be interpreted as true integers,
         SHOULD be in the range -9007199254740991 to 9007199254740991.
-      </t>
-      <t>
-        Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
-        occurrences of such values MUST cause the JCS algorithm to terminate
-        with an error indication.
       </t>
       <t>
         Note: although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
