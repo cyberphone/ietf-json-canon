@@ -291,7 +291,7 @@
               </list>
             </t>
             <t>
-              Finally, the serialized string value MUST be enclosed in double quotes (").
+              Finally, the resulting sequence of Unicode code points MUST be enclosed in double quotes (").
             </t>
             <t>
               Note: some JSON systems permit the use of invalid Unicode data
