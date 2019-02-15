@@ -568,15 +568,15 @@
 
     <section anchor="canonicalize.js" title="ES6 Sample Canonicalizer">
       <t>
-        Below is an example of a JCS canonicalizer for usage with ES6 based systems.
+        Below is an example of a JCS canonicalizer for usage with ES6 based systems:
       </t>
       <t>
-        Since the primary purpose of this code is highlighting the core
-        of the JCS algorithm, error handling and UTF-8 generation
-        were not implemented.
-      </t>
-      <t>
-        <figure align="center"><artwork><![CDATA[  var canonicalize = function(object) {
+        <figure align="center"><artwork><![CDATA[  ////////////////////////////////////////////////////////////
+  // Since the primary purpose of this code is highlighting //
+  // the core of the JCS algorithm, error handling and      //
+  // UTF-8 generation were not implemented                  //
+  ////////////////////////////////////////////////////////////
+  var canonicalize = function(object) {
   
       var buffer = '';
       serialize(object);

@@ -763,12 +763,13 @@ Table of Contents
 <span class="h2"><a class="selflink" name="appendix-A" href="#appendix-A">Appendix A</a>.  ES6 Sample Canonicalizer</span>
 
    Below is an example of a JCS canonicalizer for usage with ES6 based
-   systems.
+   systems:
 
-   Since the primary purpose of this code is highlighting the core of
-   the JCS algorithm, error handling and UTF-8 generation were not
-   implemented.
-
+     ////////////////////////////////////////////////////////////
+     // Since the primary purpose of this code is highlighting //
+     // the core of the JCS algorithm, error handling and      //
+     // UTF-8 generation were not implemented                  //
+     ////////////////////////////////////////////////////////////
      var canonicalize = function(object) {
 
          var buffer = '';
@@ -785,7 +786,6 @@ Table of Contents
 
              } else if (Array.isArray(object)) {
                  /////////////////////////////////////////////////
-                 // Array - Maintain element order              //
 
 
 
@@ -794,6 +794,7 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+                 // Array - Maintain element order              //
                  /////////////////////////////////////////////////
                  buffer += '[';
                  let next = false;
@@ -840,8 +841,7 @@ Table of Contents
    The following table holds a set of ES6 compatible Number
    serialization samples, including some edge cases.  The column "IEEE-
    754" refers to the internal ES6 representation of the Number data
-   type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using 64-bit
-   (double precision) values, here expressed in hexadecimal.
+
 
 
 
@@ -849,6 +849,9 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-13" id="page-13" href="#page-13" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using 64-bit
+   (double precision) values, here expressed in hexadecimal.
 
   |====================================================================|
   |     IEEE-754     |   JSON Representation     |       Comment       |
@@ -895,9 +898,6 @@ Table of Contents
   |--------------------------------------------------------------------|
   | 41b3de4355555556 | 333333333.3333334         |                     |
   |--------------------------------------------------------------------|
-  | 41b3de4355555557 | 333333333.33333343        |                     |
-  |--------------------------------------------------------------------|
-  | becbf647612f3696 | -0.0000033333333333333333 |                     |
 
 
 
@@ -906,6 +906,9 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+  | 41b3de4355555557 | 333333333.33333343        |                     |
+  |--------------------------------------------------------------------|
+  | becbf647612f3696 | -0.0000033333333333333333 |                     |
   |--------------------------------------------------------------------|
 
    Note: for maximum compliance with the ES6 "JSON" object, values that
@@ -950,9 +953,6 @@ Table of Contents
 
    Note: if message size is not a concern, you may even send
    "Pretty Printed" JSON data on the wire.
-
-
-
 
 
 
