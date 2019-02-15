@@ -117,7 +117,7 @@
           <t>
             The absence of a namespace concept and default values, as well
             as constraining data to the I&nbhy;JSON subset eliminate the need for specific
-            number parsing schemes for dealing with canonicalization.
+            parsers for dealing with canonicalization.
           </t>
           <t>
             JCS compatible serialization of JSON primitives is supported by most
