@@ -646,25 +646,26 @@
         here expressed in hexadecimal.
       </t>
       <t>
-        <figure align="center">
-          <artwork><![CDATA[|====================================================================|
+        <figure align="center"><artwork><![CDATA[|====================================================================|
 |     IEEE-754     |   JSON Representation     |       Comment       |
 |====================================================================|
 | 0000000000000000 | 0                         | Zero                |
 |--------------------------------------------------------------------|
 | 8000000000000000 | 0                         | Minus zero          |
 |--------------------------------------------------------------------|
-| 0000000000000001 | 5e-324                    | Smallest pos number |
+| 0000000000000001 | 5e-324                    | Min pos number      |
 |--------------------------------------------------------------------|
-| 8000000000000001 | -5e-324                   | Smallest neg number |
+| 8000000000000001 | -5e-324                   | Min neg number      |
 |--------------------------------------------------------------------|
-| 7fefffffffffffff | 1.7976931348623157e+308   | Largest pos number  |
+| 7fefffffffffffff | 1.7976931348623157e+308   | Max pos number      |
 |--------------------------------------------------------------------|
-| ffefffffffffffff | -1.7976931348623157e+308  | Largest neg number  |
+| ffefffffffffffff | -1.7976931348623157e+308  | Max neg number      |
 |--------------------------------------------------------------------|
-| 4340000000000000 | 9007199254740992          | Largest pos integer |
+| 4340000000000000 | 9007199254740992          | Max pos integer (1) |
 |--------------------------------------------------------------------|
-| c340000000000000 | -9007199254740992         | Largest neg integer |
+| c340000000000000 | -9007199254740992         | Max neg integer (1) |
+|--------------------------------------------------------------------|
+| 4430000000000000 | 295147905179352830000     | (2)                 |
 |--------------------------------------------------------------------|
 | 7fffffffffffffff |                           | NaN - Invalid       |
 |--------------------------------------------------------------------|
@@ -680,9 +681,11 @@
 |--------------------------------------------------------------------|
 | 444b1ae4d6e2ef4f | 999999999999999900000     |                     |
 |--------------------------------------------------------------------|
-| 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
+| 444b1ae4d6e2ef50 | 1e+21                     |                     |
 |--------------------------------------------------------------------|
 | 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                     |
+|--------------------------------------------------------------------|
+| 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
 |--------------------------------------------------------------------|
 | 41b3de4355555553 | 333333333.3333332         |                     |
 |--------------------------------------------------------------------|
@@ -695,18 +698,23 @@
 | 41b3de4355555557 | 333333333.33333343        |                     |
 |--------------------------------------------------------------------|
 | becbf647612f3696 | -0.0000033333333333333333 |                     |
-|--------------------------------------------------------------------|]]></artwork>
-        </figure>
+|--------------------------------------------------------------------|]]></artwork></figure>
       </t>
       <t>
-        Note: for maximum compliance with the ES6 <spanx style="verb">JSON</spanx> object, values that are
-        to be interpreted as true integers,
-        SHOULD be in the range -9007199254740991 to 9007199254740991.
-      </t>
-      <t>
-        Note: although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
-        could be regarded as having extended precision, the JCS/ES6 number serialization
-        algorithm does not take this in consideration.
+        Notes:
+        <list style="format (%d)">
+        <t>
+          For maximum compliance with the ES6 <spanx style="verb">JSON</spanx> object
+          values that are to be interpreted as true integers
+          SHOULD be in the range -9007199254740991 to 9007199254740991.
+          However, how numbers are used in applications do not affect the JCS algorithm.
+        </t>
+        <t>
+          Although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
+          could be regarded as having extended precision, the JCS/ES6 number serialization
+          algorithm does not take this in consideration.
+        </t>
+        </list>
       </t>
     </section>
     
