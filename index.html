@@ -839,8 +839,8 @@ Table of Contents
 <span class="h2"><a class="selflink" name="appendix-B" href="#appendix-B">Appendix B</a>.  Number Serialization Samples</span>
 
    The following table holds a set of ES6 compatible Number
-   serialization samples, including some edge cases.  The column "IEEE-
-   754" refers to the internal ES6 representation of the Number data
+   serialization samples, including some edge cases.  The column
+
 
 
 
@@ -850,8 +850,9 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
-   type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using 64-bit
-   (double precision) values, here expressed in hexadecimal.
+   "IEEE-754" refers to the internal ES6 representation of the Number
+   data type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using
+   64-bit (double precision) values, here expressed in hexadecimal.
 
   |====================================================================|
   |     IEEE-754     |   JSON Representation     |       Comment       |
@@ -872,7 +873,7 @@ Table of Contents
   |--------------------------------------------------------------------|
   | c340000000000000 | -9007199254740992         | Max neg integer (1) |
   |--------------------------------------------------------------------|
-  | 4430000000000000 | 295147905179352830000     | (2)                 |
+  | 4430000000000000 | 295147905179352830000     | 2**68           (2) |
   |--------------------------------------------------------------------|
   | 7fffffffffffffff |                           | NaN - Invalid       |
   |--------------------------------------------------------------------|
@@ -897,7 +898,6 @@ Table of Contents
   | 41b3de4355555553 | 333333333.3333332         |                     |
   |--------------------------------------------------------------------|
   | 41b3de4355555554 | 333333333.33333325        |                     |
-  |--------------------------------------------------------------------|
 
 
 
@@ -906,6 +906,7 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+  |--------------------------------------------------------------------|
   | 41b3de4355555555 | 333333333.3333333         |                     |
   |--------------------------------------------------------------------|
   | 41b3de4355555556 | 333333333.3333334         |                     |
@@ -922,10 +923,9 @@ Table of Contents
         -9007199254740991 to 9007199254740991.  However, how numbers are
         used in applications do not affect the JCS algorithm.
 
-   (2)  Although a set of specific integers like 2**68 (4430000000000000
-        in IEEE-754 format) could be regarded as having extended
-        precision, the JCS/ES6 number serialization algorithm does not
-        take this in consideration.
+   (2)  Although a set of specific integers like 2**68 could be regarded
+        as having extended precision, the JCS/ES6 number serialization
+        algorithm does not take this in consideration.
 
 <span class="h2"><a class="selflink" name="appendix-C" href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"</span>
 
