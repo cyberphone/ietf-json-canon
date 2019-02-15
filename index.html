@@ -584,12 +584,12 @@ Table of Contents
            "ab"
 
    The rationale for basing the sorting algorithm on UTF-16 code units
-   is that it maps directly to the string type in ECMAScript (includes
-   Web browsers), Java and .NET.  Systems using another internal
-   representation of string data will need to convert JSON property name
-   strings into arrays of UTF-16 code units before sorting.  The
-   conversion from UTF-8 or UTF-32 to UTF-16 is defined by the Unicode
-   [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] standard.
+   is that it maps directly to the string type in ECMAScript (featured
+   in Web browsers and Node.js), Java and .NET.  Systems using another
+   internal representation of string data will need to convert JSON
+   property name strings into arrays of UTF-16 code units before
+   sorting.  The conversion from UTF-8 or UTF-32 to UTF-16 is defined by
+   the Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] standard.
 
    Note: for the purpose of obtaining a deterministic property order,
    sorting on UTF-8 or UTF-32 encoded data would also work, but the
