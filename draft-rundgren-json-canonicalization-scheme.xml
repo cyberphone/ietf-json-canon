@@ -641,8 +641,7 @@
       <t>
         The following table holds a set of ES6 compatible Number serialization samples,
         including some edge cases.  The column
-        <vspace blankLines="0"/>
-        "IEEE-754" refers to the internal
+        "IEEE&nbhy;754" refers to the internal
         ES6 representation of the Number data type which is based on the
         IEEE-754 <xref target="IEEE754"/> standard using 64-bit (double precision) values,
         here expressed in hexadecimal.
