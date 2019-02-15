@@ -640,7 +640,9 @@
     <section anchor="json.ieee754.test" title="Number Serialization Samples">
       <t>
         The following table holds a set of ES6 compatible Number serialization samples,
-        including some edge cases.  The column "IEEE-754" refers to the internal
+        including some edge cases.  The column
+        <vspace blankLines="0"/>
+        "IEEE-754" refers to the internal
         ES6 representation of the Number data type which is based on the
         IEEE-754 <xref target="IEEE754"/> standard using 64-bit (double precision) values,
         here expressed in hexadecimal.
@@ -665,7 +667,7 @@
 |--------------------------------------------------------------------|
 | c340000000000000 | -9007199254740992         | Max neg integer (1) |
 |--------------------------------------------------------------------|
-| 4430000000000000 | 295147905179352830000     | (2)                 |
+| 4430000000000000 | 295147905179352830000     | 2**68           (2) |
 |--------------------------------------------------------------------|
 | 7fffffffffffffff |                           | NaN - Invalid       |
 |--------------------------------------------------------------------|
@@ -710,8 +712,8 @@
           However, how numbers are used in applications do not affect the JCS algorithm.
         </t>
         <t>
-          Although a set of specific integers like 2**68 (4430000000000000 in IEEE-754 format)
-          could be regarded as having extended precision, the JCS/ES6 number serialization
+          Although a set of specific integers like 2**68 could be regarded as having
+          extended precision, the JCS/ES6 number serialization
           algorithm does not take this in consideration.
         </t>
         </list>
