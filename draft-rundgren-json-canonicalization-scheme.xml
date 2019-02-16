@@ -672,9 +672,9 @@
 |--------------------------------------------------------------------|
 | 4430000000000000 | 295147905179352830000     | ~2**68          (2) |
 |--------------------------------------------------------------------|
-| 7fffffffffffffff |                           | NaN - Invalid       |
+| 7fffffffffffffff |                           | NaN             (3) |
 |--------------------------------------------------------------------|
-| 7ff0000000000000 |                           | Infinity - Invalid  |
+| 7ff0000000000000 |                           | Infinity        (3) |
 |--------------------------------------------------------------------|
 | 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
 |--------------------------------------------------------------------|
@@ -718,6 +718,9 @@
           Although a set of specific integers like 2**68 could be regarded as having
           extended precision, the JCS/ES6 number serialization
           algorithm does not take this in consideration.
+        </t>
+        <t>
+          Invalid.  See <xref target="json.ser.number"/>.
         </t>
         </list>
       </t>
