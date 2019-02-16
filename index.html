@@ -263,15 +263,15 @@ Table of Contents
          <a href="#section-3.2.2.3">3.2.2.3</a>.  Serialization of Numbers  . . . . . . . . . . . .   <a href="#page-6">6</a>
        <a href="#section-3.2.3">3.2.3</a>.  Sorting of Object Properties  . . . . . . . . . . . .   <a href="#page-7">7</a>
        <a href="#section-3.2.4">3.2.4</a>.  UTF-8 Generation  . . . . . . . . . . . . . . . . . .   <a href="#page-8">8</a>
-   <a href="#section-4">4</a>.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   <a href="#page-8">8</a>
+   <a href="#section-4">4</a>.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-5">5</a>.  Security Considerations . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-6">6</a>.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-7">7</a>.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
      <a href="#section-7.1">7.1</a>.  Normative References  . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
      <a href="#section-7.2">7.2</a>.  Informal References . . . . . . . . . . . . . . . . . . .  <a href="#page-10">10</a>
-     <a href="#section-7.3">7.3</a>.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-10">10</a>
+     <a href="#section-7.3">7.3</a>.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-11">11</a>
    <a href="#appendix-A">Appendix A</a>.  ES6 Sample Canonicalizer . . . . . . . . . . . . . .  <a href="#page-11">11</a>
-   <a href="#appendix-B">Appendix B</a>.  Number Serialization Samples . . . . . . . . . . . .  <a href="#page-12">12</a>
+   <a href="#appendix-B">Appendix B</a>.  Number Serialization Samples . . . . . . . . . . . .  <a href="#page-13">13</a>
    <a href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"  . . . . . . . .  <a href="#page-14">14</a>
    <a href="#appendix-D">Appendix D</a>.  Dealing with Big Numbers . . . . . . . . . . . . . .  <a href="#page-15">15</a>
    <a href="#appendix-E">Appendix E</a>.  String Subtype Handling  . . . . . . . . . . . . . .  <a href="#page-16">16</a>
@@ -593,8 +593,11 @@ Table of Contents
 
    Note: for the purpose of obtaining a deterministic property order,
    sorting on UTF-8 or UTF-32 encoded data would also work, but the
-   result would differ (and thus be incompatible with this
-   specification).
+   result would differ and thus be incompatible with this specification.
+   However, in practice property names rarely go outside of 7-bit ASCII
+   making it possible sorting on the UTF-8 byte level and still be
+   compatible with JCS.  If this is a viable option or not depends on
+   the environment JCS is supposed to be used in.
 
 <span class="h4"><a class="selflink" name="section-3.2.4" href="#section-3.2.4">3.2.4</a>.  UTF-8 Generation</span>
 
@@ -613,9 +616,6 @@ Table of Contents
 
    This data is intended to be usable as input to cryptographic methods.
 
-<span class="h2"><a class="selflink" name="section-4" href="#section-4">4</a>.  IANA Considerations</span>
-
-   This document has no IANA actions.
 
 
 
@@ -625,6 +625,10 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+<span class="h2"><a class="selflink" name="section-4" href="#section-4">4</a>.  IANA Considerations</span>
+
+   This document has no IANA actions.
 
 <span class="h2"><a class="selflink" name="section-5" href="#section-5">5</a>.  Security Considerations</span>
 
@@ -667,10 +671,6 @@ Table of Contents
               <a href="http://tools.ietf.org/html//rfc2119">2119</a> Key Words", <a href="http://tools.ietf.org/html//bcp14">BCP 14</a>, <a href="http://tools.ietf.org/html//rfc8174">RFC 8174</a>, DOI 10.17487/RFC8174,
               May 2017, &lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;.
 
-   [<a name="ref-RFC8259" id="ref-RFC8259">RFC8259</a>]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
-              Interchange Format", STD 90, <a href="http://tools.ietf.org/html//rfc8259">RFC 8259</a>,
-              DOI 10.17487/RFC8259, December 2017,
-              &lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;.
 
 
 
@@ -681,6 +681,11 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   [<a name="ref-RFC8259" id="ref-RFC8259">RFC8259</a>]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, <a href="http://tools.ietf.org/html//rfc8259">RFC 8259</a>,
+              DOI 10.17487/RFC8259, December 2017,
+              &lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;.
 
    [<a name="ref-UNICODE" id="ref-UNICODE">UNICODE</a>]  The Unicode Consortium, "The Unicode Standard, Version
               10.0.0",
@@ -721,13 +726,8 @@ Table of Contents
    [<a name="ref-XMLDSIG" id="ref-XMLDSIG">XMLDSIG</a>]  W3C, "XML Signature Syntax and Processing Version 1.1",
               &lt;<a href="https://www.w3.org/TR/xmldsig-core1/">https://www.w3.org/TR/xmldsig-core1/</a>&gt;.
 
-<span class="h3"><a class="selflink" name="section-7.3" href="#section-7.3">7.3</a>.  URIs</span>
 
-   [<a name="ref-1" id="ref-1">1</a>] <a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a>
 
-   [<a name="ref-2" id="ref-2">2</a>] <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a>
-
-   [<a name="ref-3" id="ref-3">3</a>] <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a>
 
 
 
@@ -737,6 +737,14 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-11" id="page-11" href="#page-11" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+<span class="h3"><a class="selflink" name="section-7.3" href="#section-7.3">7.3</a>.  URIs</span>
+
+   [<a name="ref-1" id="ref-1">1</a>] <a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a>
+
+   [<a name="ref-2" id="ref-2">2</a>] <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a>
+
+   [<a name="ref-3" id="ref-3">3</a>] <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a>
 
    [<a name="ref-4" id="ref-4">4</a>] <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">https://github.com/cyberphone/json-canonicalization/tree/master/</a>
        <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">go</a>
@@ -778,14 +786,6 @@ Table of Contents
 
          function serialize(object) {
              if (object === null || typeof object !== 'object' ||
-                 object.toJSON != null) {
-                 /////////////////////////////////////////////////
-                 // Primitive type or toJSON - Use ES6/JSON     //
-                 /////////////////////////////////////////////////
-                 buffer += JSON.stringify(object);
-
-             } else if (Array.isArray(object)) {
-                 /////////////////////////////////////////////////
 
 
 
@@ -794,6 +794,14 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+                 object.toJSON != null) {
+                 /////////////////////////////////////////////////
+                 // Primitive type or toJSON - Use ES6/JSON     //
+                 /////////////////////////////////////////////////
+                 buffer += JSON.stringify(object);
+
+             } else if (Array.isArray(object)) {
+                 /////////////////////////////////////////////////
                  // Array - Maintain element order              //
                  /////////////////////////////////////////////////
                  buffer += '[';
@@ -834,14 +842,6 @@ Table of Contents
                  buffer += '}';
              }
          }
-     };
-
-<span class="h2"><a class="selflink" name="appendix-B" href="#appendix-B">Appendix B</a>.  Number Serialization Samples</span>
-
-   The following table holds a set of ES6 compatible Number
-   serialization samples, including some edge cases.  The column
-   "IEEE-754" refers to the internal ES6 representation of the Number
-
 
 
 
@@ -850,6 +850,13 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+     };
+
+<span class="h2"><a class="selflink" name="appendix-B" href="#appendix-B">Appendix B</a>.  Number Serialization Samples</span>
+
+   The following table holds a set of ES6 compatible Number
+   serialization samples, including some edge cases.  The column
+   "IEEE-754" refers to the internal ES6 representation of the Number
    data type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using
    64-bit (double precision) values, here expressed in hexadecimal.
 
@@ -891,13 +898,6 @@ Table of Contents
   | 444b1ae4d6e2ef50 | 1e+21                     |                     |
   |--------------------------------------------------------------------|
   | 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                     |
-  |--------------------------------------------------------------------|
-  | 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555553 | 333333333.3333332         |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555554 | 333333333.33333325        |                     |
-  |--------------------------------------------------------------------|
 
 
 
@@ -906,6 +906,13 @@ Table of Contents
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
 
+  |--------------------------------------------------------------------|
+  | 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
+  |--------------------------------------------------------------------|
+  | 41b3de4355555553 | 333333333.3333332         |                     |
+  |--------------------------------------------------------------------|
+  | 41b3de4355555554 | 333333333.33333325        |                     |
+  |--------------------------------------------------------------------|
   | 41b3de4355555555 | 333333333.3333333         |                     |
   |--------------------------------------------------------------------|
   | 41b3de4355555556 | 333333333.3333334         |                     |
@@ -948,19 +955,17 @@ Table of Contents
        "state": "CA"
      }
 
-   Using canonicalization the properties above would be output in the
-   order "address", "city", "name", "state" and "zip", which adds
-   fuzziness to the data from a human (developer or technical support),
-   perspective.
-
-
-
 
 
 <span class="grey">Rundgren, et al.         Expires August 19, 2019               [Page 14]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-15" id="page-15" href="#page-15" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   Using canonicalization the properties above would be output in the
+   order "address", "city", "name", "state" and "zip", which adds
+   fuzziness to the data from a human (developer or technical support),
+   perspective.
 
    That is, for many applications, canonicalization would only be used
    internally for creating a "hashable" representation of the data
@@ -1005,11 +1010,6 @@ Table of Contents
      var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
      var biggie = new BigNumber(obj.giantNumber);
 
-   or declarative schemes like OpenAPI [<a href="#ref-OPENAPI" title="&quot;The OpenAPI Initiative&quot;">OPENAPI</a>], JCS imposes no limits
-   on applications, including when using ES6.
-
-
-
 
 
 
@@ -1017,6 +1017,9 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
+
+   or declarative schemes like OpenAPI [<a href="#ref-OPENAPI" title="&quot;The OpenAPI Initiative&quot;">OPENAPI</a>], JCS imposes no limits
+   on applications, including when using ES6.
 
 <span class="h2"><a class="selflink" name="appendix-E" href="#appendix-E">Appendix E</a>.  String Subtype Handling</span>
 
@@ -1059,9 +1062,6 @@ Table of Contents
    Although this is (with respect to JCS) technically correct, there is
    another way parsing JSON data which also can be used with ES6 as
    shown below:
-
-
-
 
 
 
