@@ -369,8 +369,7 @@ Table of Contents
    o  Programmatically creating data.
 
    Irrespective of the method used, the data to be serialized MUST be
-   compatible both with ES6 and I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>], which implies the
-   following:
+   compatible with I-JSON [<a href="http://tools.ietf.org/html//rfc7493" title="&quot;The I-JSON Message Format&quot;">RFC7493</a>], which implies the following:
 
    o  JSON Objects MUST NOT exhibit duplicate property names.
 
@@ -382,8 +381,9 @@ Table of Contents
       <a href="#appendix-D">Appendix D</a> outlines how such requirements can be supported in an
       interoperable and extensible way.
 
-   Note: parsed JSON String data MUST NOT be altered during subsequent
-   serializations.  For more information see <a href="#appendix-E">Appendix E</a>.
+   An additional constraint is that parsed JSON String data MUST NOT be
+   altered during subsequent serializations.  For more information see
+   <a href="#appendix-E">Appendix E</a>.
 
    Note: although the Unicode standard offers a possibility combining
    certain characters into one, referred to as "Unicode Normalization"

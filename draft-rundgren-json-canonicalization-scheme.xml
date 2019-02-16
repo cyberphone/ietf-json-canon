@@ -173,7 +173,7 @@
         </t>
         <t>
           Irrespective of the method used, the data to be serialized MUST be compatible
-          both with ES6 and I&nbhy;JSON <xref target="RFC7493"/>, which implies the following:
+          with I&nbhy;JSON <xref target="RFC7493"/>, which implies the following:
         </t>
         <t>
           <list style="symbols">
@@ -195,7 +195,7 @@
           </list>
         </t>
         <t>
-          Note: parsed JSON String data MUST NOT be altered during subsequent serializations.
+          An additional constraint is that parsed JSON String data MUST NOT be altered during subsequent serializations.
           For more information see <xref target="string.subtypes"/>.
         </t>
         <t>
