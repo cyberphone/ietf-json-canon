@@ -755,15 +755,8 @@
         Using canonicalization the properties above would be output in the order
         "address", "city", "name", "state" and "zip", which adds fuzziness
         to the data from a human (developer or technical support), perspective.
-      </t>
-      <t>
-        That is, for many applications, canonicalization would only be used internally
-        for creating a "hashable" representation of the data needed for cryptographic
-        operations.
-      </t>
-      <t>
-        Note: if message size is not a concern, you may even send "Pretty&nbsp;Printed"
-        JSON data on the wire.
+        Canonicalization also converts JSON data into a single line of text, which may
+        be less than ideal for debugging and logging.
       </t>
     </section>
 

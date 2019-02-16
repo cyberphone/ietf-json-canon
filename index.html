@@ -973,14 +973,8 @@ Table of Contents
    Using canonicalization the properties above would be output in the
    order "address", "city", "name", "state" and "zip", which adds
    fuzziness to the data from a human (developer or technical support),
-   perspective.
-
-   That is, for many applications, canonicalization would only be used
-   internally for creating a "hashable" representation of the data
-   needed for cryptographic operations.
-
-   Note: if message size is not a concern, you may even send
-   "Pretty Printed" JSON data on the wire.
+   perspective.  Canonicalization also converts JSON data into a single
+   line of text, which may be less than ideal for debugging and logging.
 
 <span class="h2"><a class="selflink" name="appendix-D" href="#appendix-D">Appendix D</a>.  Dealing with Big Numbers</span>
 
@@ -1010,6 +1004,12 @@ Table of Contents
    Due to the above, numbers that do not have a natural place in the
    current JSON ecosystem MUST be wrapped using the JSON String type.
    This is close to a de-facto standard for open systems.  This is also
+   applicable for other data types that do not have direct support in
+   JSON, like "DateTime" objects as described in <a href="#appendix-E">Appendix E</a>.
+
+   Aided by a system using the JSON String type; be it programmatic like
+
+
 
 
 
@@ -1017,11 +1017,6 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
-
-   applicable for other data types that do not have direct support in
-   JSON, like "DateTime" objects as described in <a href="#appendix-E">Appendix E</a>.
-
-   Aided by a system using the JSON String type; be it programmatic like
 
      var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
      var biggie = new BigNumber(obj.giantNumber);
@@ -1067,16 +1062,17 @@ Table of Contents
 
      {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}
 
+   Although this is (with respect to JCS) technically correct, there is
+   another way parsing JSON data which also can be used with ES6 as
+   shown below:
+
+
 
 
 <span class="grey">Rundgren, et al.         Expires August 20, 2019               [Page 16]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
-
-   Although this is (with respect to JCS) technically correct, there is
-   another way parsing JSON data which also can be used with ES6 as
-   shown below:
 
      // Currently required to make BigInt JSON serializable
      BigInt.prototype.toJSON = function() {
@@ -1122,6 +1118,10 @@ Table of Contents
          set { _amount = value.ToString(); }
      }
 
+   In an application "Amount" can be accessed as any other property
+   while it is actually represented by a quoted string in JSON contexts.
+
+
 
 
 
@@ -1129,9 +1129,6 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
-
-   In an application "Amount" can be accessed as any other property
-   while it is actually represented by a quoted string in JSON contexts.
 
    Note: the example above also addresses the constraints on numeric
    data implied by I-JSON (the C# "decimal" data type has quite
@@ -1178,6 +1175,9 @@ Table of Contents
 
    4.  Serialize the remaining JSON data using existing JSON tools.
 
+   5.  Let the external canonicalizer process the serialized data and
+       return canonicalized result data.
+
 
 
 
@@ -1185,9 +1185,6 @@ Table of Contents
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
 <span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a> February 2019</span>
 
-
-   5.  Let the external canonicalizer process the serialized data and
-       return canonicalized result data.
 
    6.  Verify that the canonicalized data matches the saved signature
        value using the algorithm and key used for creating the
@@ -1233,6 +1230,9 @@ Table of Contents
 
    In contrast to JCS which is a serialization scheme, the listed
    efforts build on text level JSON to JSON transformations.
+
+
+
 
 
 
