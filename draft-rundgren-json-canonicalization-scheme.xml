@@ -785,7 +785,7 @@
         JSON Number type (at least in an extensible manner), is through
         mapping mechanisms, instructing parsers what to do with different properties
         based on their name.  However, this greatly limits the value of using the
-        Number type outside of its original somewhat constrained, JavaScript context.
+        JSON Number type outside of its original somewhat constrained, JavaScript context.
         The ES6 <spanx style="verb">JSON</spanx> object does not support mappings to JSON Number either.
       </t>
       <t>
