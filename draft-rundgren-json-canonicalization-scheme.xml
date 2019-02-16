@@ -413,7 +413,11 @@
           <t>
             Note: for the purpose of obtaining a deterministic property order, sorting on
             UTF-8 or UTF-32 encoded data would also work, but the result would differ
-            (and thus be incompatible with this specification).
+            and thus be incompatible with this specification.
+            However, in practice property names rarely go outside of
+            7-bit ASCII making it possible sorting on the UTF-8 byte level and
+            still be compatible with JCS.  If this is a viable option or not
+            depends on the environment JCS is supposed to be used in.
           </t>
         </section>
         <section anchor="json.utf8" title="UTF-8 Generation">
