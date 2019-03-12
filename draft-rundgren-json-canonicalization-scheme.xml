@@ -470,6 +470,11 @@
         Mike&nbsp;Miller, Mark&nbsp;Nottingham, Mike&nbsp;Samuel, Jim&nbsp;Schaad,
         Robert&nbsp;Tupelo-Schneck and Michal&nbsp;Wadas.
       </t>
+      <t>
+        For carrying out real-world concept verification, the software and
+        support for number serialization provided by Ulf Adams, Tanner Gooding and Remy Oudompheng
+        was very helpful.
+      </t>
     </section>
   </middle>
 
