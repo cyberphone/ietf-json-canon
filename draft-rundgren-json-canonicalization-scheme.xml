@@ -818,7 +818,7 @@
         JCS compliant applications targeting a wider audience.
       </t>
       <t>
-        Assume you want parse a JSON object where the schema
+        Assume you want to parse a JSON object where the schema
         designer assigned the property "big" for holding a "BigInteger" subtype and
         "time" for holding a "DateTime" subtype, while "val" is supposed to be a JSON Number
         compliant with JCS. The following example shows such an object:
