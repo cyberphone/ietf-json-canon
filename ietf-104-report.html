@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>JCS - IETF-104 Report</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><style type="text/css">
+﻿<!DOCTYPE html><html><head><title>JCS - IETF-104 Report</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><style type="text/css">
 body {font-size:10pt;color:#000000;font-family:verdana,arial;background-color:white;margin:10pt}
 a {font-size:10pt;color:blue;text-decoration:none}
 div.json {margin-top:8pt;margin-bottom:15pt;word-break:break-all;width:800pt;background:#F8F8F8;border-width:1px;border-style:solid;border-color:grey;padding:10pt;box-shadow:3pt 3pt 3pt #D0D0D0}
@@ -20,8 +20,8 @@ div.response {margin-top:10pt}
     the core rationale is simply "keeping JSON as JSON even when signed".
 </p>
 
-<div class="claim">
-    The need for clear text messages is a weak argument
+<div class="claim" id="1">
+    1. The need for clear text messages is a weak argument
 </div>
 <div class="response">
     The <a href="https://tools.ietf.org/html/rfc7515" 
@@ -41,10 +41,10 @@ div.response {margin-top:10pt}
     JCS is (correctly) not perceived as a standard.
 </div>
 
-<div class="claim">
-    Canonicalization introduces security vulnerabilities
+<div class="claim" id="2">
+    2. Canonicalization introduces security vulnerabilities
 </div>
-<div class="response">If the canonicalization scheme is incorrectly implemented 
+<div class="response">If a canonicalization scheme is incorrectly implemented 
     (irrespective in which end), the likely result is that signatures will not validate. 
     Broken signatures in similarity to any other input error, including missing or 
     incorrectly formatted data should in a properly designed application lead to a 
@@ -53,8 +53,8 @@ div.response {margin-top:10pt}
     so it should be easy to verify for correctness.
 </div>
 
-<div class="claim">
-    Number serialization is major problem
+<div class="claim" id="3">
+    3. Number serialization is major problem
 </div>
 <div class="response">
     I clearly underestimated this part when I started with JCS back in 2015, but 
@@ -63,8 +63,8 @@ div.response {margin-top:10pt}
     Extensive test data is also publicly available.
 </div>
 
-<div class="claim">
-    You should have stayed with the ES6 predictive parsing/serialization scheme
+<div class="claim" id="4">
+    4. You should have stayed with the ES6 predictive parsing/serialization scheme
 </div>
 <div class="response">
     That had been cool but the sentiment among other JSON tool vendors was
@@ -79,8 +79,8 @@ div.response {margin-top:10pt}
     Sometimes "pushback" is just good 😀
 </div>
 
-<div class="claim">
-    You need a data model
+<div class="claim" id="5">
+    5. You need a data model
 </div>
 <div class="response">
     JCS builds on the same a bare-bones data model for primitives as JSON
@@ -101,8 +101,8 @@ div.response {margin-top:10pt}
     Standardizing external mappings is another [possible] IETF activity, not related to JCS.
 </div>
 
-<div class="claim">
-    I-JSON (JCS builds on that) only says SHOULD for IEEE-754 while JCS says MUST
+<div class="claim" id="6">
+    6. I-JSON (JCS builds on that) only says SHOULD for IEEE-754 while JCS says MUST
 </div>
 <div class="response">
     That is correct but if you for example send 64-bit integers expressed as 
