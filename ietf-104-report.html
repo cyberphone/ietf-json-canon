@@ -24,8 +24,9 @@ div.response {margin-top:10pt}
     1. The need for clear text messages is a weak argument
 </div>
 <div class="response">
-    The <a href="https://tools.ietf.org/html/rfc7515" 
-           target="_blank">current solution</a> requires you to:
+    The current IETF solution
+    <a href="https://tools.ietf.org/html/rfc7515"
+        target="_blank">(JWS)</a> requires you to:
     <ul>
         <li>
             Encode JSON data to be signed in Base64Url
@@ -35,8 +36,8 @@ div.response {margin-top:10pt}
             signed message data in specific signature containers
         </li>
     </ul>
-    None of the Open Banking systems out there have to date chosen 
-    this route, they all build on variants using clear text JSON data.
+    None of the Open Banking systems out there have to date chosen
+    this route, they all build on variants using <u>detached</u> clear text JSON data.
     That none of them utilize JCS is quite logical since
     JCS is (correctly) not perceived as a standard.
 </div>
