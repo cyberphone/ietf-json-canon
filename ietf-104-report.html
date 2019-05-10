@@ -15,8 +15,8 @@ div.response {margin-top:10pt}
     I have taken the liberty commenting them here.</i>
 <p>
     For those who are not familiar with JCS 
-    <a href="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-05"
-       target="_blank">(https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-05)</a>,
+    <a href="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-06"
+       target="_blank">(https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-06)</a>,
     the core rationale is simply "keeping JSON as JSON even when signed".
 </p>
 
@@ -37,7 +37,7 @@ div.response {margin-top:10pt}
         </li>
     </ul>
     None of the Open Banking systems out there have to date chosen
-    this route, <u>they all build on variants using detached clear text JSON data</u>.
+    this route; <u>they all build on variants using detached clear text JSON data</u>.
     That none of them utilize JCS is quite logical since
     JCS is (correctly) not perceived as a standard.
 </div>
@@ -57,37 +57,46 @@ div.response {margin-top:10pt}
     </p>
     <p>
         It has been mentioned that clear text data will tempt developers into trusting
-        (=using) data without first verifying signatures.  JCS obviously does not
+        (=acting upon) received data without verifying signatures.  JCS obviously does not
         come with a cure for naïve developers.
+        See JCS <a href="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-06#section-5"
+                   target="_blank">Security Considerations</a>.
     </p>
     <p>
-        In fact, the absence of clear text signatures creates issues even
-        for true security experts like the TEEP folks:
-    </p><div style="margin-left:30pt">
+        In fact, the absence of clear text signatures also creates security issues as shown
+        by the following example from IETF's Trusted Execution Protocol WG:
+    </p>
+    <div style="margin-left:30pt">
         <a href="https://tools.ietf.org/html/draft-ietf-teep-opentrustprotocol-02"
            target="_blank">https://tools.ietf.org/html/draft-ietf-teep-opentrustprotocol-02</a>
     <p>
         <i>
-            "The top element "<name>
-            [Signed][Request|Response]" cannot be fully
+            The top element &quot;<name>[Signed][Request|Response]&quot; cannot be fully
             trusted to match the content because it doesn't participate in the
             signature generation.  However, a recipient can always match it with
             the value associated with the property "payload".  It purely serves
-            to provide a quick reference for reading and method invocation"
+            to provide a quick reference for reading and method invocation.
         </i>
         </p>
     </div>
-    Using JCS with JWS the need for artificial holder objects and associated matching requirements disappear, while message content is provided in clear.
+    By using <a href="https://mobilepki.org/jws-jcs/verify"
+             target="_blank">JCS with JWS</a> 
+    the need for artificial holder objects and associated matching requirements 
+    disappear, while message content is provided in clear.
 </div>
 
 <div class="claim" id="3">
-    3. Number serialization is major problem
+    3. Number serialization is huge problem
 </div>
 <div class="response">
     I clearly underestimated this part when I started with JCS back in 2015, but 
-    recently fast and quite simple algorithms have been developed, making number 
-    serialization according to JCS/ES6 in scope for any platform.
-    Extensive test data is also publicly available.
+    recently fast, open sourced and quite simple
+    <a href="https://github.com/ulfjack/ryu"
+       target="_blank">algorithms</a> have been developed
+    making number serialization according to JCS/ES6 in scope for any platform.
+    Extensive test data is 
+    <a href="https://github.com/cyberphone/json-canonicalization/tree/master/testdata#es6-numbers"
+        target="_blank">publicly available</a>.
 </div>
 
 <div class="claim" id="4">
@@ -123,7 +132,7 @@ div.response {margin-top:10pt}
     This is all what is needed with respect to data models for creating reliable and interoperable "hashable" JSON.
     Existing JSON-based systems use external mappings to emulate
     missing data types like "DateTime", "Money", "Binary" and similar.
-    That not all JSON applications not use the same conventions
+    That not all JSON applications use the same conventions
     <u>do not seem to have hampered the popularity and ubiquity of JSON</u>.
     Standardizing external mappings is another [possible] IETF activity, not related to JCS.
 </div>
