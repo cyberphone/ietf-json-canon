@@ -457,6 +457,22 @@
         on input data to avoid overflowing buffers and similar things that
         could affect the integrity of the system.
       </t>
+      <t>
+        When JCS is applied to signature schemes like the one in <xref target="impl.guidelines"/>,
+        applications MUST perform the following operations before acting
+        upon received data:
+        <list style="numbers">
+        <t>
+          Parse the JSON data
+        </t>
+        <t>
+          Verify the data for correctness
+        </t>
+        <t>
+          Verify the signature
+        </t>
+        </list>
+      </t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
@@ -467,13 +483,25 @@
       </t>
       <t>
         Other people who have contributed with valuable input to this specification include
-        Scott&nbsp;Ananian, Richard&nbsp;Gibson, Bron&nbsp;Gondwana, John-Mark&nbsp;Gurney, Mike&nbsp;Jones,
-        Mike&nbsp;Miller, Mark&nbsp;Nottingham, Mike&nbsp;Samuel, Jim&nbsp;Schaad,
-        Robert&nbsp;Tupelo-Schneck and Michal&nbsp;Wadas.
+        Scott&nbsp;Ananian, 
+        Ben&nbsp;Campbell, 
+        Richard&nbsp;Gibson, 
+        Bron&nbsp;Gondwana,
+        John-Mark&nbsp;Gurney, 
+        Mike&nbsp;Jones,
+        Mike&nbsp;Miller,
+        Mark&nbsp;Nottingham,
+        Mike&nbsp;Samuel,
+        Jim&nbsp;Schaad,
+        Robert&nbsp;Tupelo-Schneck
+        and Michal&nbsp;Wadas.
       </t>
       <t>
         For carrying out real world concept verification, the software and
-        support for number serialization provided by Ulf&nbsp;Adams, Tanner&nbsp;Gooding and Remy&nbsp;Oudompheng
+        support for number serialization provided by
+        Ulf&nbsp;Adams,
+        Tanner&nbsp;Gooding
+        and Remy&nbsp;Oudompheng
         was very helpful.
       </t>
     </section>
