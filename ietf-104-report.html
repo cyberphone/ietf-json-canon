@@ -3,7 +3,7 @@ body {font-size:10pt;color:#000000;font-family:verdana,arial;background-color:wh
 a {font-size:10pt;color:blue;text-decoration:none}
 div.json {margin-top:8pt;margin-bottom:15pt;word-break:break-all;width:800pt;background:#F8F8F8;border-width:1px;border-style:solid;border-color:grey;padding:10pt;box-shadow:3pt 3pt 3pt #D0D0D0}
 div.header {font-size:12pt;margin-top:15pt;margin-bottom:8pt;font-family:arial,verdana}
-code {font-size:9pt;font-family:'Courier New',Courier}
+code {font-size:11pt;font-family:'Courier New',Courier}
 div.claim {font-style:normal;margin-top:20pt;font-weight:bolder}
 div.response {margin-top:10pt}
 </style></head>
@@ -86,7 +86,7 @@ div.response {margin-top:10pt}
 </div>
 
 <div class="claim" id="3">
-    3. Number serialization is huge problem
+    3. Number serialization is a huge problem
 </div>
 <div class="response">
     I clearly underestimated this part when I started with JCS back in 2015, but 
@@ -132,7 +132,7 @@ div.response {margin-top:10pt}
     </ul>
     This is all what is needed with respect to data models for creating reliable and interoperable "hashable" JSON.
     Existing JSON-based systems use external mappings to emulate
-    missing data types like "DateTime", "Money", "Binary" and similar.
+    missing data types like <code>int32</code>, <code>DateTime</code>, <code>Money</code>, <code>Binary</code> and similar.
     That not all JSON applications use the same conventions
     <u>do not seem to have hampered the popularity and ubiquity of JSON</u>.
     Standardizing external mappings is another [possible] IETF activity, not related to JCS.
