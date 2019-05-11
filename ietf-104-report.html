@@ -26,12 +26,12 @@ div.response {margin-top:10pt}
 <div class="response">
     The current IETF solution
     <a href="https://tools.ietf.org/html/rfc7515"
-        target="_blank">(JWS)</a> requires you to:
+       target="_blank">(JWS)</a> requires you to:
     <ul>
         <li>
             Encode JSON data to be signed in Base64Url
         </li>
-        <li>
+        <li style="padding-top:5pt">
             Disrupt the natural structure of messages by embedding
             signed message data in specific signature containers
         </li>
@@ -39,7 +39,7 @@ div.response {margin-top:10pt}
     None of the Open Banking systems out there have to date chosen
     this route; <u>they all build on variants using detached clear text JSON data</u>.
     That none of them utilize JCS is quite logical since
-    JCS is (correctly) not perceived as a standard.
+    JCS (<i>correctly</i>) is not perceived as a standard.
 </div>
 
 <div class="claim" id="2">
@@ -57,8 +57,9 @@ div.response {margin-top:10pt}
     </p>
     <p>
         It has been mentioned that clear text data will tempt developers into trusting
-        (=acting upon) received data without verifying signatures.  JCS obviously does not
-        come with a cure for naïve developers.
+        (=acting upon) received data without verifying signatures. 
+        <u>JCS obviously does not
+        come with a cure for naïve developers</u>.
         See JCS <a href="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-06#section-5"
                    target="_blank">Security Considerations</a>.
     </p>
@@ -120,13 +121,14 @@ div.response {margin-top:10pt}
 </div>
 <div class="response">
     JCS builds on the same a bare-bones data model for primitives as JSON
-    (null, true, false, numbers, strings), albeit with a couple of constraints:
+    (<code>null</code>, <code>true</code>, <code>false</code>, <i>Number</i>, <i>String</i>),
+    albeit with a couple of constraints:
     <ul>
         <li>
             JSON Numbers MUST conceptually be treated as IEEE-754 double precision data during parsing/serialization
             (which also is a generic requirement for being JavaScript compatible)
         </li>
-        <li>
+        <li style="padding-top:5pt">
             JSON Strings MUST (modulo escaping) be treated as immutable during parsing/serialization
         </li>
     </ul>
@@ -147,5 +149,22 @@ div.response {margin-top:10pt}
     every now and then since the inherent precision is only 53 bits.
     JCS was designed to also be fully JavaScript compatible.
 </div>
-<div style="margin-top:30pt">Version 1.03, Anders Rundgren 2019-05-10</div>
+<div class="claim" id="7">
+    7. XML canonicalization was a disaster
+</div>
+<div class="response">
+    <p>
+        JCS is not a fullblown canonicalization scheme like XML's C14; it is
+        a (fairly rudimentary) serialization method.
+    </p>
+    <p>
+        A proper and fair evaluation should be based on the actual draft rather than
+        bad experiences from the XML era which BTW
+        <u>also were due to other factors</u>
+        such as Namespaces,
+        SOAP and an elaborate WS* stack which indeed took <u>years</u> to get
+        fully interoperable between vendors.
+    </p>
+</div>
+<div style="margin-top:30pt">Version 1.04, Anders Rundgren 2019-05-11</div>
 </body></html>
