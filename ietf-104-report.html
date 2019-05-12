@@ -24,15 +24,15 @@ div.response {margin-top:10pt}
     1. The need for clear text messages is a weak argument
 </div>
 <div class="response">
-    The current IETF solution
+    The <i>recommended</i> use of the current IETF JSON signature solution
     <a href="https://tools.ietf.org/html/rfc7515"
-       target="_blank">(JWS)</a> requires you to:
+       target="_blank">(JWS)</a> is that you:
     <ul>
         <li>
             Encode JSON data to be signed in Base64Url
         </li>
         <li style="padding-top:5pt">
-            Disrupt the natural structure of messages by embedding
+            Disrupt the natural structure of JSON messages by embedding
             signed message data in specific signature containers
         </li>
     </ul>
@@ -166,5 +166,5 @@ div.response {margin-top:10pt}
         fully interoperable between vendors.
     </p>
 </div>
-<div style="margin-top:30pt">Version 1.05, Anders Rundgren 2019-05-12</div>
+<div style="margin-top:30pt">Version 1.06, Anders Rundgren 2019-05-12</div>
 </body></html>
