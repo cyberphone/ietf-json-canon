@@ -37,7 +37,7 @@ div.response {margin-top:10pt}
         </li>
     </ul>
     None of the Open Banking systems out there have to date chosen
-    this route; <u>they all build on variants using detached clear text JSON data</u>.
+    this route; <i>they all build on variants using detached clear text JSON data</i>.
     That none of them utilize JCS is quite logical since
     JCS (<i>correctly</i>) is not perceived as a standard.
 </div>
@@ -52,14 +52,14 @@ div.response {margin-top:10pt}
         Broken signatures in similarity to any other input error, including missing or
         incorrectly formatted data should in a properly designed application lead to a
         rejected message/application failure. The core of a JCS implementation is
-        typically only <u>a couple of kilobytes of executable code</u>
+        typically only <i>a couple of kilobytes of executable code</i>
         making it reasonably easy to verify for correctness.
     </p>
     <p>
         It has been mentioned that clear text data will tempt developers into trusting
         (=acting upon) received data without verifying signatures. 
-        <u>JCS obviously does not
-        come with a cure for naïve developers</u>.
+        <i>JCS obviously does not
+        come with a cure for naïve developers</i>.
         See JCS <a href="https://tools.ietf.org/html/draft-rundgren-json-canonicalization-scheme-06#section-5"
                    target="_blank">Security Considerations</a>.
     </p>
@@ -81,7 +81,7 @@ div.response {margin-top:10pt}
         </p>
     </div>
     By using <a href="https://mobilepki.org/jws-jcs/verify"
-             target="_blank">JCS with JWS</a> 
+             target="_blank">JWS with JCS</a> 
     the need for artificial holder objects and associated matching requirements 
     disappear, while message content is provided in clear.
 </div>
@@ -106,7 +106,7 @@ div.response {margin-top:10pt}
 <div class="response">
     That had been cool but the sentiment among other JSON tool vendors was
     that "ECMA got it all wrong" so
-    <u>I was forced to select another and more conventional route</u>.
+    <i>I was forced to select another and more conventional route</i>.
     Fortunately, the revised scheme turned out to be very simple to get running
     in other platforms including Go, Python, C# and Java/Android, while leaving
     parsers and serializers unchanged. 
@@ -126,7 +126,7 @@ div.response {margin-top:10pt}
     <ul>
         <li>
             JSON Numbers MUST conceptually be treated as IEEE-754 double precision data during parsing/serialization
-            (which also is a generic requirement for being JavaScript compatible)
+            (<i>which also is a generic requirement for being JavaScript compatible</i>)
         </li>
         <li style="padding-top:5pt">
             JSON Strings MUST (modulo escaping) be treated as immutable during parsing/serialization
@@ -136,7 +136,7 @@ div.response {margin-top:10pt}
     Existing JSON-based systems use external mappings to emulate
     missing data types like <code>int32</code>, <code>DateTime</code>, <code>Money</code>, <code>Binary</code> and similar.
     That not all JSON applications use the same conventions
-    <u>do not seem to have hampered the popularity and ubiquity of JSON</u>.
+    <i>do not seem to have hampered the popularity and ubiquity of JSON</i>.
     Standardizing external mappings is another [possible] IETF activity, not related to JCS.
 </div>
 
@@ -160,11 +160,11 @@ div.response {margin-top:10pt}
     <p>
         A proper and fair evaluation should be based on the actual draft rather than
         bad experiences from the XML era which BTW
-        <u>also were due to other factors</u>
-        such as Namespaces,
-        SOAP and an elaborate WS* stack which indeed took <u>years</u> to get
+        <i>also were due to other factors</i>
+        such as Namespaces, Default values,
+        SOAP and an elaborate WS* stack which indeed took <i>years</i> to get
         fully interoperable between vendors.
     </p>
 </div>
-<div style="margin-top:30pt">Version 1.04, Anders Rundgren 2019-05-11</div>
+<div style="margin-top:30pt">Version 1.05, Anders Rundgren 2019-05-12</div>
 </body></html>
