@@ -180,15 +180,15 @@
 <pre>
 Network Working Group                                        A. Rundgren
 Internet-Draft                                               Independent
-Intended status: Standards Track                               B. Jordan
-Expires: November 10, 2019                          Symantec Corporation
+Intended status: Informational                                 B. Jordan
+Expires: 14 March 2020                              Symantec Corporation
                                                               S. Erdtman
                                                               Spotify AB
-                                                             May 9, 2019
+                                                       11 September 2019
 
 
                    <span class="h1">JSON Canonicalization Scheme (JCS)</span>
-             <span class="h1">draft-rundgren-json-canonicalization-scheme-06</span>
+             <span class="h1">draft-rundgren-json-canonicalization-scheme-07</span>
 
 Abstract
 
@@ -218,7 +218,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 10, 2019.
+   This Internet-Draft will expire on 14 March 2020.
 
 Copyright Notice
 
@@ -229,20 +229,19 @@ Copyright Notice
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 1]</span></pre>
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 1]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-2" id="page-2" href="#page-2" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
    This document is subject to <a href="http://tools.ietf.org/html//bcp78">BCP 78</a> and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (<a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a>) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
+   Provisions Relating to IETF Documents (<a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/</a>
+   <a href="https://trustee.ietf.org/license-info">license-info</a>) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Simplified BSD License text
+   as described in Section 4.e of the <a href="https://trustee.ietf.org/license-info">Trust Legal Provisions</a> and are
+   provided without warranty as described in the Simplified BSD License.
 
 Table of Contents
 
@@ -253,18 +252,17 @@ Table of Contents
      <a href="#section-3.2">3.2</a>.  Generation of Canonical JSON Data . . . . . . . . . . . .   <a href="#page-5">5</a>
        <a href="#section-3.2.1">3.2.1</a>.  Whitespace  . . . . . . . . . . . . . . . . . . . . .   <a href="#page-5">5</a>
        <a href="#section-3.2.2">3.2.2</a>.  Serialization of Primitive Data Types . . . . . . . .   <a href="#page-5">5</a>
-         <a href="#section-3.2.2.1">3.2.2.1</a>.  Serialization of Literals . . . . . . . . . . . .   <a href="#page-6">6</a>
+         <a href="#section-3.2.2.1">3.2.2.1</a>.  Serialization of Literals . . . . . . . . . . . .   <a href="#page-5">5</a>
          <a href="#section-3.2.2.2">3.2.2.2</a>.  Serialization of Strings  . . . . . . . . . . . .   <a href="#page-6">6</a>
          <a href="#section-3.2.2.3">3.2.2.3</a>.  Serialization of Numbers  . . . . . . . . . . . .   <a href="#page-6">6</a>
        <a href="#section-3.2.3">3.2.3</a>.  Sorting of Object Properties  . . . . . . . . . . . .   <a href="#page-7">7</a>
-       <a href="#section-3.2.4">3.2.4</a>.  UTF-8 Generation  . . . . . . . . . . . . . . . . . .   <a href="#page-8">8</a>
+       <a href="#section-3.2.4">3.2.4</a>.  UTF-8 Generation  . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-4">4</a>.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-5">5</a>.  Security Considerations . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
    <a href="#section-6">6</a>.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
-   <a href="#section-7">7</a>.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
-     <a href="#section-7.1">7.1</a>.  Normative References  . . . . . . . . . . . . . . . . . .   <a href="#page-9">9</a>
+   <a href="#section-7">7</a>.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-10">10</a>
+     <a href="#section-7.1">7.1</a>.  Normative References  . . . . . . . . . . . . . . . . . .  <a href="#page-10">10</a>
      <a href="#section-7.2">7.2</a>.  Informal References . . . . . . . . . . . . . . . . . . .  <a href="#page-10">10</a>
-     <a href="#section-7.3">7.3</a>.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  <a href="#page-11">11</a>
    <a href="#appendix-A">Appendix A</a>.  ES6 Sample Canonicalizer . . . . . . . . . . . . . .  <a href="#page-11">11</a>
    <a href="#appendix-B">Appendix B</a>.  Number Serialization Samples . . . . . . . . . . . .  <a href="#page-13">13</a>
    <a href="#appendix-C">Appendix C</a>.  Canonicalized JSON as "Wire Format"  . . . . . . . .  <a href="#page-14">14</a>
@@ -282,16 +280,15 @@ Table of Contents
    Cryptographic operations like hashing and signing requires that the
    original data does not change during serialization or parsing.  One
    way of accomplishing this is converting the data into a format that
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 2]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    has a simple and fixed representation like Base64Url [<a href="http://tools.ietf.org/html//rfc4648" title="&quot;The Base16, Base32, and Base64 Data Encodings&quot;">RFC4648</a>], which
    is how JWS [<a href="http://tools.ietf.org/html//rfc7515" title="&quot;JSON Web Signature (JWS)&quot;">RFC7515</a>] addressed this issue.
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 2]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
    Another solution is to create a canonical version of the data,
    similar to what was done for the XML Signature [<a href="#ref-XMLDSIG" title="&quot;XML Signature Syntax and Processing Version 1.1&quot;">XMLDSIG</a>] standard.
@@ -332,7 +329,9 @@ Table of Contents
    For potential uses outside of cryptography see [<a href="#ref-JSONCOMP" title="&quot;Comparable&quot;">JSONCOMP</a>].
 
    The intended audiences of this document are JSON tool vendors, as
-   well as designers of JSON based cryptographic solutions.
+   well as designers of JSON based cryptographic solutions.  The reader
+   is assumed to have a basic knowledge of ECMAScript including the
+   "JSON" object.
 
 
 
@@ -341,9 +340,10 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 3]</span></pre>
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 3]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-4" id="page-4" href="#page-4" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
 <span class="h2"><a class="selflink" name="section-2" href="#section-2">2</a>.  Terminology</span>
@@ -373,7 +373,7 @@ Table of Contents
 
    o  JSON Objects MUST NOT exhibit duplicate property names.
 
-   o  JSON String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>].
+   o  JSON String data MUST be expressible as Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 12.1.0&quot;">UNICODE</a>].
 
    o  JSON Number data MUST be expressible as IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] double
       precision values.  For applications needing higher precision or
@@ -387,8 +387,8 @@ Table of Contents
 
    Note: although the Unicode standard offers a possibility combining
    certain characters into one, referred to as "Unicode Normalization"
-   (<a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a> [<a href="#ref-1">1</a>]), such functionality MUST
-   be delegated to the application layer.
+   (<a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a>), such functionality MUST be
+   delegated to the application layer.
 
 
 
@@ -397,9 +397,9 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 4]</span></pre>
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 4]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-5" id="page-5" href="#page-5" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
 <span class="h3"><a class="selflink" name="section-3.2" href="#section-3.2">3.2</a>.  Generation of Canonical JSON Data</span>
@@ -432,10 +432,7 @@ Table of Contents
    respect to representation of data:
 
      {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
-     "EURO$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}
-
-      Note: EURO denotes a single Euro character (Unicode: U+20AC),
-      which not being ASCII, is currently not displayable in RFCs.
+     "€$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}
 
    The reason for the difference between the parsed data and its
    serialized counterpart, is due to a wide tolerance on input data (as
@@ -446,22 +443,20 @@ Table of Contents
    The following subsections describe serialization of primitive JSON
    data types according to JCS.  This part is identical to that of ES6.
 
-
-
-
-
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 5]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
 <span class="h5"><a class="selflink" name="section-3.2.2.1" href="#section-3.2.2.1">3.2.2.1</a>.  Serialization of Literals</span>
 
    The JSON literals "null", "true", and "false" present no challenge
    since they already have a fixed definition in JSON [<a href="http://tools.ietf.org/html//rfc8259" title="&quot;The JavaScript Object Notation (JSON) Data Interchange Format&quot;">RFC8259</a>].
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 5]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
 <span class="h5"><a class="selflink" name="section-3.2.2.2" href="#section-3.2.2.2">3.2.2.2</a>.  Serialization of Strings</span>
 
@@ -469,14 +464,14 @@ Table of Contents
    well), each Unicode code point MUST be serialized as described below
    (also matching Section 24.3.2.2 of [<a href="#ref-ES6" title="&quot;ECMAScript 2015 Language Specification&quot;">ES6</a>]):
 
-   o  If the Unicode value falls within the traditional ASCII control
+   *  If the Unicode value falls within the traditional ASCII control
       character range (U+0000 through U+001F), it MUST be serialized
       using lowercase hexadecimal Unicode notation (\uhhhh) unless it is
       in the set of predefined JSON control characters U+0008, U+0009,
       U+000A, U+000C or U+000D which MUST be serialized as \b, \t, \n,
       \f and \r respectively.
 
-   o  If the Unicode value is outside of the ASCII control character
+   *  If the Unicode value is outside of the ASCII control character
       range, it MUST be serialized "as is" unless it is equivalent to
       U+005C (\) or U+0022 (") which MUST be serialized as \\ and \"
       respectively.
@@ -505,18 +500,19 @@ Table of Contents
    representing JSON Number data.  <a href="#appendix-B">Appendix B</a> holds a set of IEEE-754
    sample values and their corresponding JSON serialization.
 
-
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 6]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-7" id="page-7" href="#page-7" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    Note: since NaN (Not a Number) and Infinity are not permitted in
    JSON, occurrences of such values MUST cause the JCS algorithm to
    terminate with an error indication.
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 6]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-7" id="page-7" href="#page-7" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
 <span class="h4"><a class="selflink" name="section-3.2.3" href="#section-3.2.3">3.2.3</a>.  Sorting of Object Properties</span>
 
@@ -530,10 +526,7 @@ Table of Contents
    read as:
 
      {"literals":[null,true,false],"numbers":[333333333.3333333,
-     1e+30,4.5,0.002,1e-27],"string":"EURO$\u000f\nA'B\"\\\\\"/"}
-
-      Note: EURO denotes a single Euro character (Unicode: U+20AC),
-      which not being ASCII, is currently not displayable in RFCs.
+     1e+30,4.5,0.002,1e-27],"string":"€$\u000f\nA'B\"\\\\\"/"}
 
    The rules for lexicographic sorting of JSON Object properties
    according to JCS are as follows:
@@ -554,7 +547,7 @@ Table of Contents
       as U+000A.
 
    o  Property name strings to be sorted are formatted as arrays of
-      UTF-16 [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] code units.  The sorting is based on pure value
+      UTF-16 [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 12.1.0&quot;">UNICODE</a>] code units.  The sorting is based on pure value
       comparisons, where code units are treated as unsigned integers,
       independent of locale settings.
 
@@ -562,14 +555,6 @@ Table of Contents
       that is a valid index for both strings, or their lengths are
       different, or both.  If they have different values at one or more
       index positions, let k be the smallest such index; then the string
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 7]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-8" id="page-8" href="#page-8" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
       whose value at position k has the smaller value, as determined by
       using the &lt; operator, lexicographically precedes the other string.
       If there is no index position at which they differ, then the
@@ -578,6 +563,13 @@ Table of Contents
       In plain English this means that property names are sorted in
       ascending order like the following:
 
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 7]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-8" id="page-8" href="#page-8" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
+
            ""
            "a"
            "aa"
@@ -585,19 +577,54 @@ Table of Contents
 
    The rationale for basing the sorting algorithm on UTF-16 code units
    is that it maps directly to the string type in ECMAScript (featured
-   in Web browsers and Node.js), Java and .NET.  Systems using another
-   internal representation of string data will need to convert JSON
-   property name strings into arrays of UTF-16 code units before
-   sorting.  The conversion from UTF-8 or UTF-32 to UTF-16 is defined by
-   the Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 10.0.0&quot;">UNICODE</a>] standard.
+   in Web browsers and Node.js), Java and .NET.  In addition, JSON only
+   supports escape sequences expressed as UTF-16 code units making
+   knowledge and handling of such data a necessity anyway.  Systems
+   using another internal representation of string data will need to
+   convert JSON property name strings into arrays of UTF-16 code units
+   before sorting.  The conversion from UTF-8 or UTF-32 to UTF-16 is
+   defined by the Unicode [<a href="#ref-UNICODE" title="&quot;The Unicode Standard, Version 12.1.0&quot;">UNICODE</a>] standard.
 
-   Note: for the purpose of obtaining a deterministic property order,
-   sorting on UTF-8 or UTF-32 encoded data would also work, but the
-   result would differ and thus be incompatible with this specification.
-   However, in practice property names rarely go outside of 7-bit ASCII
-   making it possible sorting on the UTF-8 byte level and still be
-   compatible with JCS.  If this is a viable option or not depends on
-   the environment JCS is supposed to be used in.
+   The following test data can be used for verifying the correctness of
+   the sorting scheme in a JCS implementation.  Input JSON data:
+
+     {
+       "\u20ac": "Euro Sign",
+       "\r": "Carriage Return",
+       "\ufb33": "Hebrew Letter Dalet With Dagesh",
+       "1": "One",
+       "\u0080": "Control",
+       "\ud83d\ude00": "Emoji: Grinning Face",
+       "\u00f6": "Latin Small Letter O With Diaeresis"
+     }
+
+   Expected argument order after sorting:
+
+     "Carriage Return"
+     "One"
+     "Control"
+     "Latin Small Letter O With Diaeresis"
+     "Euro Sign"
+     "Emoji: Grinning Face"
+     "Hebrew Letter Dalet With Dagesh"
+
+   Note: for the purpose of obtaining a deterministic property order
+   sorting on UTF-8 or UTF-32 encoded data would also work but the
+   outcome would for JSON data like above differ and thus be
+   incompatible with this specification.  However, in practice property
+   names are rarely defined outside of 7-bit ASCII making it possible
+   sorting on string data in UTF-8 or UTF-32 without conversions and
+   still be compatible with JCS.  If this is a viable option or not
+   depends on the environment JCS is supposed to be used in.
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 8]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
 <span class="h4"><a class="selflink" name="section-3.2.4" href="#section-3.2.4">3.2.4</a>.  UTF-8 Generation</span>
 
@@ -615,16 +642,6 @@ Table of Contents
      30 66 5c 6e 41 27 42 5c 22 5c 5c 5c 5c 5c 22 2f 22 7d
 
    This data is intended to be usable as input to cryptographic methods.
-
-
-
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 8]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
 
 <span class="h2"><a class="selflink" name="section-4" href="#section-4">4</a>.  IANA Considerations</span>
 
@@ -653,10 +670,17 @@ Table of Contents
    serialization scheme for JSON primitives.
 
    Other people who have contributed with valuable input to this
-   specification include Scott Ananian, Ben Campbell, Richard Gibson,
-   Bron Gondwana, John-Mark Gurney, Mike Jones, Mike Miller,
-   Mark Nottingham, Mike Samuel, Jim Schaad, Robert Tupelo-Schneck and
-   Michal Wadas.
+   specification include Scott Ananian, Tim Bray, Ben Campbell, Adrian
+   Farell, Richard Gibson, Bron Gondwana, John-Mark Gurney, John Levine,
+   Mark Miller, Matt Miller, Mike Jones, Mark Nottingham, Mike Samuel,
+   Jim Schaad, Robert Tupelo-Schneck and Michal Wadas.
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                 [Page 9]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
    For carrying out real world concept verification, the software and
    support for number serialization provided by Ulf Adams,
@@ -664,23 +688,16 @@ Table of Contents
 
 <span class="h2"><a class="selflink" name="section-7" href="#section-7">7</a>.  References</span>
 
-<span class="h3"><a class="selflink" name="section-7.1" href="#section-7.1">7.1</a>.  Normative References</span>
+7.1.
+Normative References
 
    [<a name="ref-ES6" id="ref-ES6">ES6</a>]      Ecma International, "ECMAScript 2015 Language
-              Specification", &lt;<a href="https://www.ecma-international.org/ecma-262/6.0/index.html">https://www.ecma-international.org/ecma-</a>
-              <a href="https://www.ecma-international.org/ecma-262/6.0/index.html">262/6.0/index.html</a>&gt;.
+              Specification", June 2015,
+              &lt;<a href="https://www.ecma-international.org/ecma-262/6.0/index.html">https://www.ecma-international.org/ecma-262/6.0/</a>
+              <a href="https://www.ecma-international.org/ecma-262/6.0/index.html">index.html</a>&gt;.
 
    [<a name="ref-IEEE754" id="ref-IEEE754">IEEE754</a>]  IEEE, "IEEE Standard for Floating-Point Arithmetic",
               August 2008, &lt;<a href="http://grouper.ieee.org/groups/754/">http://grouper.ieee.org/groups/754/</a>&gt;.
-
-
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019               [Page 9]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
 
    [<a name="ref-RFC2119" id="ref-RFC2119">RFC2119</a>]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", <a href="http://tools.ietf.org/html//bcp14">BCP 14</a>, <a href="http://tools.ietf.org/html//rfc2119">RFC 2119</a>,
@@ -701,18 +718,25 @@ Table of Contents
               &lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;.
 
    [<a name="ref-UNICODE" id="ref-UNICODE">UNICODE</a>]  The Unicode Consortium, "The Unicode Standard, Version
-              10.0.0",
-              &lt;<a href="https://www.unicode.org/versions/Unicode10.0.0/">https://www.unicode.org/versions/Unicode10.0.0/</a>&gt;.
+              12.1.0", May 2019,
+              &lt;<a href="https://www.unicode.org/versions/Unicode12.1.0/">https://www.unicode.org/versions/Unicode12.1.0/</a>&gt;.
 
-<span class="h3"><a class="selflink" name="section-7.2" href="#section-7.2">7.2</a>.  Informal References</span>
+7.2.
+Informal References
 
-   [<a name="ref-JSONCOMP" id="ref-JSONCOMP">JSONCOMP</a>]
-              A. Rundgren, ""Comparable" JSON - Work in progress",
-              &lt;<a href="https://tools.ietf.org/html/draft-rundgren-comparable-json-04">https://tools.ietf.org/html/</a>
-              <a href="https://tools.ietf.org/html/draft-rundgren-comparable-json-04">draft-rundgren-comparable-json-04</a>&gt;.
+   [<a name="ref-JSONCOMP" id="ref-JSONCOMP">JSONCOMP</a>] A. Rundgren, ""Comparable" JSON - Work in progress",
+              &lt;<a href="https://tools.ietf.org/html/draft-rundgren-comparable-json-04">https://tools.ietf.org/html/draft-rundgren-comparable-</a>
+              <a href="https://tools.ietf.org/html/draft-rundgren-comparable-json-04">json-04</a>&gt;.
 
    [<a name="ref-KEYBASE" id="ref-KEYBASE">KEYBASE</a>]  "Keybase",
               &lt;<a href="https://keybase.io/docs/api/1.0/canonical_packings#json">https://keybase.io/docs/api/1.0/canonical_packings#json</a>&gt;.
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 10]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-11" id="page-11" href="#page-11" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
    [<a name="ref-NODEJS" id="ref-NODEJS">NODEJS</a>]   "Node.js", &lt;<a href="https://nodejs.org">https://nodejs.org</a>&gt;.
 
@@ -730,52 +754,14 @@ Table of Contents
               Thumbprint", <a href="http://tools.ietf.org/html//rfc7638">RFC 7638</a>, DOI 10.17487/RFC7638, September
               2015, &lt;<a href="https://www.rfc-editor.org/info/rfc7638">https://www.rfc-editor.org/info/rfc7638</a>&gt;.
 
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 10]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-11" id="page-11" href="#page-11" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    [<a name="ref-RYU" id="ref-RYU">RYU</a>]      Ulf Adams, "Ryu floating point number serializing
               algorithm", &lt;<a href="https://github.com/ulfjack/ryu">https://github.com/ulfjack/ryu</a>&gt;.
 
    [<a name="ref-V8" id="ref-V8">V8</a>]       Google LLC, "Chrome V8 Open Source JavaScript Engine",
-              &lt;<a href="https://developers.google.com/v8/">https://developers.google.com/v8/</a>&gt;.
+              September 2019, &lt;<a href="https://developers.google.com/v8/">https://developers.google.com/v8/</a>&gt;.
 
    [<a name="ref-XMLDSIG" id="ref-XMLDSIG">XMLDSIG</a>]  W3C, "XML Signature Syntax and Processing Version 1.1",
               &lt;<a href="https://www.w3.org/TR/xmldsig-core1/">https://www.w3.org/TR/xmldsig-core1/</a>&gt;.
-
-<span class="h3"><a class="selflink" name="section-7.3" href="#section-7.3">7.3</a>.  URIs</span>
-
-   [<a name="ref-1" id="ref-1">1</a>] <a href="https://www.unicode.org/reports/tr15/">https://www.unicode.org/reports/tr15/</a>
-
-   [<a name="ref-2" id="ref-2">2</a>] <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a>
-
-   [<a name="ref-3" id="ref-3">3</a>] <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a>
-
-   [<a name="ref-4" id="ref-4">4</a>] <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">https://github.com/cyberphone/json-canonicalization/tree/master/</a>
-       <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">go</a>
-
-   [<a name="ref-5" id="ref-5">5</a>] <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">https://github.com/cyberphone/json-canonicalization/tree/master/</a>
-       <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">dotnet</a>
-
-   [<a name="ref-6" id="ref-6">6</a>] <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">https://github.com/cyberphone/json-canonicalization/tree/master/</a>
-       <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">python3</a>
-
-   [<a name="ref-7" id="ref-7">7</a>] <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">https://tools.ietf.org/html/draft-staykov-hu-json-canonical-</a>
-       <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">form-00</a>
-
-   [<a name="ref-8" id="ref-8">8</a>] <a href="https://gibson042.github.io/canonicaljson-spec/">https://gibson042.github.io/canonicaljson-spec/</a>
-
-   [<a name="ref-9" id="ref-9">9</a>] <a href="http://wiki.laptop.org/go/Canonical_JSON">http://wiki.laptop.org/go/Canonical_JSON</a>
-
-   [<a name="ref-10" id="ref-10">10</a>] <a href="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</a>
-
-   [<a name="ref-11" id="ref-11">11</a>] <a href="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</a>
-
-   [<a name="ref-12" id="ref-12">12</a>] <a href="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</a>
 
 <span class="h2"><a class="selflink" name="appendix-A" href="#appendix-A">Appendix A</a>.  ES6 Sample Canonicalizer</span>
 
@@ -786,14 +772,6 @@ Table of Contents
      // Since the primary purpose of this code is highlighting //
      // the core of the JCS algorithm, error handling and      //
      // UTF-8 generation were not implemented                  //
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 11]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-12" id="page-12" href="#page-12" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
      ////////////////////////////////////////////////////////////
      var canonicalize = function(object) {
 
@@ -808,6 +786,13 @@ Table of Contents
                  // Primitive type or toJSON - Use ES6/JSON     //
                  /////////////////////////////////////////////////
                  buffer += JSON.stringify(object);
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 11]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-12" id="page-12" href="#page-12" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
              } else if (Array.isArray(object)) {
                  /////////////////////////////////////////////////
@@ -842,14 +827,6 @@ Table of Contents
                      // Property names are strings - Use ES6/JSON //
                      ///////////////////////////////////////////////
                      buffer += JSON.stringify(property);
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 12]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-13" id="page-13" href="#page-13" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
                      buffer += ':';
                      //////////////////////////////////////////
                      // Property value - Recursive expansion //
@@ -861,6 +838,18 @@ Table of Contents
          }
      };
 
+
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 12]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-13" id="page-13" href="#page-13" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
+
 <span class="h2"><a class="selflink" name="appendix-B" href="#appendix-B">Appendix B</a>.  Number Serialization Samples</span>
 
    The following table holds a set of ES6 compatible Number
@@ -869,67 +858,67 @@ Table of Contents
    data type which is based on the IEEE-754 [<a href="#ref-IEEE754" title="&quot;IEEE Standard for Floating-Point Arithmetic&quot;">IEEE754</a>] standard using
    64-bit (double precision) values, here expressed in hexadecimal.
 
-  |====================================================================|
-  |     IEEE-754     |   JSON Representation     |       Comment       |
-  |====================================================================|
-  | 0000000000000000 | 0                         | Zero                |
-  |--------------------------------------------------------------------|
-  | 8000000000000000 | 0                         | Minus zero          |
-  |--------------------------------------------------------------------|
-  | 0000000000000001 | 5e-324                    | Min pos number      |
-  |--------------------------------------------------------------------|
-  | 8000000000000001 | -5e-324                   | Min neg number      |
-  |--------------------------------------------------------------------|
-  | 7fefffffffffffff | 1.7976931348623157e+308   | Max pos number      |
-  |--------------------------------------------------------------------|
-  | ffefffffffffffff | -1.7976931348623157e+308  | Max neg number      |
-  |--------------------------------------------------------------------|
-  | 4340000000000000 | 9007199254740992          | Max pos integer (1) |
-  |--------------------------------------------------------------------|
-  | c340000000000000 | -9007199254740992         | Max neg integer (1) |
-  |--------------------------------------------------------------------|
-  | 4430000000000000 | 295147905179352830000     | ~2**68          (2) |
-  |--------------------------------------------------------------------|
-  | 7fffffffffffffff |                           | NaN             (3) |
-  |--------------------------------------------------------------------|
-  | 7ff0000000000000 |                           | Infinity        (3) |
-  |--------------------------------------------------------------------|
-  | 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
-  |--------------------------------------------------------------------|
-  | 44b52d02c7e14af6 | 1e+23                     |                     |
-  |--------------------------------------------------------------------|
+   ╒══════════════════╤═══════════════════════════╤═════════════════════╕
+   │     IEEE-754     │   JSON Representation     │       Comment       │
+   ╞══════════════════╪═══════════════════════════╪═════════════════════╡
+   │ 0000000000000000 │ 0                         │ Zero                │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 8000000000000000 │ 0                         │ Minus zero          │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 0000000000000001 │ 5e-324                    │ Min pos number      │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 8000000000000001 │ -5e-324                   │ Min neg number      │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 7fefffffffffffff │ 1.7976931348623157e+308   │ Max pos number      │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ ffefffffffffffff │ -1.7976931348623157e+308  │ Max neg number      │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 4340000000000000 │ 9007199254740992          │ Max pos integer (1) │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ c340000000000000 │ -9007199254740992         │ Max neg integer (1) │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 4430000000000000 │ 295147905179352830000     │ ~2**68 (2)          │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 7fffffffffffffff │                           │ NaN (3)             │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 7ff0000000000000 │                           │ Infinity (3)        │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 44b52d02c7e14af5 │ 9.999999999999997e+22     │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 44b52d02c7e14af6 │ 1e+23                     │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 44b52d02c7e14af7 │ 1.0000000000000001e+23    │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 444b1ae4d6e2ef4e │ 999999999999999700000     │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 444b1ae4d6e2ef4f │ 999999999999999900000     │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 444b1ae4d6e2ef50 │ 1e+21                     │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 3eb0c6f7a0b5ed8c │ 9.999999999999997e-7      │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 3eb0c6f7a0b5ed8d │ 0.000001                  │                     │
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 13]</span></pre>
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 13]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-14" id="page-14" href="#page-14" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
-  | 44b52d02c7e14af7 | 1.0000000000000001e+23    |                     |
-  |--------------------------------------------------------------------|
-  | 444b1ae4d6e2ef4e | 999999999999999700000     |                     |
-  |--------------------------------------------------------------------|
-  | 444b1ae4d6e2ef4f | 999999999999999900000     |                     |
-  |--------------------------------------------------------------------|
-  | 444b1ae4d6e2ef50 | 1e+21                     |                     |
-  |--------------------------------------------------------------------|
-  | 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                     |
-  |--------------------------------------------------------------------|
-  | 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555553 | 333333333.3333332         |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555554 | 333333333.33333325        |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555555 | 333333333.3333333         |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555556 | 333333333.3333334         |                     |
-  |--------------------------------------------------------------------|
-  | 41b3de4355555557 | 333333333.33333343        |                     |
-  |--------------------------------------------------------------------|
-  | becbf647612f3696 | -0.0000033333333333333333 |                     |
-  |--------------------------------------------------------------------|
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 41b3de4355555553 │ 333333333.3333332         │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 41b3de4355555554 │ 333333333.33333325        │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 41b3de4355555555 │ 333333333.3333333         │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 41b3de4355555556 │ 333333333.3333334         │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ 41b3de4355555557 │ 333333333.33333343        │                     │
+   ├──────────────────┼───────────────────────────┼─────────────────────┤
+   │ becbf647612f3696 │ -0.0000033333333333333333 │                     │
+   └──────────────────┴───────────────────────────┴─────────────────────┘
 
    Notes:
 
@@ -954,14 +943,6 @@ Table of Contents
 
    In fact, the ES6 standard way of serializing objects using
    "JSON.stringify()" produces a more "logical" format, where properties
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 14]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-15" id="page-15" href="#page-15" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    are kept in the order they were created or received.  The example
    below shows an address record which could benefit from ES6 standard
    serialization:
@@ -973,6 +954,13 @@ Table of Contents
        "zip": "90001",
        "state": "CA"
      }
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 14]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-15" id="page-15" href="#page-15" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
    Using canonicalization the properties above would be output in the
    order "address", "city", "name", "state" and "zip", which adds
@@ -1011,13 +999,6 @@ Table of Contents
    applicable for other data types that do not have direct support in
    JSON, like "DateTime" objects as described in <a href="#appendix-E">Appendix E</a>.
 
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 15]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    Aided by a system using the JSON String type; be it programmatic like
 
      var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
@@ -1025,6 +1006,17 @@ Table of Contents
 
    or declarative schemes like OpenAPI [<a href="#ref-OPENAPI" title="&quot;The OpenAPI Initiative&quot;">OPENAPI</a>], JCS imposes no limits
    on applications, including when using ES6.
+
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 15]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-16" id="page-16" href="#page-16" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
 <span class="h2"><a class="selflink" name="appendix-E" href="#appendix-E">Appendix E</a>.  String Subtype Handling</span>
 
@@ -1064,19 +1056,23 @@ Table of Contents
 
      {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}
 
-
-
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 16]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    Although this is (with respect to JCS) technically correct, there is
    another way parsing JSON data which also can be used with ES6 as
    shown below:
+
+
+
+
+
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 16]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-17" id="page-17" href="#page-17" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
      // Currently required to make BigInt JSON serializable
      BigInt.prototype.toJSON = function() {
@@ -1122,16 +1118,17 @@ Table of Contents
          set { _amount = value.ToString(); }
      }
 
-
-
-
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 17]</span></pre>
-<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
-
-
    In an application "Amount" can be accessed as any other property
    while it is actually represented by a quoted string in JSON contexts.
+
+
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 17]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-18" id="page-18" href="#page-18" class="invisible"> </a>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
+
 
    Note: the example above also addresses the constraints on numeric
    data implied by I-JSON (the C# "decimal" data type has quite
@@ -1152,46 +1149,46 @@ Table of Contents
    performed through externally supplied canonicalizer software,
    enabling signature creation schemes like the following:
 
-   1.  Create the data to be signed.
+   1.   Create the data to be signed.
 
-   2.  Serialize the data using existing JSON tools.
+   2.   Serialize the data using existing JSON tools.
 
-   3.  Let the external canonicalizer process the serialized data and
-       return canonicalized result data.
+   3.   Let the external canonicalizer process the serialized data and
+        return canonicalized result data.
 
-   4.  Sign the canonicalized data.
+   4.   Sign the canonicalized data.
 
-   5.  Add the resulting signature value to the original JSON data
-       through a designated signature property.
+   5.   Add the resulting signature value to the original JSON data
+        through a designated signature property.
 
-   6.  Serialize the completed (now signed) JSON object using existing
-       JSON tools.
+   6.   Serialize the completed (now signed) JSON object using existing
+        JSON tools.
 
    A compatible signature verification scheme would then be as follows:
 
-   1.  Parse the signed JSON data using existing JSON tools.
+   1.   Parse the signed JSON data using existing JSON tools.
 
-   2.  Read and save the signature value from the designated signature
-       property.
+   2.   Read and save the signature value from the designated signature
+        property.
 
-   3.  Remove the signature property from the parsed JSON object.
+   3.   Remove the signature property from the parsed JSON object.
 
-   4.  Serialize the remaining JSON data using existing JSON tools.
+   4.   Serialize the remaining JSON data using existing JSON tools.
+
+   5.   Let the external canonicalizer process the serialized data and
+        return canonicalized result data.
 
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 18]</span></pre>
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 18]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-19" id="page-19" href="#page-19" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
-   5.  Let the external canonicalizer process the serialized data and
-       return canonicalized result data.
-
-   6.  Verify that the canonicalized data matches the saved signature
-       value using the algorithm and key used for creating the
-       signature.
+   6.   Verify that the canonicalized data matches the saved signature
+        value using the algorithm and key used for creating the
+        signature.
 
    A canonicalizer like above is effectively only a "filter",
    potentially usable with a multitude of quite different cryptographic
@@ -1206,30 +1203,30 @@ Table of Contents
    The following Open Source implementations have been verified to be
    compatible with JCS:
 
-   o  JavaScript: <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a> [<a href="#ref-2">2</a>]
+   *  JavaScript: <a href="https://www.npmjs.com/package/canonicalize">https://www.npmjs.com/package/canonicalize</a>
 
-   o  Java: <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a> [<a href="#ref-3">3</a>]
+   *  Java: <a href="https://github.com/erdtman/java-json-canonicalization">https://github.com/erdtman/java-json-canonicalization</a>
 
-   o  Go: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">https://github.com/cyberphone/json-</a>
-      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">canonicalization/tree/master/go</a> [<a href="#ref-4">4</a>]
+   *  Go: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">https://github.com/cyberphone/json-</a>
+      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/go">canonicalization/tree/master/go</a>
 
-   o  .NET/C#: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">https://github.com/cyberphone/json-</a>
-      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">canonicalization/tree/master/dotnet</a> [<a href="#ref-5">5</a>]
+   *  .NET/C#: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">https://github.com/cyberphone/json-</a>
+      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet">canonicalization/tree/master/dotnet</a>
 
-   o  Python: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">https://github.com/cyberphone/json-</a>
-      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">canonicalization/tree/master/python3</a> [<a href="#ref-6">6</a>]
+   *  Python: <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">https://github.com/cyberphone/json-</a>
+      <a href="https://github.com/cyberphone/json-canonicalization/tree/master/python3">canonicalization/tree/master/python3</a>
 
 <span class="h2"><a class="selflink" name="appendix-H" href="#appendix-H">Appendix H</a>.  Other JSON Canonicalization Efforts</span>
 
    There are (and have been) other efforts creating "Canonical JSON".
    Below is a list of URLs to some of them:
 
-   o  <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">https://tools.ietf.org/html/draft-staykov-hu-json-canonical-</a>
-      <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">form-00</a> [<a href="#ref-7">7</a>]
+   *  <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">https://tools.ietf.org/html/draft-staykov-hu-json-canonical-</a>
+      <a href="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00">form-00</a>
 
-   o  <a href="https://gibson042.github.io/canonicaljson-spec/">https://gibson042.github.io/canonicaljson-spec/</a> [<a href="#ref-8">8</a>]
+   *  <a href="https://gibson042.github.io/canonicaljson-spec/">https://gibson042.github.io/canonicaljson-spec/</a>
 
-   o  <a href="http://wiki.laptop.org/go/Canonical_JSON">http://wiki.laptop.org/go/Canonical_JSON</a> [<a href="#ref-9">9</a>]
+   *  <a href="http://wiki.laptop.org/go/Canonical_JSON">http://wiki.laptop.org/go/Canonical_JSON</a>
 
    In contrast to JCS which is a serialization scheme, the listed
    efforts build on text level JSON to JSON transformations.
@@ -1237,21 +1234,24 @@ Table of Contents
 
 
 
-<span class="grey">Rundgren, et al.        Expires November 10, 2019              [Page 19]</span></pre>
+
+
+
+<span class="grey">Rundgren, et al.          Expires 14 March 2020                [Page 19]</span></pre>
 <hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-20" id="page-20" href="#page-20" class="invisible"> </a>
-<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-scheme">draft-rundgren-json-canonicalization-scheme</a>      May 2019</span>
+<span class="grey">Internet-Draft <a href="http://tools.ietf.org/html//draft-rundgren-json-canonicalization-schemeSeptember">draft-rundgren-json-canonicalization-schemeSeptember</a> 2019</span>
 
 
 <span class="h2"><a class="selflink" name="appendix-I" href="#appendix-I">Appendix I</a>.  Development Portal</span>
 
    The JCS specification is currently developed at:
-   <a href="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</a> [<a href="#ref-10">10</a>].
+   <a href="https://github.com/cyberphone/ietf-json-canon">https://github.com/cyberphone/ietf-json-canon</a>.
 
    The most recent "editors' copy" can be found at:
-   <a href="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</a> [<a href="#ref-11">11</a>].
+   <a href="https://cyberphone.github.io/ietf-json-canon">https://cyberphone.github.io/ietf-json-canon</a>.
 
    JCS source code and test data is available at:
-   <a href="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</a> [<a href="#ref-12">12</a>]
+   <a href="https://github.com/cyberphone/json-canonicalization">https://github.com/cyberphone/json-canonicalization</a>
 
 Authors' Addresses
 
@@ -1267,8 +1267,8 @@ Authors' Addresses
    Bret Jordan
    Symantec Corporation
    350 Ellis Street
-   Mountain View  CA 94043
-   USA
+   Mountain View, CA 94043
+   United States of America
 
    Email: bret_jordan@symantec.com
 
@@ -1276,7 +1276,7 @@ Authors' Addresses
    Samuel Erdtman
    Spotify AB
    Birger Jarlsgatan 61, 4tr
-   Stockholm  113 56
+   SE-113 56 Stockholm
    Sweden
 
    Email: erdtman@spotify.com
@@ -1293,7 +1293,7 @@ Authors' Addresses
 
 
 
-Rundgren, et al.        Expires November 10, 2019              [Page 20]
+Rundgren, et al.          Expires 14 March 2020                [Page 20]
 
 </pre><br />
     <span class="noprint"><small><small>Html markup produced by rfcmarkup 1.129c, available from
