@@ -11,19 +11,18 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-07" 
+     docName="draft-rundgren-json-canonicalization-scheme-08" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
      submissionType="IETF" 
      xml:lang="en" 
      version="3">
-  <!-- xml2rfc v2v3 conversion 2.24.0 -->
   <front>
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-07"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-08"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -72,8 +71,9 @@
         original data does not change during serialization or parsing.  One
         way addressing this issue is creating a canonical form of the data.
         Canonicalization also permits data to be exchanged in its original
-        form on the "wire" while still being subject to secure cryptographic
-        operations. The JSON Canonicalization Scheme (JCS) provides
+        form on the "wire" while secure cryptographic operations are performed
+        on its canonicalized counterpart in the producer and consumer end points.
+        The JSON Canonicalization Scheme (JCS) provides
         canonicalization support for data in the JSON format by building on
         the strict serialization methods for JSON primitives defined by
         ECMAScript, constraining JSON data to the I-JSON subset, and through
@@ -83,7 +83,6 @@
   </front>
   <middle>
     <section anchor="Introduction" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Introduction</name>
       <t>
         Cryptographic operations like hashing and signing requires that the
@@ -111,9 +110,7 @@
         XML canonicalization rules as well as of the equally extensive
         Web Services security standards), may rightfully wonder why JCS
         would not suffer from similar issues. The reasons are twofold:
-        <!-- v2v3: Replaced <list style="symbols"/> with <ul/> -->
       </t>
-      <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <dl spacing="normal">
         <dt>&#x2022;</dt><dd>
             The absence of a namespace concept and default values, as well
@@ -147,7 +144,6 @@
       </t>
     </section>
     <section anchor="Terminology" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Terminology</name>
       <t>
         The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -158,23 +154,18 @@
       </t>
     </section>
     <section anchor="Operation" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Detailed Operation</name>
       <t>
         This section describes the different issues related to creating 
         a canonical JSON representation, and how they are addressed by JCS.
       </t>
       <section anchor="json.datacreation" numbered="true" toc="default">
-        <!-- v2v3: Moved attribute title to <name/> -->
-        <name>Creation of Input Data</name>
+          <name>Creation of Input Data</name>
         <t>
-          In order to serialize JSON data, one needs data
-          that is adapted for JSON serialization.  This is usually achieved by:
+          Data to be serialized is usually achieved by:
         </t>
-        <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
-        <dl spacing="normal">
-          <!-- v2v3: Replaced <t/> with <li/> -->
-          <dt>&#x2022;</dt>
+          <dl spacing="normal">
+            <dt>&#x2022;</dt>
           <dd>
               Parsing previously generated JSON data.
           </dd>
@@ -184,15 +175,13 @@
           </dd>
         </dl>
         <t>
-          Irrespective of the method used, the data to be serialized MUST be compatible
-          with I‑JSON <xref target="RFC7493" format="default"/>, which implies the following:
+          Irrespective of the method used, the data to be serialized MUST be adapted
+          for I‑JSON <xref target="RFC7493" format="default"/> formatting, which implies the following:
         </t>
-        <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
-        <dl spacing="normal">
-          <!-- v2v3: Replaced <t/> with <li/> -->
+          <dl spacing="normal">
           <dt>&#x2022;</dt>
           <dd>
-              JSON Objects MUST NOT exhibit duplicate property names. 
+              JSON Objects MUST NOT exhibit duplicate property names.
           </dd>
           <dt>&#x2022;</dt>
           <dd>
@@ -217,12 +206,17 @@
           Note: although the Unicode standard offers a possibility combining
           certain characters into one, referred to as "Unicode Normalization"
           (<eref target="https://www.unicode.org/reports/tr15/"/>),
-          such functionality MUST be delegated to the application layer.
+          JCS' string processing does not take this in consideration.
+          That is, all components involved in a scheme depending on JCS,
+          MUST preserve Unicode string data "as is".
+        </t>
+        <t>
+          Note: how structured objects like sets are represented in JSON is out of scope
+          for JCS.  See also <xref target="impl.guidelines" format="default"/>.
         </t>
       </section>
       <section anchor="json.canonicalization" numbered="true" toc="default">
-        <!-- v2v3: Moved attribute title to <name/> -->
-        <name>Generation of Canonical JSON Data</name>
+          <name>Generation of Canonical JSON Data</name>
         <t>
           The following subsections describe the steps required for creating a canonical
           JSON representation of the data elaborated on in the previous section.
@@ -232,19 +226,16 @@
           matching the JCS specification.
         </t>
         <section anchor="json.whitespace" numbered="true" toc="default">
-          <!-- v2v3: Moved attribute title to <name/> -->
-          <name>Whitespace</name>
+              <name>Whitespace</name>
           <t>
-            Whitespace between JSON elements MUST NOT be emitted.
+            Whitespace between JSON tokens MUST NOT be emitted.
           </t>
         </section>
         <section anchor="json.serialization.data" numbered="true" toc="default">
-          <!-- v2v3: Moved attribute title to <name/> -->
-          <name>Serialization of Primitive Data Types</name>
+              <name>Serialization of Primitive Data Types</name>
           <t>
             Assume that you parse a JSON object like the following:
           </t>
-          <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "numbers": [333333333.33333329, 1E30, 4.50,
                 2e-3, 0.000000000000000000000000001],
@@ -253,15 +244,12 @@
   }]]></artwork>
           <t>
             If you subsequently serialize the parsed data
-            using a serializer compliant with ES6's <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-            <tt>JSON.stringify()</tt>,
+            using a serializer compliant with ES6's <tt>JSON.stringify()</tt>,
             the result would (with a line wrap added for display purposes only),
             be rather divergent with respect to representation of data:
           </t>
-          <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <artwork name="" type="" align="left" alt=""><![CDATA[  {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
   "€$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}]]></artwork>
-          <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <t>
             The reason for the difference between the parsed data and its
             serialized counterpart, is due to a wide tolerance on input data (as defined
@@ -274,41 +262,33 @@
             according to JCS.  This part is identical to that of ES6.
           </t>
           <section anchor="json.ser.literals" numbered="true" toc="default">
-            <!-- v2v3: Moved attribute title to <name/> -->
-            <name>Serialization of Literals</name>
+                  <name>Serialization of Literals</name>
             <t>
-              The JSON literals <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-              <tt>null</tt>, <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-              <tt>true</tt>,
-              and <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-              <tt>false</tt> present no challenge since they already have a
+              The JSON literals <tt>null</tt>, <tt>true</tt>, and <tt>false</tt>
+              present no challenge since they already have a
               fixed definition in JSON <xref target="RFC8259" format="default"/>.
             </t>
           </section>
           <section anchor="json.ser.string" numbered="true" toc="default">
-            <!-- v2v3: Moved attribute title to <name/> -->
-            <name>Serialization of Strings</name>
+                  <name>Serialization of Strings</name>
             <t>
               For JSON String data (which includes
               JSON Object property names as well), each Unicode code point MUST be serialized as
               described below (also matching Section 24.3.2.2 of <xref target="ES6" format="default"/>):
             </t>
-            <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
             <ul spacing="normal">
-              <!-- v2v3: Replaced <t/> with <li/> -->
               <li>
-                  If the Unicode value falls within the traditional ASCII control
-                  character range (U+0000 through U+001F), it MUST
-                  be serialized using lowercase hexadecimal Unicode notation (\uhhhh) unless it is in the
-                  set of predefined JSON control characters U+0008, U+0009, U+000A, U+000C or U+000D
-                  which MUST be serialized as \b, \t, \n, \f and \r respectively.
-                </li>
-              <!-- v2v3: Replaced <t/> with <li/> -->
+                If the Unicode value falls within the traditional ASCII control
+                character range (U+0000 through U+001F), it MUST
+                be serialized using lowercase hexadecimal Unicode notation (\uhhhh) unless it is in the
+                set of predefined JSON control characters U+0008, U+0009, U+000A, U+000C or U+000D
+                which MUST be serialized as \b, \t, \n, \f and \r respectively.
+              </li>
               <li>
-                  If the Unicode value is outside of the ASCII control character range, it MUST
-                  be serialized "as is" unless it is equivalent to
-                  U+005C (\) or U+0022 (") which MUST be serialized as \\ and \" respectively.
-                </li>
+                If the Unicode value is outside of the ASCII control character range, it MUST
+                be serialized "as is" unless it is equivalent to
+                U+005C (\) or U+0022 (") which MUST be serialized as \\ and \" respectively.
+              </li>
             </ul>
             <t>
               Finally, the resulting sequence of Unicode code points MUST be enclosed in double quotes (").
@@ -322,8 +302,7 @@
             </t>
           </section>
           <section anchor="json.ser.number" numbered="true" toc="default">
-            <!-- v2v3: Moved attribute title to <name/> -->
-            <name>Serialization of Numbers</name>
+                  <name>Serialization of Numbers</name>
             <t>
               JSON Number data MUST be serialized according to
               Section 7.1.12.1 of <xref target="ES6" format="default"/> including the "Note 2" enhancement.
@@ -348,8 +327,7 @@
           </section>
         </section>
         <section anchor="json.sorting.properties" numbered="true" toc="default">
-          <!-- v2v3: Moved attribute title to <name/> -->
-          <name>Sorting of Object Properties</name>
+              <name>Sorting of Object Properties</name>
           <t>
             Although the previous step indeed normalized the representation of primitive
             JSON data types, the result would not qualify as "canonical" since JSON
@@ -360,16 +338,12 @@
             a properly canonicalized version should (with a
             line wrap added for display purposes only), read as:
           </t>
-          <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <artwork name="" type="" align="left" alt=""><![CDATA[  {"literals":[null,true,false],"numbers":[333333333.3333333,
   1e+30,4.5,0.002,1e-27],"string":"€$\u000f\nA'B\"\\\\\"/"}]]></artwork>
-          <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <t>
             The rules for lexicographic sorting of JSON Object
             properties according to JCS are as follows:
-            <!-- v2v3: Replaced <list style="symbols"/> with <ul/> -->
           </t>
-          <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <dl spacing="normal">
             <dt>&#x2022;</dt>
             <dd>
@@ -387,9 +361,7 @@
           <t>
             When a JSON Object is about to have its properties
             sorted, the following measures MUST be adhered to:
-            <!-- v2v3: Replaced <list style="symbols"/> with <ul/> -->
           </t>
-          <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <dl spacing="normal">
             <dt>&#x2022;</dt>
             <dd>
@@ -414,14 +386,12 @@
                 the &lt; operator, lexicographically precedes the other string.
                 If there is no index position at which they differ,
                 then the shorter string lexicographically precedes the longer string.
-                <!-- v2v3: <vspace/> inside list converted to sequence of <t/> -->
               </t>
               <t>
                 In plain English this means that property names are sorted in ascending order like the following:
               </t>
             </dd>
           </dl>
-          <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <artwork name="" type="" align="left" alt=""><![CDATA[        ""
         "a"
         "aa"
@@ -451,7 +421,7 @@
     "\u00f6": "Latin Small Letter O With Diaeresis"
   }]]></artwork>
           <t>
-            Expected argument order after sorting:
+            Expected argument order after sorting property strings:
           </t>
           <artwork name="" type="" align="left" alt=""><![CDATA[  "Carriage Return"
   "One"
@@ -462,8 +432,8 @@
   "Hebrew Letter Dalet With Dagesh"]]></artwork>
           <t>
             Note: for the purpose of obtaining a deterministic property order sorting on
-            UTF-8 or UTF-32 encoded data would also work but the outcome would for JSON
-            data like above differ and thus be incompatible with this specification.
+            UTF-8 or UTF-32 encoded data would also work but the outcome for JSON data
+            like above would differ and thus be incompatible with this specification.
             However, in practice property names are rarely defined outside of 7-bit ASCII making
             it possible sorting on string data in UTF-8 or UTF-32 without conversions and still
             be compatible with JCS.  If this is a viable option or not depends on the
@@ -471,8 +441,7 @@
           </t>
         </section>
         <section anchor="json.utf8" numbered="true" toc="default">
-          <!-- v2v3: Moved attribute title to <name/> -->
-          <name>UTF-8 Generation</name>
+              <name>UTF-8 Generation</name>
           <t>
             Finally, in order to create a platform independent representation,
             the result of the preceding step MUST be encoded in UTF-8.
@@ -481,7 +450,6 @@
             Applied to the sample in <xref target="json.sorting.properties" format="default"/> this
             should yield the following bytes here shown in hexadecimal notation:
           </t>
-          <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
           <artwork name="" type="" align="left" alt=""><![CDATA[  7b 22 6c 69 74 65 72 61 6c 73 22 3a 5b 6e 75 6c 6c 2c 74 72
   75 65 2c 66 61 6c 73 65 5d 2c 22 6e 75 6d 62 65 72 73 22 3a
   5b 33 33 33 33 33 33 33 33 33 2e 33 33 33 33 33 33 33 2c 31
@@ -495,14 +463,12 @@
       </section>
     </section>
     <section anchor="IANA" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>IANA Considerations</name>
       <t>
         This document has no IANA actions.
       </t>
     </section>
     <section anchor="Security" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Security Considerations</name>
       <t>
         It is vital performing "sanity" checks
@@ -510,29 +476,29 @@
         could affect the integrity of the system.
       </t>
       <t>
-        When JCS is applied to signature schemes like the one in <xref target="impl.guidelines" format="default"/>,
+        When JCS is applied to signature schemes like the one described
+        in <xref target="impl.guidelines" format="default"/>,
         applications MUST perform the following operations before acting
         upon received data:
-        <!-- v2v3: Replaced <list style="numbers"/> with <ol/> -->
       </t>
-      <!-- v2v3: <ol/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ol spacing="normal" type="1">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
-          Parse the JSON data
+          Parse the JSON data and verify that it adheres to I-JSON.
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
-          Verify the data for correctness
+          Verify the data for correctness according to the conventions defined by the
+          ecosystem where it is to be used.   This also includes locating the
+          property holding the signature data.
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
-          Verify the signature
+          Verify the signature.
         </li>
       </ol>
+      <t>
+        If any of these steps fail, the operation in progress MUST be aborted.
+      </t>
     </section>
     <section anchor="Acknowledgements" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Acknowledgements</name>
       <t>
         Building on ES6 Number serialization was
@@ -572,16 +538,12 @@
     <references>
       <name>References</name>
       <references>
-        <!-- v2v3: Moved attribute title to <name/> -->
-        <name>Normative References</name>
+          <name>Normative References</name>
         <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
           <front>
             <title>Key words for use in RFCs to Indicate Requirement Levels</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC2119"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="2119"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="BCP" value="14"/>
             <author initials="S." surname="Bradner" fullname="S. Bradner">
               <organization/>
@@ -595,11 +557,8 @@
         <reference anchor="RFC8259" target="https://www.rfc-editor.org/info/rfc8259">
           <front>
             <title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC8259"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="8259"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="STD" value="90"/>
             <author initials="T." surname="Bray" fullname="T. Bray" role="editor">
               <organization/>
@@ -614,11 +573,8 @@
         <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174">
           <front>
             <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC8174"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="8174"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="BCP" value="14"/>
             <author initials="B." surname="Leiba" fullname="B. Leiba">
               <organization/>
@@ -632,9 +588,7 @@
         <reference anchor="RFC7493" target="https://www.rfc-editor.org/info/rfc7493">
           <front>
             <title>The I-JSON Message Format</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC7493"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="7493"/>
             <author initials="T." surname="Bray" fullname="T. Bray" role="editor">
               <organization/>
@@ -674,14 +628,11 @@
         </reference>
       </references>
       <references>
-        <!-- v2v3: Moved attribute title to <name/> -->
-        <name>Informal References</name>
+          <name>Informal References</name>
         <reference anchor="RFC7638" target="https://www.rfc-editor.org/info/rfc7638">
           <front>
             <title>JSON Web Key (JWK) Thumbprint</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC7638"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="7638"/>
             <author initials="M." surname="Jones" fullname="M. Jones">
               <organization/>
@@ -704,9 +655,7 @@
         <reference anchor="RFC4648" target="https://www.rfc-editor.org/info/rfc4648">
           <front>
             <title>The Base16, Base32, and Base64 Data Encodings</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC4648"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="4648"/>
             <author initials="S." surname="Josefsson" fullname="S. Josefsson">
               <organization/>
@@ -723,9 +672,7 @@
         <reference anchor="RFC7515" target="https://www.rfc-editor.org/info/rfc7515">
           <front>
             <title>JSON Web Signature (JWS)</title>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="DOI" value="10.17487/RFC7515"/>
-            <!-- v2v3: Moved <seriesInfo/> inside <front/> element -->
             <seriesInfo name="RFC" value="7515"/>
             <author initials="M." surname="Jones" fullname="M. Jones">
               <organization/>
@@ -762,7 +709,6 @@
             <author>
               <organization>Google LLC</organization>
             </author>
-            <date/>
           </front>
         </reference>
         <reference anchor="RYU" target="https://github.com/ulfjack/ryu">
@@ -802,12 +748,10 @@
       </references>
     </references>
     <section anchor="canonicalize.js" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>ES6 Sample Canonicalizer</name>
       <t>
         Below is an example of a JCS canonicalizer for usage with ES6 based systems:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  ////////////////////////////////////////////////////////////
   // Since the primary purpose of this code is highlighting //
   // the core of the JCS algorithm, error handling and      //
@@ -872,7 +816,6 @@
   };]]></artwork>
     </section>
     <section anchor="json.ieee754.test" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Number Serialization Samples</name>
       <t>
         The following table holds a set of ES6 compatible Number serialization samples,
@@ -882,9 +825,8 @@
         IEEE-754 <xref target="IEEE754" format="default"/> standard using 64-bit (double precision) values,
         here expressed in hexadecimal.
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[╒══════════════════╤═══════════════════════════╤═════════════════════╕
-│     IEEE-754     │   JSON Representation     │       Comment       │
+│     IEEE-754     │    JSON Representation    │       Comment       │
 ╞══════════════════╪═══════════════════════════╪═════════════════════╡
 │ 0000000000000000 │ 0                         │ Zero                │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
@@ -935,36 +877,36 @@
 │ 41b3de4355555557 │ 333333333.33333343        │                     │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
 │ becbf647612f3696 │ -0.0000033333333333333333 │                     │
+├──────────────────┼───────────────────────────┼─────────────────────┤
+│ 43143ff3c1cb0959 │ 1424953923781206.2        │ Round to even (4)   │
 └──────────────────┴───────────────────────────┴─────────────────────┘]]></artwork>
 
       <t>
         Notes:
-        <!-- v2v3: Replaced <list style="format (%d)"/> with <ol/> -->
       </t>
-      <!-- v2v3: <ol/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ol spacing="normal" type="(%d)">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
-          For maximum compliance with the ES6 <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-          <tt>JSON</tt> object
+          For maximum compliance with the ES6 <tt>JSON</tt> object
           values that are to be interpreted as true integers
           SHOULD be in the range -9007199254740991 to 9007199254740991.
           However, how numbers are used in applications do not affect the JCS algorithm.
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
           Although a set of specific integers like 2**68 could be regarded as having
           extended precision, the JCS/ES6 number serialization
           algorithm does not take this in consideration.
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
           Invalid.  See <xref target="json.ser.number" format="default"/>.
+        </li>
+        <li>
+          This number is exactly 1424953923781206.25 but will after the "Note 2" rule
+          mentioned in <xref target="json.ser.number" format="default"/> be truncated and
+          rounded to the closest even value.
         </li>
       </ol>
     </section>
     <section anchor="json.wireformat" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Canonicalized JSON as "Wire Format"</name>
       <t>
         Since the result from the canonicalization process (see <xref target="json.utf8" format="default"/>),
@@ -975,14 +917,12 @@
       </t>
       <t>
         In fact, the ES6 standard way of serializing objects using
-        <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
         <tt>JSON.stringify()</tt> produces a
         more "logical" format, where properties are
         kept in the order they were created or received.  The
         example below shows an address record which could benefit from
         ES6 standard serialization:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "name": "John Doe",
     "address": "2000 Sunset Boulevard",
@@ -999,14 +939,12 @@
       </t>
     </section>
     <section anchor="json.bignumbers" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Dealing with Big Numbers</name>
       <t>
         There are several issues associated with the
         JSON Number type, here illustrated by the following
         sample object:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "giantNumber": 1.4e+9999,
     "payMeThis": 26000.33,
@@ -1025,8 +963,7 @@
         mapping mechanisms, instructing parsers what to do with different properties
         based on their name.  However, this greatly limits the value of using the
         JSON Number type outside of its original somewhat constrained, JavaScript context.
-        The ES6 <!-- v2v3: Replaced <spanx style="verb"/> with <tt/> -->
-        <tt>JSON</tt> object does not support mappings to JSON Number either.
+        The ES6 <tt>JSON</tt> object does not support mappings to JSON Number either.
       </t>
       <t>
         Due to the above, numbers that do not have a natural place in the current
@@ -1038,7 +975,6 @@
       <t>
         Aided by a system using the JSON String type; be it programmatic like
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
   var biggie = new BigNumber(obj.giantNumber);]]></artwork>
       <t>
@@ -1047,7 +983,6 @@
       </t>
     </section>
     <section anchor="string.subtypes" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>String Subtype Handling</name>
       <t>
         Due to the limited set of data types featured in JSON,
@@ -1062,44 +997,39 @@
         "time" for holding a "DateTime" subtype, while "val" is supposed to be a JSON Number
         compliant with JCS. The following example shows such an object:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "time": "2019-01-28T07:45:10Z",
     "big": "055", 
     "val": 3.5
   }]]></artwork>
       <t>Parsing of this object can accomplished by the following ES6 statement:</t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
-      <artwork name="" type="" align="left" alt=""><![CDATA[  var object = JSON.parse(JSON-data-featured-as-a-string);]]></artwork>
+      <artwork name="" type="" align="left" alt=""><![CDATA[  var object = JSON.parse(JSON_object_featured_as_a_string);]]></artwork>
       <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
       step using the result of the parsing process (an ECMAScript object) as input:</t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  ... = new Date(object.time); // Date object
   ... = BigInt(object.big);    // Big integer
   ... = object.val;            // JSON/JS number]]></artwork>
       <t>Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
       following string:</t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
-        which also can be used with ES6 as shown below:
+        which also can be used with ECMAScript as shown below:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
-      <artwork name="" type="" align="left" alt=""><![CDATA[  // Currently required to make BigInt JSON serializable
+      <artwork name="" type="" align="left" alt=""><![CDATA[  // Note: "BigInt" is implemented by Google's V8 ECMAScript engine.
+  // It requires the following code to become JSON serializable.
   BigInt.prototype.toJSON = function() {
       return this.toString();
   };
 
   // JSON parsing using a "stream" based method
-  var object = JSON.parse(JSON-data-featured-as-a-string, 
+  var object = JSON.parse(JSON_object_featured_as_a_string, 
       (k,v) => k == 'time' ? new Date(v) : k == 'big' ? BigInt(v) : v
   );]]></artwork>
       <t>
         If you now apply the canonicalizer in <xref target="canonicalize.js" format="default"/> to  "object", the
         following string would be generated:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork>
       <t>
         In this case the string arguments for "big" and "time" have changed with respect to the original,
@@ -1119,7 +1049,6 @@
         Below is an example in C#/Json.NET showing a part of a class that is serializable
         as a JSON Object:
       </t>
-      <!-- v2v3: <artwork/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <artwork name="" type="" align="left" alt=""><![CDATA[  // The "pure" string solution uses a local
   // string variable for JSON serialization while
   // exposing another type to the application
@@ -1141,17 +1070,15 @@
         characteristics compared to IEEE-754 double precision).
       </t>
       <section anchor="string.subtypes.arrays" numbered="true" toc="default">
-        <!-- v2v3: Moved attribute title to <name/> -->
-        <name>Subtypes in Arrays</name>
+          <name>Subtypes in Arrays</name>
         <t>
-          Since the JSON Array construct permits mixing arbitrary JSON elements,
-          custom parsing and serialization code must normally
-          be used to cope with subtypes anyway.
+          Since the JSON Array construct permits mixing arbitrary JSON data types,
+          custom parsing and serialization code may be required
+          to cope with subtypes anyway.
         </t>
       </section>
     </section>
     <section anchor="impl.guidelines" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Implementation Guidelines</name>
       <t>
         The optimal solution is integrating support for JCS directly
@@ -1160,62 +1087,46 @@
         for a JSON serializer. However, this is currently not the case.
         Fortunately JCS support can be performed through externally supplied
         canonicalizer software, enabling signature creation schemes like the following:
-        <!-- v2v3: Replaced <list style="numbers"/> with <ol/> -->
       </t>
-      <!-- v2v3: <ol/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ol spacing="normal" type="1">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Create the data to be signed.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Serialize the data using existing JSON tools.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Let the external canonicalizer process the serialized data and return canonicalized result data.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Sign the canonicalized data.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Add the resulting signature value to the original JSON data through a designated signature property.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Serialize the completed (now signed) JSON object using existing JSON tools.
           </li>
       </ol>
       <t>
         A compatible signature verification scheme would then be as follows:
-        <!-- v2v3: Replaced <list style="numbers"/> with <ol/> -->
       </t>
-      <!-- v2v3: <ol/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ol spacing="normal" type="1">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Parse the signed JSON data using existing JSON tools.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Read and save the signature value from the designated signature property.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Remove the signature property from the parsed JSON object.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Serialize the remaining JSON data using existing JSON tools.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Let the external canonicalizer process the serialized data and return canonicalized result data.
           </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Verify that the canonicalized data matches the saved signature value
             using the algorithm and key used for creating the signature.
@@ -1231,67 +1142,58 @@
       </t>
     </section>
     <section anchor="open.source" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Open Source Implementations</name>
       <t>
         The following Open Source implementations have been verified to be
         compatible with JCS:
-        <!-- v2v3: Replaced <list style="symbols"/> with <ul/> -->
       </t>
-      <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ul spacing="normal">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             JavaScript: <eref target="https://www.npmjs.com/package/canonicalize"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Java: <eref target="https://github.com/erdtman/java-json-canonicalization"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Go: <eref target="https://github.com/cyberphone/json-canonicalization/tree/master/go"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             .NET/C#: <eref target="https://github.com/cyberphone/json-canonicalization/tree/master/dotnet"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
             Python: <eref target="https://github.com/cyberphone/json-canonicalization/tree/master/python3"/>
         </li>
       </ul>
     </section>
     <section anchor="json.otherefforts" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Other JSON Canonicalization Efforts</name>
       <t>
         There are (and have been) other efforts creating "Canonical JSON". 
         Below is a list of URLs to some of them:
-        <!-- v2v3: Replaced <list style="symbols"/> with <ul/> -->
       </t>
-      <!-- v2v3: <ul/> promoted to be child of <section/>, and the enclosing <t/> split. -->
       <ul spacing="normal">
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
           <eref target="https://tools.ietf.org/html/draft-staykov-hu-json-canonical-form-00"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
           <eref target="https://gibson042.github.io/canonicaljson-spec/"/>
         </li>
-        <!-- v2v3: Replaced <t/> with <li/> -->
         <li>
           <eref target="http://wiki.laptop.org/go/Canonical_JSON"/>
         </li>
       </ul>
       <t>
-        In contrast to JCS which is a serialization scheme, the listed efforts build on text level JSON to JSON
-        transformations. 
+        The listed efforts all build
+        on text level JSON to JSON transformations. The primary feature
+        of text level canonicalization is that it can be made neutral to
+        the flavor of JSON used.  However, such schemes also
+        imply major changes to the JSON parsing process which is a likely
+        hurdle for adoption. Albeit at the expense of certain JSON and
+        application constraints,
+        JCS was designed to be compatible with existing JSON tools.
       </t>
     </section>
     <section anchor="json.development" numbered="true" toc="default">
-      <!-- v2v3: Moved attribute title to <name/> -->
       <name>Development Portal</name>
       <t>
         The JCS specification is currently developed at:
@@ -1302,9 +1204,57 @@
         <eref target="https://cyberphone.github.io/ietf-json-canon"/>.
       </t>
       <t>
-        JCS source code and test data is available at:
+        JCS source code and extensive test data is available at:
         <eref target="https://github.com/cyberphone/json-canonicalization"/>
       </t>
+    </section>
+    <section anchor="document.history" numbered="true" toc="default">
+      <name>Document History</name>
+      <t>
+        [[ to be removed by the RFC Editor before publication as an RFC ]]
+      </t>
+      <t>Version 00-06:</t>
+      <ul spacing="normal">
+        <li>
+          See IETF diff listings.
+        </li>
+      </ul>
+      <t>Version 07:</t>
+      <ul spacing="normal">
+        <li>
+          Initial converson to XML RFC version 3.
+        </li>
+        <li>
+          Changed intended status to "Informational".
+        </li>
+        <li>
+          Added UTF-16 test data and explanations.
+        </li>
+      </ul>
+      <t>Version 08:</t>
+      <ul spacing="normal">
+        <li>
+          Updated Abstract.
+        </li>
+        <li>
+          Added a "Note 2" number serialization sample.
+        </li>
+        <li>
+          Updated Security Considerations.
+        </li>
+        <li>
+          Tried to clear up the JSON input data section.
+        </li>
+        <li>
+          Added a line about Unicode normalization.
+        </li>
+        <li>
+          Added a line about serialiation of structured data.
+        </li>
+        <li>
+          Added a missing fact about "BigInt" (V8 not ES6).
+        </li>
+      </ul>
     </section>
   </back>
 </rfc>
