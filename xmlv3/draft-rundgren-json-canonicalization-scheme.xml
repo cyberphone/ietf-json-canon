@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-08" 
+     docName="draft-rundgren-json-canonicalization-scheme-09" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-08"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-09"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -68,7 +68,7 @@
     <abstract>
       <t>
         Cryptographic operations like hashing and signing requires that the
-        original data does not change during serialization or parsing.  One
+        data is expressed in an invariant format.  One
         way addressing this issue is creating a canonical form of the data.
         Canonicalization also permits data to be exchanged in its original
         form on the "wire" while secure cryptographic operations are performed
@@ -86,7 +86,7 @@
       <name>Introduction</name>
       <t>
         Cryptographic operations like hashing and signing requires that the
-        original data does not change during serialization or parsing.
+        data is expressed in an invariant format.
         One way of accomplishing this is converting the data into
         a format that has a simple and fixed representation like Base64Url <xref target="RFC4648" format="default"/>,
         which is how JWS <xref target="RFC7515" format="default"/> addressed this issue.
@@ -97,10 +97,11 @@
         The primary advantage with a canonicalizing scheme is that data
         can be kept in its original form. This is the core rationale behind JCS.
         Put another way: by using canonicalization a JSON Object may remain a JSON Object
-        even after being signed which simplifies system design, documentation and logging.
+        even after being signed which can simplify system design, documentation and logging.
       </t>
       <t>
-        To avoid "reinventing the wheel", JCS relies on serialization of JSON primitives compatible with
+        To avoid "reinventing the wheel", JCS relies on serialization of JSON primitives
+        (strings, numbers and literals), compatible with
         ECMAScript (aka JavaScript) beginning with version 6 <xref target="ES6" format="default"/>,
         hereafter referred to as "ES6".
       </t>
@@ -260,6 +261,10 @@
           <t>
             The following subsections describe serialization of primitive JSON data types
             according to JCS.  This part is identical to that of ES6.
+            In the (unlikely) event that a future version of ECMAScript would
+            invalidate any of the following serialization methods, it will be
+            up to the developer community to
+            either stick to this specification or create a new specification.
           </t>
           <section anchor="json.ser.literals" numbered="true" toc="default">
                   <name>Serialization of Literals</name>
@@ -276,20 +281,21 @@
               JSON Object property names as well), each Unicode code point MUST be serialized as
               described below (also matching Section 24.3.2.2 of <xref target="ES6" format="default"/>):
             </t>
-            <ul spacing="normal">
-              <li>
+            <dl spacing="normal">
+              <dt>&#x2022;</dt>
+              <dd>
                 If the Unicode value falls within the traditional ASCII control
                 character range (U+0000 through U+001F), it MUST
                 be serialized using lowercase hexadecimal Unicode notation (\uhhhh) unless it is in the
                 set of predefined JSON control characters U+0008, U+0009, U+000A, U+000C or U+000D
                 which MUST be serialized as \b, \t, \n, \f and \r respectively.
-              </li>
-              <li>
+              </dd>
+                <dt>&#x2022;</dt><dd>
                 If the Unicode value is outside of the ASCII control character range, it MUST
                 be serialized "as is" unless it is equivalent to
                 U+005C (\) or U+0022 (") which MUST be serialized as \\ and \" respectively.
-              </li>
-            </ul>
+              </dd>
+            </dl>
             <t>
               Finally, the resulting sequence of Unicode code points MUST be enclosed in double quotes (").
             </t>
@@ -844,11 +850,11 @@
 ├──────────────────┼───────────────────────────┼─────────────────────┤
 │ c340000000000000 │ -9007199254740992         │ Max neg integer (1) │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 4430000000000000 │ 295147905179352830000     │ ~2**68 (2)          │
+│ 4430000000000000 │ 295147905179352830000     │ ~2**68          (2) │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 7fffffffffffffff │                           │ NaN (3)             │
+│ 7fffffffffffffff │                           │ NaN             (3) │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 7ff0000000000000 │                           │ Infinity (3)        │
+│ 7ff0000000000000 │                           │ Infinity        (3) │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
 │ 44b52d02c7e14af5 │ 9.999999999999997e+22     │                     │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
@@ -878,7 +884,7 @@
 ├──────────────────┼───────────────────────────┼─────────────────────┤
 │ becbf647612f3696 │ -0.0000033333333333333333 │                     │
 ├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 43143ff3c1cb0959 │ 1424953923781206.2        │ Round to even (4)   │
+│ 43143ff3c1cb0959 │ 1424953923781206.2        │ Round to even   (4) │
 └──────────────────┴───────────────────────────┴─────────────────────┘]]></artwork>
 
       <t>
@@ -1011,7 +1017,7 @@
   ... = object.val;            // JSON/JS number]]></artwork>
       <t>Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
       following string:</t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z",val:3.5}]]></artwork>
+      <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
         which also can be used with ECMAScript as shown below:
@@ -1253,6 +1259,18 @@
         </li>
         <li>
           Added a missing fact about "BigInt" (V8 not ES6).
+        </li>
+      </ul>
+      <t>Version 09:</t>
+      <ul spacing="normal">
+        <li>
+          Updated initial line of Abstract and Introduction.
+        </li>
+        <li>
+          Added note about breaking ECMAScript changes.
+        </li>
+        <li>
+          Minor nit fixes.
         </li>
       </ul>
     </section>
