@@ -634,7 +634,7 @@
         </reference>
       </references>
       <references>
-          <name>Informal References</name>
+          <name>Informative References</name>
         <reference anchor="RFC7638" target="https://www.rfc-editor.org/info/rfc7638">
           <front>
             <title>JSON Web Key (JWK) Thumbprint</title>
