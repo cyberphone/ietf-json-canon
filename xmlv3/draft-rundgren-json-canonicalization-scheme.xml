@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-09" 
+     docName="draft-rundgren-json-canonicalization-scheme-10" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-09"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-10"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -69,15 +69,14 @@
       <t>
         Cryptographic operations like hashing and signing requires that the
         data is expressed in an invariant format.  One
-        way addressing this issue is creating a canonical form of the data.
+        way to address this is to create a canonical representation of the data.
         Canonicalization also permits data to be exchanged in its original
         form on the "wire" while secure cryptographic operations are performed
         on its canonicalized counterpart in the producer and consumer end points.
-        The JSON Canonicalization Scheme (JCS) provides
-        canonicalization support for data in the JSON format by building on
-        the strict serialization methods for JSON primitives defined by
-        ECMAScript, constraining JSON data to the I-JSON subset, and through
-        a deterministic property sorting scheme.
+        The JSON Canonicalization Scheme (JCS) defines how to create a canonical
+        representation of JSON data by building on the strict serialization methods
+        for JSON primitives defined by ECMAScript, constraining JSON data to the
+        I-JSON subset, and by using deterministic property sorting.
       </t>
     </abstract>
   </front>
@@ -87,49 +86,61 @@
       <t>
         Cryptographic operations like hashing and signing requires that the
         data is expressed in an invariant format.
-        One way of accomplishing this is converting the data into
-        a format that has a simple and fixed representation like Base64Url <xref target="RFC4648" format="default"/>,
-        which is how JWS <xref target="RFC7515" format="default"/> addressed this issue.
+        One way to accomplish this is to convert the data into
+        a format that has a simple and fixed representation,
+        like Base64Url <xref target="RFC4648" format="default"/>.
+        This is how JWS <xref target="RFC7515" format="default"/> addressed this issue.
       </t>
       <t>
         Another solution is to create a canonical version of the data,
         similar to what was done for the XML Signature <xref target="XMLDSIG" format="default"/> standard.
         The primary advantage with a canonicalizing scheme is that data
         can be kept in its original form. This is the core rationale behind JCS.
-        Put another way: by using canonicalization a JSON Object may remain a JSON Object
-        even after being signed which can simplify system design, documentation and logging.
+        Put another way, using canonicalization enables a JSON Object to remain a JSON Object
+        even after being signed. This can simplify system design, documentation, and logging.
       </t>
       <t>
-        To avoid "reinventing the wheel", JCS relies on serialization of JSON primitives
-        (strings, numbers and literals), compatible with
+        To avoid "reinventing the wheel", JCS relies on the serialization of JSON primitives
+        (strings, numbers and literals), as defined by
         ECMAScript (aka JavaScript) beginning with version 6 <xref target="ES6" format="default"/>,
         hereafter referred to as "ES6".
       </t>
       <t>
-        Seasoned XML developers recalling difficulties getting signatures
-        to validate (usually due to different interpretations of the quite intricate
-        XML canonicalization rules as well as of the equally extensive
-        Web Services security standards), may rightfully wonder why JCS
-        would not suffer from similar issues. The reasons are twofold:
+        Seasoned XML developers may recall difficulties getting XML signatures
+        to validate.  This was usually due to different interpretations of the quite intricate
+        XML canonicalization rules as well as of the equally complex
+        Web Services security standards.
+        The reasons why JCS should not suffer from similar issues are:
       </t>
       <dl spacing="normal">
-        <dt>&#x2022;</dt><dd>
-            The absence of a namespace concept and default values, as well
-            as constraining data to the I‑JSON subset eliminate the need for specific
-            parsers for dealing with canonicalization.
-          </dd>
-       <dt>&#x2022;</dt><dd>
-            JCS compatible serialization of JSON primitives is supported by most
-            current Web browsers and as well as by Node.js <xref target="NODEJS" format="default"/>,
-            while the full JCS specification is supported by multiple
-            Open Source implementations (see <xref target="open.source" format="default"/>).
-            See also <xref target="impl.guidelines" format="default"/>.
-          </dd>
+        <dt>&#x2022;</dt>
+        <dd>
+          The absence of a namespace concept and default values.
+        </dd>
+        <dt>&#x2022;</dt>
+        <dd>
+          Constraining data to the I‑JSON <xref target="RFC7493" format="default"/> subset.
+          This eliminates the need for specific parsers for dealing with canonicalization.
+        </dd>
+        <dt>&#x2022;</dt>
+        <dd>
+          JCS compatible serialization of JSON primitives is currently supported
+          by most Web browsers and as well as by Node.js <xref target="NODEJS" format="default"/>,
+        </dd>
+        <dt>&#x2022;</dt>
+        <dd>
+          The full JCS specification is currently supported by multiple
+          Open Source implementations (see <xref target="open.source" format="default"/>).
+          See also <xref target="impl.guidelines" format="default"/>.
+        </dd>
       </dl>
       <t>
-        In summary the JCS specification describes how serialization of JSON primitives compliant
-        with ES6 combined with a deterministic property sorting scheme can be used for
-        creating "Hashable" representations of JSON data intended for consumption by cryptographic methods.
+        In summary the JCS specification defines how to create a canonical
+        representation of JSON data by building on the strict serialization
+        methods for JSON primitives defined by ECMAScript <xref target="ES6" format="default"/>,
+        constraining JSON data to the I-JSON <xref target="RFC7493" format="default"/> subset,
+        and by using deterministic property sorting. The output from JCS is a
+        “Hashable” representation of JSON data that can be used by cryptographic methods.
       </t>
       <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
@@ -157,7 +168,7 @@
     <section anchor="Operation" numbered="true" toc="default">
       <name>Detailed Operation</name>
       <t>
-        This section describes the different issues related to creating 
+        This section describes different issues related to creating 
         a canonical JSON representation, and how they are addressed by JCS.
       </t>
       <section anchor="json.datacreation" numbered="true" toc="default">
@@ -204,7 +215,7 @@
           For more information see <xref target="string.subtypes" format="default"/>.
         </t>
         <t>
-          Note: although the Unicode standard offers a possibility combining
+          Note: although the Unicode standard offers the possibility of combining
           certain characters into one, referred to as "Unicode Normalization"
           (<eref target="https://www.unicode.org/reports/tr15/"/>),
           JCS' string processing does not take this in consideration.
@@ -219,7 +230,7 @@
       <section anchor="json.canonicalization" numbered="true" toc="default">
           <name>Generation of Canonical JSON Data</name>
         <t>
-          The following subsections describe the steps required for creating a canonical
+          The following subsections describe the steps required to create a canonical
           JSON representation of the data elaborated on in the previous section.
         </t>
         <t>
@@ -235,7 +246,7 @@
         <section anchor="json.serialization.data" numbered="true" toc="default">
               <name>Serialization of Primitive Data Types</name>
           <t>
-            Assume that you parse a JSON object like the following:
+            Assume a JSON object as follows is parsed:
           </t>
           <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "numbers": [333333333.33333329, 1E30, 4.50,
@@ -244,10 +255,10 @@
     "literals": [null, true, false]
   }]]></artwork>
           <t>
-            If you subsequently serialize the parsed data
+            If the parsed data is subsequently serialized
             using a serializer compliant with ES6's <tt>JSON.stringify()</tt>,
             the result would (with a line wrap added for display purposes only),
-            be rather divergent with respect to representation of data:
+            be rather divergent with respect to the original data:
           </t>
           <artwork name="" type="" align="left" alt=""><![CDATA[  {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
   "€$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}]]></artwork>
@@ -255,11 +266,11 @@
             The reason for the difference between the parsed data and its
             serialized counterpart, is due to a wide tolerance on input data (as defined
             by JSON <xref target="RFC8259" format="default"/>), while output data (as defined by ES6),
-            has a fixed representation.  As can be seen by the example,
+            has a fixed representation.  As can be seen in the example,
             numbers are subject to rounding as well.
           </t>
           <t>
-            The following subsections describe serialization of primitive JSON data types
+            The following subsections describe the serialization of primitive JSON data types
             according to JCS.  This part is identical to that of ES6.
             In the (unlikely) event that a future version of ECMAScript would
             invalidate any of the following serialization methods, it will be
@@ -269,8 +280,9 @@
           <section anchor="json.ser.literals" numbered="true" toc="default">
                   <name>Serialization of Literals</name>
             <t>
-              The JSON literals <tt>null</tt>, <tt>true</tt>, and <tt>false</tt>
-              present no challenge since they already have a
+              There is no issue with the JSON literals 
+              <tt>null</tt>, <tt>true</tt>, and <tt>false</tt>
+              since they already have a
               fixed definition in JSON <xref target="RFC8259" format="default"/>.
             </t>
           </section>
@@ -279,7 +291,7 @@
             <t>
               For JSON String data (which includes
               JSON Object property names as well), each Unicode code point MUST be serialized as
-              described below (also matching Section 24.3.2.2 of <xref target="ES6" format="default"/>):
+              described below (see section 24.3.2.2 of <xref target="ES6" format="default"/>):
             </t>
             <dl spacing="normal">
               <dt>&#x2022;</dt>
@@ -301,23 +313,28 @@
             </t>
             <t>
               Note: some JSON systems permit the use of invalid Unicode data
-              including "lone surrogates" (e.g. U+DEAD).
-              Since this leads to interoperability issues including broken signatures,
-              occurrences of such data MUST cause the JCS algorithm to terminate
-              with an error indication.
+              like "lone surrogates" (e.g. U+DEAD).
+              Since this may lead to interoperability issues including broken signatures,
+              occurrences of such data MUST cause a compliant JCS implementation to terminate
+              with an appropriate error.
             </t>
           </section>
           <section anchor="json.ser.number" numbered="true" toc="default">
                   <name>Serialization of Numbers</name>
             <t>
               JSON Number data MUST be serialized according to
-              Section 7.1.12.1 of <xref target="ES6" format="default"/> including the "Note 2" enhancement.
+              section 7.1.12.1 of <xref target="ES6" format="default"/> 
+              including the "Note 2" enhancement.
             </t>
             <t>
-              Due to the relative complexity of this part, the algorithm itself is not included in this document.
-              However, the specification is fully implemented by for example Google's V8 <xref target="V8" format="default"/>.
-              The open source Java implementation mentioned in <xref target="open.source" format="default"/>
-              uses a recently developed number serialization algorithm called Ryu <xref target="RYU" format="default"/>.
+              Due to the relative complexity of this part, the algorithm 
+              itself is not included in this document.
+              For implementers of JCS compliant number serialization,
+              Google's V8 <xref target="V8" format="default"/> may serve as a reference. 
+              Another compatible number serialization reference implementation 
+              is Ryu <xref target="RYU" format="default"/>,
+              that is used by the JCS open source Java implementation 
+              mentioned in <xref target="open.source" format="default"/>.
             </t>
             <t>
               ES6 builds on the IEEE-754 <xref target="IEEE754" format="default"/> double precision
@@ -327,16 +344,16 @@
             </t>
             <t>
               Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
-              occurrences of such values MUST cause the JCS algorithm to terminate
-              with an error indication.
+              occurrences of such values MUST cause a compliant JCS implementation to terminate
+              with an appropriate error.
             </t>
           </section>
         </section>
         <section anchor="json.sorting.properties" numbered="true" toc="default">
               <name>Sorting of Object Properties</name>
           <t>
-            Although the previous step indeed normalized the representation of primitive
-            JSON data types, the result would not qualify as "canonical" since JSON
+            Although the previous step normalized the representation of primitive
+            JSON data types, the result would not yet qualify as "canonical" since JSON
             Object properties are not in lexicographic (alphabetical) order.
           </t>
           <t>
@@ -353,15 +370,15 @@
           <dl spacing="normal">
             <dt>&#x2022;</dt>
             <dd>
-                JSON Object properties MUST be sorted in a recursive manner
-                which means that possible JSON child Objects
+                JSON Object properties MUST be sorted recursively,
+                which means that JSON child Objects
                 MUST have their properties sorted as well.
             </dd>
             <dt>&#x2022;</dt>
             <dd>
-                JSON Array data MUST also be scanned for
-                presence of JSON Objects (and applying associated property sorting),
-                but array element order MUST NOT be changed.
+              JSON Array data MUST also be scanned for the
+              presence of JSON Objects (if an object is found then its properties MUST be sorted),
+              but array element order MUST NOT be changed.
             </dd>
           </dl>
           <t>
@@ -371,15 +388,15 @@
           <dl spacing="normal">
             <dt>&#x2022;</dt>
             <dd>
-                The sorting process is applied to property name strings in their "raw" (unescaped) form.
-                That is, a newline character is treated as U+000A.
+              The sorting process is applied to property name strings in their "raw" (unescaped) form.
+              That is, a newline character is treated as U+000A.
             </dd>
             <dt>&#x2022;</dt>
             <dd>
-                Property name strings to be sorted are formatted
-                as arrays of UTF-16 <xref target="UNICODE" format="default"/> code units.
-                The sorting is based on pure value comparisons, where code units are treated as
-                unsigned integers, independent of locale settings.
+              Property name strings to be sorted are formatted
+              as arrays of UTF-16 <xref target="UNICODE" format="default"/> code units.
+              The sorting is based on pure value comparisons, where code units are treated as
+              unsigned integers, independent of locale settings.
             </dd>
             <dt>&#x2022;</dt>
             <dd>
@@ -415,7 +432,7 @@
           </t>
           <t>
             The following test data can be used for verifying the correctness of the sorting
-            scheme in a JCS implementation.  Input JSON data:
+            scheme in a JCS implementation.  JSON test data:
           </t>
           <artwork name="" type="" align="left" alt=""><![CDATA[  {
     "\u20ac": "Euro Sign",
@@ -440,10 +457,10 @@
             Note: for the purpose of obtaining a deterministic property order sorting on
             UTF-8 or UTF-32 encoded data would also work but the outcome for JSON data
             like above would differ and thus be incompatible with this specification.
-            However, in practice property names are rarely defined outside of 7-bit ASCII making
-            it possible sorting on string data in UTF-8 or UTF-32 without conversions and still
-            be compatible with JCS.  If this is a viable option or not depends on the
-            environment JCS is supposed to be used in.
+            However, in practice, property names are rarely defined outside of 7-bit ASCII making
+            it possible to sort on string data in UTF-8 or UTF-32 format without conversions
+            to UTF-16 and still be compatible with JCS.  If this is a viable option or not 
+            depends on the environment JCS is used in.
           </t>
         </section>
         <section anchor="json.utf8" numbered="true" toc="default">
@@ -601,7 +618,9 @@
             </author>
             <date year="2015" month="March"/>
             <abstract>
-              <t>I-JSON (short for "Internet JSON") is a restricted profile of JSON designed to maximize interoperability and increase confidence that software can process it successfully with predictable results.</t>
+              <t>I-JSON (short for "Internet JSON") is a restricted profile of 
+              JSON designed to maximize interoperability and increase confidence 
+              that software can process it successfully with predictable results.</t>
             </abstract>
           </front>
         </reference>
@@ -892,7 +911,7 @@
       </t>
       <ol spacing="normal" type="(%d)">
         <li>
-          For maximum compliance with the ES6 <tt>JSON</tt> object
+          For maximum compliance with the ES6 <tt>JSON</tt> object,
           values that are to be interpreted as true integers
           SHOULD be in the range -9007199254740991 to 9007199254740991.
           However, how numbers are used in applications do not affect the JCS algorithm.
@@ -1270,7 +1289,13 @@
           Added note about breaking ECMAScript changes.
         </li>
         <li>
-          Minor nit fixes.
+          Minor language nit fixes.
+        </li>
+      </ul>
+      <t>Version 10:</t>
+      <ul spacing="normal">
+        <li>
+          Language tweaks.
         </li>
       </ul>
     </section>
