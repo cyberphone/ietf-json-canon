@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-10" 
+     docName="draft-rundgren-json-canonicalization-scheme-11" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-10"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-11"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
