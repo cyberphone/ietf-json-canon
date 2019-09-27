@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-11" 
+     docName="draft-rundgren-json-canonicalization-scheme-12" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-11"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-12"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -288,7 +288,7 @@
             <t>
               In accordance with JSON <xref target="RFC8259" format="default"/>, 
               the literals "null", "true", and
-              "false" are serialized as null, true, and false respectively.
+              "false" MUST be serialized as null, true, and false respectively.
             </t>
           </section>
           <section anchor="json.ser.string" numbered="true" toc="default">
@@ -1325,13 +1325,7 @@
           Minor language nit fixes.
         </li>
       </ul>
-      <t>Version 10:</t>
-      <ul spacing="normal">
-        <li>
-          Language tweaks.
-        </li>
-      </ul>
-      <t>Version 11:</t>
+      <t>Version 10-12:</t>
       <ul spacing="normal">
         <li>
           Language tweaks.
