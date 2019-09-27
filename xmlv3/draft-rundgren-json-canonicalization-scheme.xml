@@ -67,16 +67,21 @@
     </keyword>
     <abstract>
       <t>
-        Cryptographic operations like hashing and signing requires that the
-        data is expressed in an invariant format.  One
-        way to address this is to create a canonical representation of the data.
-        Canonicalization also permits data to be exchanged in its original
-        form on the "wire" while secure cryptographic operations are performed
-        on its canonicalized counterpart in the producer and consumer end points.
-        The JSON Canonicalization Scheme (JCS) defines how to create a canonical
-        representation of JSON data by building on the strict serialization methods
-        for JSON primitives defined by ECMAScript, constraining JSON data to the
-        I-JSON subset, and by using deterministic property sorting.
+        Cryptographic operations like hashing and signing need the data to be
+        expressed in an invariant format so that the operations are reliably
+        repeatable.
+
+        One way to address this is to create a canonical representation of
+        the data.  Canonicalization also permits data to be exchanged in its
+        original form on the "wire" while cryptographic operations
+        performed on the canonicalized counterpart of the data in the
+        producer and consumer end points, generate consistent results.
+        
+        This document describes the JSON Canonicalization Scheme (JCS).
+        The JCS specification defines how to create a canonical representation
+        of JSON data by building on the strict serialization methods for
+        JSON primitives defined by ECMAScript, constraining JSON data to
+        the I-JSON subset, and by using deterministic property sorting.
       </t>
     </abstract>
   </front>
@@ -84,8 +89,9 @@
     <section anchor="Introduction" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
-        Cryptographic operations like hashing and signing requires that the
-        data is expressed in an invariant format.
+        Cryptographic operations like hashing and signing need the data to be
+        expressed in an invariant format so that the operations are reliably
+        repeatable.
         One way to accomplish this is to convert the data into
         a format that has a simple and fixed representation,
         like Base64Url <xref target="RFC4648" format="default"/>.
@@ -280,10 +286,9 @@
           <section anchor="json.ser.literals" numbered="true" toc="default">
                   <name>Serialization of Literals</name>
             <t>
-              There is no issue with the JSON literals 
-              <tt>null</tt>, <tt>true</tt>, and <tt>false</tt>
-              since they already have a
-              fixed definition in JSON <xref target="RFC8259" format="default"/>.
+              In accordance with JSON <xref target="RFC8259" format="default"/>, 
+              the literals "null", "true", and
+              "false" are serialized as null, true, and false respectively.
             </t>
           </section>
           <section anchor="json.ser.string" numbered="true" toc="default">
