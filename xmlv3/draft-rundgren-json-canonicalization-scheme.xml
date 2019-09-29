@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-12" 
+     docName="draft-rundgren-json-canonicalization-scheme-13" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-12"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-13"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -327,8 +327,9 @@
           <section anchor="json.ser.number" numbered="true" toc="default">
                   <name>Serialization of Numbers</name>
             <t>
-              JSON Number data MUST be serialized according to
-              section 7.1.12.1 of <xref target="ES6" format="default"/> 
+              ES6 builds on the IEEE-754 <xref target="IEEE754" format="default"/> double precision
+              standard for representing JSON Number data.
+              Such data MUST be serialized according to section 7.1.12.1 of <xref target="ES6" format="default"/> 
               including the "Note 2" enhancement.
             </t>
             <t>
@@ -340,16 +341,12 @@
               is Ryu <xref target="RYU" format="default"/>,
               that is used by the JCS open source Java implementation 
               mentioned in <xref target="open.source" format="default"/>.
-            </t>
-            <t>
-              ES6 builds on the IEEE-754 <xref target="IEEE754" format="default"/> double precision
-              standard for representing JSON Number data.
               <xref target="json.ieee754.test" format="default"/> holds a set of IEEE-754 sample values and their
               corresponding JSON serialization.
             </t>
             <t>
               Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
-              occurrences of such values MUST cause a compliant JCS implementation to terminate
+              occurrences of NaN or Infinity MUST cause a compliant JCS implementation to terminate
               with an appropriate error.
             </t>
           </section>
@@ -1329,6 +1326,12 @@
       <ul spacing="normal">
         <li>
           Language tweaks.
+        </li>
+      </ul>
+      <t>Version 13:</t>
+      <ul spacing="normal">
+        <li>
+          Reorganized <xref target="json.ser.number" format="default"/>.
         </li>
       </ul>
     </section>
