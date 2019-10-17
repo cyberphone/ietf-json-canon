@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-13" 
+     docName="draft-rundgren-json-canonicalization-scheme-14" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-13"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-14"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -89,6 +89,17 @@
     <section anchor="Introduction" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
+        This document describes the JSON Canonicalization Scheme (JCS).
+        The JCS specification defines how to create a canonical representation
+        of JSON <xref target="RFC8259" format="default"/> data by building
+        on the strict serialization methods for
+        JSON primitives defined by ECMAScript <xref target="ES6" format="default"/>,
+        constraining JSON data to the I-JSON <xref target="RFC7493" format="default"/>
+        subset, and by using deterministic property sorting. The output from JCS is a
+        “Hashable” representation of JSON data that can be used by cryptographic methods.
+        The subsequent paragraphs outline the primary design considerations.
+      </t>
+      <t>
         Cryptographic operations like hashing and signing need the data to be
         expressed in an invariant format so that the operations are reliably
         repeatable.
@@ -141,14 +152,6 @@
         </dd>
       </dl>
       <t>
-        In summary the JCS specification defines how to create a canonical
-        representation of JSON data by building on the strict serialization
-        methods for JSON primitives defined by ECMAScript <xref target="ES6" format="default"/>,
-        constraining JSON data to the I-JSON <xref target="RFC7493" format="default"/> subset,
-        and by using deterministic property sorting. The output from JCS is a
-        “Hashable” representation of JSON data that can be used by cryptographic methods.
-      </t>
-      <t>
         JCS is compatible with some existing systems relying on JSON canonicalization
         such as JWK Thumbprint <xref target="RFC7638" format="default"/> and Keybase <xref target="KEYBASE" format="default"/>. 
       </t>
@@ -158,7 +161,7 @@
       <t>
         The intended audiences of this document are JSON tool vendors, as
         well as designers of JSON based cryptographic solutions.
-        The reader is assumed to have a basic knowledge of ECMAScript including the "JSON" object.
+        The reader is assumed to be knowledgeable in ECMAScript including the <tt>JSON</tt> object.
       </t>
     </section>
     <section anchor="Terminology" numbered="true" toc="default">
@@ -176,6 +179,10 @@
       <t>
         This section describes different issues related to creating 
         a canonical JSON representation, and how they are addressed by JCS.
+      </t>
+      <t>
+        <xref target="impl.guidelines" format="default"/> describes
+        the RECOMMENDED way of adding JCS support to existing JSON tools.
       </t>
       <section anchor="json.datacreation" numbered="true" toc="default">
           <name>Creation of Input Data</name>
@@ -221,16 +228,12 @@
           For more information see <xref target="string.subtypes" format="default"/>.
         </t>
         <t>
-          Note: although the Unicode standard offers the possibility of combining
-          certain characters into one, referred to as "Unicode Normalization"
+          Note: although the Unicode standard offers the possibility of rearranging
+          certain character sequences, referred to as "Unicode Normalization"
           (<eref target="https://www.unicode.org/reports/tr15/"/>),
           JCS' string processing does not take this in consideration.
           That is, all components involved in a scheme depending on JCS,
           MUST preserve Unicode string data "as is".
-        </t>
-        <t>
-          Note: how structured objects like sets are represented in JSON is out of scope
-          for JCS.  See also <xref target="impl.guidelines" format="default"/>.
         </t>
       </section>
       <section anchor="json.canonicalization" numbered="true" toc="default">
@@ -317,9 +320,8 @@
               Finally, the resulting sequence of Unicode code points MUST be enclosed in double quotes (").
             </t>
             <t>
-              Note: some JSON systems permit the use of invalid Unicode data
-              like "lone surrogates" (e.g. U+DEAD).
-              Since this may lead to interoperability issues including broken signatures,
+              Note: since invalid Unicode data like "lone surrogates" (e.g. U+DEAD),
+              may lead to interoperability issues including broken signatures,
               occurrences of such data MUST cause a compliant JCS implementation to terminate
               with an appropriate error.
             </t>
@@ -345,8 +347,8 @@
               corresponding JSON serialization.
             </t>
             <t>
-              Note: since NaN (Not a Number) and Infinity are not permitted in JSON,
-              occurrences of NaN or Infinity MUST cause a compliant JCS implementation to terminate
+              Note: since <tt>NaN</tt> (Not a Number) and <tt>Infinity</tt> are not permitted in JSON,
+              occurrences of <tt>NaN</tt> or <tt>Infinity</tt> MUST cause a compliant JCS implementation to terminate
               with an appropriate error.
             </t>
           </section>
@@ -496,7 +498,7 @@
     <section anchor="Security" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>
-        It is vital performing "sanity" checks
+        It is vital performing sanity checks
         on input data to avoid overflowing buffers and similar things that
         could affect the integrity of the system.
       </t>
@@ -541,7 +543,7 @@
         John-Mark Gurney,
         John Levine,
         Mark Miller,
-        Matt Miller,
+        Matthew Miller,
         Mike Jones,
         Mark Nottingham,
         Mike Samuel,
@@ -1024,7 +1026,7 @@
         Due to the above, numbers that do not have a natural place in the current
         JSON ecosystem MUST be wrapped using the JSON String type.  This is close to
         a de-facto standard for open systems.  This is also applicable for
-        other data types that do not have direct support in JSON, like "DateTime"
+        other data types that do not have direct support in JSON, like <tt>DateTime</tt>
         objects as described in <xref target="string.subtypes" format="default"/>.
       </t>
       <t>
@@ -1048,8 +1050,8 @@
       </t>
       <t>
         Assume you want to parse a JSON object where the schema
-        designer assigned the property "big" for holding a "BigInteger" subtype and
-        "time" for holding a "DateTime" subtype, while "val" is supposed to be a JSON Number
+        designer assigned the property "big" for holding a <tt>BigInt</tt> subtype and
+        "time" for holding a <tt>DateTime</tt> subtype, while "val" is supposed to be a JSON Number
         compliant with JCS. The following example shows such an object:
       </t>
       <artwork name="" type="" align="left" alt=""><![CDATA[  {
@@ -1064,15 +1066,19 @@
       <artwork name="" type="" align="left" alt=""><![CDATA[  ... = new Date(object.time); // Date object
   ... = BigInt(object.big);    // Big integer
   ... = object.val;            // JSON/JS number]]></artwork>
-      <t>Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
-      following string:</t>
+      <t>
+        Note that the <tt>BigInt</tt> data type is currently only natively supported by V8 <xref target="V8" format="default"/>.
+      </t>
+      <t>
+        Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
+        following string:
+      </t>
       <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
         which also can be used with ECMAScript as shown below:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  // Note: "BigInt" is implemented by Google's V8 ECMAScript engine.
-  // It requires the following code to become JSON serializable.
+      <artwork name="" type="" align="left" alt=""><![CDATA[  // "BigInt" requires the following code to become JSON serializable
   BigInt.prototype.toJSON = function() {
       return this.toString();
   };
@@ -1140,8 +1146,13 @@
         in JSON serializers (parsers need no changes).
         That is, canonicalization would just be an additional "mode"
         for a JSON serializer. However, this is currently not the case.
-        Fortunately JCS support can be performed through externally supplied
-        canonicalizer software, enabling signature creation schemes like the following:
+        Fortunately, JCS support can be introduced through externally supplied
+        canonicalizer software acting as a post processor to existing
+        JSON serializers. This arrangement also relieves the JCS implementer from
+        having to deal with how underlying data is to be represented in JSON.
+      </t>
+      <t>
+        The post processor concept enables signature creation schemes like the following:
       </t>
       <ol spacing="normal" type="1">
         <li>
@@ -1332,6 +1343,16 @@
       <ul spacing="normal">
         <li>
           Reorganized <xref target="json.ser.number" format="default"/>.
+        </li>
+      </ul>
+      <t>Version 14:</t>
+      <ul spacing="normal">
+        <li>
+          Improved introduction + some minor changes in security considerations, aknowlegdgements, and
+          unicode normalization.
+        </li>
+        <li>
+          Generalized data representation issues by updating <xref target="impl.guidelines" format="default"/>.
         </li>
       </ul>
     </section>
