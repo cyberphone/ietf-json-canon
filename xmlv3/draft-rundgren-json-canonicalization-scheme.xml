@@ -107,10 +107,10 @@
         a format that has a simple and fixed representation,
         like Base64Url <xref target="RFC4648" format="default"/>.
         This is how JWS <xref target="RFC7515" format="default"/> addressed this issue.
-      </t>
-      <t>
         Another solution is to create a canonical version of the data,
         similar to what was done for the XML Signature <xref target="XMLDSIG" format="default"/> standard.
+      </t>
+      <t>  
         The primary advantage with a canonicalizing scheme is that data
         can be kept in its original form. This is the core rationale behind JCS.
         Put another way, using canonicalization enables a JSON Object to remain a JSON Object
@@ -142,13 +142,14 @@
         <dt>&#x2022;</dt>
         <dd>
           JCS compatible serialization of JSON primitives is currently supported
-          by most Web browsers and as well as by Node.js <xref target="NODEJS" format="default"/>,
+          by most Web browsers as well as by Node.js <xref target="NODEJS" format="default"/>,
         </dd>
         <dt>&#x2022;</dt>
         <dd>
           The full JCS specification is currently supported by multiple
           Open Source implementations (see <xref target="open.source" format="default"/>).
-          See also <xref target="impl.guidelines" format="default"/>.
+          See also <xref target="impl.guidelines" format="default"/> for implementation 
+          guidelines.
         </dd>
       </dl>
       <t>
@@ -177,7 +178,7 @@
     <section anchor="Operation" numbered="true" toc="default">
       <name>Detailed Operation</name>
       <t>
-        This section describes different issues related to creating 
+        This section describes the details related to creating 
         a canonical JSON representation, and how they are addressed by JCS.
       </t>
       <t>
@@ -187,7 +188,7 @@
       <section anchor="json.datacreation" numbered="true" toc="default">
           <name>Creation of Input Data</name>
         <t>
-          Data to be serialized is usually achieved by:
+          Data to be canonically serialized is usually created by:
         </t>
         <dl spacing="normal">
           <dt>&#x2022;</dt>
@@ -218,9 +219,9 @@
               JSON Number data MUST be expressible
               as IEEE-754 <xref target="IEEE754" format="default"/> double precision values.
               For applications needing higher precision or longer integers than
-              offered by IEEE-754 double precision,
-              <xref target="json.bignumbers" format="default"/> outlines how
-              such requirements can be supported in an interoperable and extensible way.
+              offered by IEEE-754 double precision it is recommended to transport the 
+              number as a String, see <xref target="json.bignumbers" format="default"/> for 
+              details on how this can be done in an interoperable and extensible way.
           </dd>
         </dl>
         <t>
@@ -475,7 +476,7 @@
           </t>
           <t>
             Applied to the sample in <xref target="json.sorting.properties" format="default"/> this
-            should yield the following bytes here shown in hexadecimal notation:
+            should yield the following bytes, here shown in hexadecimal notation:
           </t>
           <artwork name="" type="" align="left" alt=""><![CDATA[  7b 22 6c 69 74 65 72 61 6c 73 22 3a 5b 6e 75 6c 6c 2c 74 72
   75 65 2c 66 61 6c 73 65 5d 2c 22 6e 75 6d 62 65 72 73 22 3a
