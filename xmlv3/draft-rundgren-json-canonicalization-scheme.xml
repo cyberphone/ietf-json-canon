@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-14"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-15"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -76,7 +76,8 @@
         original form on the "wire" while cryptographic operations
         performed on the canonicalized counterpart of the data in the
         producer and consumer end points, generate consistent results.
-        
+      </t>
+      <t>
         This document describes the JSON Canonicalization Scheme (JCS).
         The JCS specification defines how to create a canonical representation
         of JSON data by building on the strict serialization methods for
@@ -96,7 +97,7 @@
         JSON primitives defined by ECMAScript <xref target="ES6" format="default"/>,
         constraining JSON data to the I-JSON <xref target="RFC7493" format="default"/>
         subset, and by using deterministic property sorting. The output from JCS is a
-        “Hashable” representation of JSON data that can be used by cryptographic methods.
+        "Hashable" representation of JSON data that can be used by cryptographic methods.
         The subsequent paragraphs outline the primary design considerations.
       </t>
       <t>
@@ -218,10 +219,10 @@
           <dd>
               JSON Number data MUST be expressible
               as IEEE-754 <xref target="IEEE754" format="default"/> double precision values.
-              For applications needing higher precision or longer integers than
-              offered by IEEE-754 double precision it is recommended to transport the 
-              number as a String, see <xref target="json.bignumbers" format="default"/> for 
-              details on how this can be done in an interoperable and extensible way.
+            For applications needing higher precision or longer integers than
+            offered by IEEE-754 double precision, it is RECOMMENDED to represent such
+            numbers as JSON Strings, see <xref target="json.bignumbers" format="default"/> for 
+              details on how this can be performed in an interoperable and extensible way.
           </dd>
         </dl>
         <t>
@@ -232,7 +233,7 @@
           Note: although the Unicode standard offers the possibility of rearranging
           certain character sequences, referred to as "Unicode Normalization"
           (<eref target="https://www.unicode.org/reports/tr15/"/>),
-          JCS' string processing does not take this in consideration.
+          JCS compliant string processing does not take this in consideration.
           That is, all components involved in a scheme depending on JCS,
           MUST preserve Unicode string data "as is".
         </t>
@@ -258,7 +259,7 @@
           <t>
             Assume a JSON object as follows is parsed:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  {
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  {
     "numbers": [333333333.33333329, 1E30, 4.50,
                 2e-3, 0.000000000000000000000000001],
     "string": "\u20ac$\u000F\u000aA'\u0042\u0022\u005c\\\"\/",
@@ -270,7 +271,7 @@
             the result would (with a line wrap added for display purposes only),
             be rather divergent with respect to the original data:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  {"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":
   "€$\u000f\nA'B\"\\\\\"/","literals":[null,true,false]}]]></artwork>
           <t>
             The reason for the difference between the parsed data and its
@@ -321,7 +322,7 @@
               Finally, the resulting sequence of Unicode code points MUST be enclosed in double quotes (").
             </t>
             <t>
-              Note: since invalid Unicode data like "lone surrogates" (e.g. U+DEAD),
+              Note: since invalid Unicode data like "lone surrogates" (e.g. U+DEAD)
               may lead to interoperability issues including broken signatures,
               occurrences of such data MUST cause a compliant JCS implementation to terminate
               with an appropriate error.
@@ -339,8 +340,8 @@
               Due to the relative complexity of this part, the algorithm 
               itself is not included in this document.
               For implementers of JCS compliant number serialization,
-              Google's V8 <xref target="V8" format="default"/> may serve as a reference. 
-              Another compatible number serialization reference implementation 
+              Google's implementation in V8 <xref target="V8" format="default"/> may serve as a reference.
+              Another compatible number serialization reference implementation
               is Ryu <xref target="RYU" format="default"/>,
               that is used by the JCS open source Java implementation 
               mentioned in <xref target="open.source" format="default"/>.
@@ -366,7 +367,7 @@
             a properly canonicalized version should (with a
             line wrap added for display purposes only), read as:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  {"literals":[null,true,false],"numbers":[333333333.3333333,
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  {"literals":[null,true,false],"numbers":[333333333.3333333,
   1e+30,4.5,0.002,1e-27],"string":"€$\u000f\nA'B\"\\\\\"/"}]]></artwork>
           <t>
             The rules for lexicographic sorting of JSON Object
@@ -420,7 +421,7 @@
               </t>
             </dd>
           </dl>
-          <artwork name="" type="" align="left" alt=""><![CDATA[        ""
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[        ""
         "a"
         "aa"
         "ab"]]></artwork>
@@ -439,7 +440,7 @@
             The following test data can be used for verifying the correctness of the sorting
             scheme in a JCS implementation.  JSON test data:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  {
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  {
     "\u20ac": "Euro Sign",
     "\r": "Carriage Return",
     "\ufb33": "Hebrew Letter Dalet With Dagesh",
@@ -451,7 +452,7 @@
           <t>
             Expected argument order after sorting property strings:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  "Carriage Return"
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  "Carriage Return"
   "One"
   "Control"
   "Latin Small Letter O With Diaeresis"
@@ -478,7 +479,7 @@
             Applied to the sample in <xref target="json.sorting.properties" format="default"/> this
             should yield the following bytes, here shown in hexadecimal notation:
           </t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[  7b 22 6c 69 74 65 72 61 6c 73 22 3a 5b 6e 75 6c 6c 2c 74 72
+          <artwork type="ascii-art" align="left" alt=""><![CDATA[  7b 22 6c 69 74 65 72 61 6c 73 22 3a 5b 6e 75 6c 6c 2c 74 72
   75 65 2c 66 61 6c 73 65 5d 2c 22 6e 75 6d 62 65 72 73 22 3a
   5b 33 33 33 33 33 33 33 33 33 2e 33 33 33 33 33 33 33 2c 31
   65 2b 33 30 2c 34 2e 35 2c 30 2e 30 30 32 2c 31 65 2d 32 37
@@ -499,9 +500,9 @@
     <section anchor="Security" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>
-        It is vital performing sanity checks
-        on input data to avoid overflowing buffers and similar things that
-        could affect the integrity of the system.
+        It is crucial to perform sanity checks on input data to avoid
+        overflowing buffers and similar things that could affect the
+        integrity of the system.
       </t>
       <t>
         When JCS is applied to signature schemes like the one described
@@ -810,7 +811,7 @@
       <t>
         Below is an example of a JCS canonicalizer for usage with ES6 based systems:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  ////////////////////////////////////////////////////////////
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  ////////////////////////////////////////////////////////////
   // Since the primary purpose of this code is highlighting //
   // the core of the JCS algorithm, error handling and      //
   // UTF-8 generation were not implemented                  //
@@ -883,61 +884,61 @@
         IEEE-754 <xref target="IEEE754" format="default"/> standard using 64-bit (double precision) values,
         here expressed in hexadecimal.
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[╒══════════════════╤═══════════════════════════╤═════════════════════╕
-│     IEEE-754     │    JSON Representation    │       Comment       │
-╞══════════════════╪═══════════════════════════╪═════════════════════╡
-│ 0000000000000000 │ 0                         │ Zero                │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 8000000000000000 │ 0                         │ Minus zero          │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 0000000000000001 │ 5e-324                    │ Min pos number      │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 8000000000000001 │ -5e-324                   │ Min neg number      │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 7fefffffffffffff │ 1.7976931348623157e+308   │ Max pos number      │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ ffefffffffffffff │ -1.7976931348623157e+308  │ Max neg number      │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 4340000000000000 │ 9007199254740992          │ Max pos integer (1) │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ c340000000000000 │ -9007199254740992         │ Max neg integer (1) │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 4430000000000000 │ 295147905179352830000     │ ~2**68          (2) │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 7fffffffffffffff │                           │ NaN             (3) │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 7ff0000000000000 │                           │ Infinity        (3) │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 44b52d02c7e14af5 │ 9.999999999999997e+22     │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 44b52d02c7e14af6 │ 1e+23                     │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 44b52d02c7e14af7 │ 1.0000000000000001e+23    │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 444b1ae4d6e2ef4e │ 999999999999999700000     │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 444b1ae4d6e2ef4f │ 999999999999999900000     │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 444b1ae4d6e2ef50 │ 1e+21                     │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 3eb0c6f7a0b5ed8c │ 9.999999999999997e-7      │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 3eb0c6f7a0b5ed8d │ 0.000001                  │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 41b3de4355555553 │ 333333333.3333332         │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 41b3de4355555554 │ 333333333.33333325        │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 41b3de4355555555 │ 333333333.3333333         │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 41b3de4355555556 │ 333333333.3333334         │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 41b3de4355555557 │ 333333333.33333343        │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ becbf647612f3696 │ -0.0000033333333333333333 │                     │
-├──────────────────┼───────────────────────────┼─────────────────────┤
-│ 43143ff3c1cb0959 │ 1424953923781206.2        │ Round to even   (4) │
-└──────────────────┴───────────────────────────┴─────────────────────┘]]></artwork>
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[|====================================================================|
+|     IEEE-754     |    JSON Representation    |       Comment       |
+|====================================================================|
+| 0000000000000000 | 0                         | Zero                |
+|--------------------------------------------------------------------|
+| 8000000000000000 | 0                         | Minus zero          |
+|--------------------------------------------------------------------|
+| 0000000000000001 | 5e-324                    | Min pos number      |
+|--------------------------------------------------------------------|
+| 8000000000000001 | -5e-324                   | Min neg number      |
+|--------------------------------------------------------------------|
+| 7fefffffffffffff | 1.7976931348623157e+308   | Max pos number      |
+|--------------------------------------------------------------------|
+| ffefffffffffffff | -1.7976931348623157e+308  | Max neg number      |
+|--------------------------------------------------------------------|
+| 4340000000000000 | 9007199254740992          | Max pos integer (1) |
+|--------------------------------------------------------------------|
+| c340000000000000 | -9007199254740992         | Max neg integer (1) |
+|--------------------------------------------------------------------|
+| 4430000000000000 | 295147905179352830000     | ~2**68          (2) |
+|--------------------------------------------------------------------|
+| 7fffffffffffffff |                           | NaN             (3) |
+|--------------------------------------------------------------------|
+| 7ff0000000000000 |                           | Infinity        (3) |
+|--------------------------------------------------------------------|
+| 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
+|--------------------------------------------------------------------|
+| 44b52d02c7e14af6 | 1e+23                     |                     |
+|--------------------------------------------------------------------|
+| 44b52d02c7e14af7 | 1.0000000000000001e+23    |                     |
+|--------------------------------------------------------------------|
+| 444b1ae4d6e2ef4e | 999999999999999700000     |                     |
+|--------------------------------------------------------------------|
+| 444b1ae4d6e2ef4f | 999999999999999900000     |                     |
+|--------------------------------------------------------------------|
+| 444b1ae4d6e2ef50 | 1e+21                     |                     |
+|--------------------------------------------------------------------|
+| 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                     |
+|--------------------------------------------------------------------|
+| 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
+|--------------------------------------------------------------------|
+| 41b3de4355555553 | 333333333.3333332         |                     |
+|--------------------------------------------------------------------|
+| 41b3de4355555554 | 333333333.33333325        |                     |
+|--------------------------------------------------------------------|
+| 41b3de4355555555 | 333333333.3333333         |                     |
+|--------------------------------------------------------------------|
+| 41b3de4355555556 | 333333333.3333334         |                     |
+|--------------------------------------------------------------------|
+| 41b3de4355555557 | 333333333.33333343        |                     |
+|--------------------------------------------------------------------|
+| becbf647612f3696 | -0.0000033333333333333333 |                     |
+|--------------------------------------------------------------------|
+| 43143ff3c1cb0959 | 1424953923781206.2        | Round to even   (4) |
+|--------------------------------------------------------------------|]]></artwork>
 
       <t>
         Notes:
@@ -955,7 +956,8 @@
           algorithm does not take this in consideration.
         </li>
         <li>
-          Invalid.  See <xref target="json.ser.number" format="default"/>.
+          Value out range, not permitted in JSON.
+          See <xref target="json.ser.number" format="default"/>.
         </li>
         <li>
           This number is exactly 1424953923781206.25 but will after the "Note 2" rule
@@ -963,6 +965,15 @@
           rounded to the closest even value.
         </li>
       </ol>
+      <t>
+        For a more exhaustive validation of a JCS number serializer, you may test
+        against a file (currently) available in the development portal
+        (see <xref target="json.development" format="default"/>),
+        containing a large set of sample values. Another option
+        is running V8 <xref target="V8" format="default"/> 
+        as a live reference together with a program generating a
+        substantial amount of random IEEE-754 values.
+      </t>
     </section>
     <section anchor="json.wireformat" numbered="true" toc="default">
       <name>Canonicalized JSON as "Wire Format"</name>
@@ -981,7 +992,7 @@
         example below shows an address record which could benefit from
         ES6 standard serialization:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  {
     "name": "John Doe",
     "address": "2000 Sunset Boulevard",
     "city": "Los Angeles",
@@ -1003,7 +1014,7 @@
         JSON Number type, here illustrated by the following
         sample object:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  {
     "giantNumber": 1.4e+9999,
     "payMeThis": 26000.33,
     "int64Max": 9223372036854775807
@@ -1033,7 +1044,7 @@
       <t>
         Aided by a system using the JSON String type; be it programmatic like
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
   var biggie = new BigNumber(obj.giantNumber);]]></artwork>
       <t>
         or declarative schemes like OpenAPI <xref target="OPENAPI" format="default"/>,
@@ -1055,16 +1066,16 @@
         "time" for holding a <tt>DateTime</tt> subtype, while "val" is supposed to be a JSON Number
         compliant with JCS. The following example shows such an object:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  {
     "time": "2019-01-28T07:45:10Z",
     "big": "055", 
     "val": 3.5
   }]]></artwork>
       <t>Parsing of this object can accomplished by the following ES6 statement:</t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  var object = JSON.parse(JSON_object_featured_as_a_string);]]></artwork>
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  var object = JSON.parse(JSON_object_featured_as_a_string);]]></artwork>
       <t>After parsing the actual data can be extracted which for subtypes also involve a conversion
       step using the result of the parsing process (an ECMAScript object) as input:</t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  ... = new Date(object.time); // Date object
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  ... = new Date(object.time); // Date object
   ... = BigInt(object.big);    // Big integer
   ... = object.val;            // JSON/JS number]]></artwork>
       <t>
@@ -1074,12 +1085,12 @@
         Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
         following string:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  {"big":"055","time":"2019-01-28T07:45:10Z","val":3.5}]]></artwork>
       <t>
         Although this is (with respect to JCS) technically correct, there is another way parsing JSON data
         which also can be used with ECMAScript as shown below:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  // "BigInt" requires the following code to become JSON serializable
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  // "BigInt" requires the following code to become JSON serializable
   BigInt.prototype.toJSON = function() {
       return this.toString();
   };
@@ -1092,7 +1103,7 @@
         If you now apply the canonicalizer in <xref target="canonicalize.js" format="default"/> to  "object", the
         following string would be generated:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork>
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  {"big":"55","time":"2019-01-28T07:45:10.000Z","val":3.5}]]></artwork>
       <t>
         In this case the string arguments for "big" and "time" have changed with respect to the original,
         presumable making an application depending on JCS fail.
@@ -1111,7 +1122,7 @@
         Below is an example in C#/Json.NET showing a part of a class that is serializable
         as a JSON Object:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[  // The "pure" string solution uses a local
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[  // The "pure" string solution uses a local
   // string variable for JSON serialization while
   // exposing another type to the application
   [JsonProperty("amount")]
@@ -1267,10 +1278,6 @@
         <eref target="https://github.com/cyberphone/ietf-json-canon"/>.
       </t>
       <t>
-        The most recent "editors' copy" can be found at:
-        <eref target="https://cyberphone.github.io/ietf-json-canon"/>.
-      </t>
-      <t>
         JCS source code and extensive test data is available at:
         <eref target="https://github.com/cyberphone/json-canonicalization"/>
       </t>
@@ -1278,7 +1285,8 @@
     <section anchor="document.history" numbered="true" toc="default">
       <name>Document History</name>
       <t>
-        [[ to be removed by the RFC Editor before publication as an RFC ]]
+        [[ This section to be removed by the RFC Editor before publication as
+        an RFC ]]
       </t>
       <t>Version 00-06:</t>
       <ul spacing="normal">
@@ -1354,6 +1362,18 @@
         </li>
         <li>
           Generalized data representation issues by updating <xref target="impl.guidelines" format="default"/>.
+        </li>
+      </ul>
+      <t>Version 15:</t>
+      <ul spacing="normal">
+        <li>
+          Minor nits, reverted the IEEE-754 table to ASCII.
+        </li>
+        <li>
+          Added a bit more meat to the IEEE-754 table.
+        </li>
+        <li>
+          Changed all &lt;artwork&gt; to: type="ascii-art" and removed name="".
         </li>
       </ul>
     </section>
