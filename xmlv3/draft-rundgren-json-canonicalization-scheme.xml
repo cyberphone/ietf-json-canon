@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-15" 
+     docName="draft-rundgren-json-canonicalization-scheme-16" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-15"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-16"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -131,21 +131,21 @@
         The reasons why JCS should not suffer from similar issues are:
       </t>
       <dl spacing="normal">
-        <dt>&#x2022;</dt>
+        <dt>o</dt>
         <dd>
           The absence of a namespace concept and default values.
         </dd>
-        <dt>&#x2022;</dt>
+        <dt>o</dt>
         <dd>
           Constraining data to the I‑JSON <xref target="RFC7493" format="default"/> subset.
           This eliminates the need for specific parsers for dealing with canonicalization.
         </dd>
-        <dt>&#x2022;</dt>
+        <dt>o</dt>
         <dd>
           JCS compatible serialization of JSON primitives is currently supported
           by most Web browsers as well as by Node.js <xref target="NODEJS" format="default"/>,
         </dd>
-        <dt>&#x2022;</dt>
+        <dt>o</dt>
         <dd>
           The full JCS specification is currently supported by multiple
           Open Source implementations (see <xref target="open.source" format="default"/>).
@@ -168,6 +168,12 @@
     </section>
     <section anchor="Terminology" numbered="true" toc="default">
       <name>Terminology</name>
+      <t>
+        While this document does not describe a standard, a conformant
+        implementation is supposed to adhere to the specified behavior for
+        security and interoperability reasons.  This text uses BCP 14 to
+        describe that necessary behavior.
+      </t>
       <t>
         The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
         NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
@@ -192,11 +198,11 @@
           Data to be canonically serialized is usually created by:
         </t>
         <dl spacing="normal">
-          <dt>&#x2022;</dt>
+          <dt>o</dt>
           <dd>
               Parsing previously generated JSON data.
           </dd>
-          <dt>&#x2022;</dt>
+          <dt>o</dt>
           <dd>
               Programmatically creating data.
           </dd>
@@ -206,16 +212,16 @@
           for I‑JSON <xref target="RFC7493" format="default"/> formatting, which implies the following:
         </t>
           <dl spacing="normal">
-          <dt>&#x2022;</dt>
+          <dt>o</dt>
           <dd>
               JSON Objects MUST NOT exhibit duplicate property names.
           </dd>
-          <dt>&#x2022;</dt>
+          <dt>o</dt>
           <dd>
               JSON String data MUST be expressible
               as Unicode <xref target="UNICODE" format="default"/>.
           </dd>
-          <dt>&#x2022;</dt>
+          <dt>o</dt>
           <dd>
               JSON Number data MUST be expressible
               as IEEE-754 <xref target="IEEE754" format="default"/> double precision values.
@@ -304,7 +310,7 @@
               described below (see section 24.3.2.2 of <xref target="ES6" format="default"/>):
             </t>
             <dl spacing="normal">
-              <dt>&#x2022;</dt>
+              <dt>o</dt>
               <dd>
                 If the Unicode value falls within the traditional ASCII control
                 character range (U+0000 through U+001F), it MUST
@@ -312,7 +318,7 @@
                 set of predefined JSON control characters U+0008, U+0009, U+000A, U+000C or U+000D
                 which MUST be serialized as \b, \t, \n, \f and \r respectively.
               </dd>
-                <dt>&#x2022;</dt><dd>
+                <dt>o</dt><dd>
                 If the Unicode value is outside of the ASCII control character range, it MUST
                 be serialized "as is" unless it is equivalent to
                 U+005C (\) or U+0022 (") which MUST be serialized as \\ and \" respectively.
@@ -374,13 +380,13 @@
             properties according to JCS are as follows:
           </t>
           <dl spacing="normal">
-            <dt>&#x2022;</dt>
+            <dt>o</dt>
             <dd>
                 JSON Object properties MUST be sorted recursively,
                 which means that JSON child Objects
                 MUST have their properties sorted as well.
             </dd>
-            <dt>&#x2022;</dt>
+            <dt>o</dt>
             <dd>
               JSON Array data MUST also be scanned for the
               presence of JSON Objects (if an object is found then its properties MUST be sorted),
@@ -392,19 +398,19 @@
             sorted, the following measures MUST be adhered to:
           </t>
           <dl spacing="normal">
-            <dt>&#x2022;</dt>
+            <dt>o</dt>
             <dd>
               The sorting process is applied to property name strings in their "raw" (unescaped) form.
               That is, a newline character is treated as U+000A.
             </dd>
-            <dt>&#x2022;</dt>
+            <dt>o</dt>
             <dd>
               Property name strings to be sorted are formatted
               as arrays of UTF-16 <xref target="UNICODE" format="default"/> code units.
               The sorting is based on pure value comparisons, where code units are treated as
               unsigned integers, independent of locale settings.
             </dd>
-            <dt>&#x2022;</dt>
+            <dt>o</dt>
             <dd>
               <t>
                 Property name strings either have different values at some index that is
@@ -884,61 +890,61 @@
         IEEE-754 <xref target="IEEE754" format="default"/> standard using 64-bit (double precision) values,
         here expressed in hexadecimal.
       </t>
-      <artwork type="ascii-art" align="left" alt=""><![CDATA[|====================================================================|
-|     IEEE-754     |    JSON Representation    |       Comment       |
-|====================================================================|
-| 0000000000000000 | 0                         | Zero                |
-|--------------------------------------------------------------------|
-| 8000000000000000 | 0                         | Minus zero          |
-|--------------------------------------------------------------------|
-| 0000000000000001 | 5e-324                    | Min pos number      |
-|--------------------------------------------------------------------|
-| 8000000000000001 | -5e-324                   | Min neg number      |
-|--------------------------------------------------------------------|
-| 7fefffffffffffff | 1.7976931348623157e+308   | Max pos number      |
-|--------------------------------------------------------------------|
-| ffefffffffffffff | -1.7976931348623157e+308  | Max neg number      |
-|--------------------------------------------------------------------|
-| 4340000000000000 | 9007199254740992          | Max pos integer (1) |
-|--------------------------------------------------------------------|
-| c340000000000000 | -9007199254740992         | Max neg integer (1) |
-|--------------------------------------------------------------------|
-| 4430000000000000 | 295147905179352830000     | ~2**68          (2) |
-|--------------------------------------------------------------------|
-| 7fffffffffffffff |                           | NaN             (3) |
-|--------------------------------------------------------------------|
-| 7ff0000000000000 |                           | Infinity        (3) |
-|--------------------------------------------------------------------|
-| 44b52d02c7e14af5 | 9.999999999999997e+22     |                     |
-|--------------------------------------------------------------------|
-| 44b52d02c7e14af6 | 1e+23                     |                     |
-|--------------------------------------------------------------------|
-| 44b52d02c7e14af7 | 1.0000000000000001e+23    |                     |
-|--------------------------------------------------------------------|
-| 444b1ae4d6e2ef4e | 999999999999999700000     |                     |
-|--------------------------------------------------------------------|
-| 444b1ae4d6e2ef4f | 999999999999999900000     |                     |
-|--------------------------------------------------------------------|
-| 444b1ae4d6e2ef50 | 1e+21                     |                     |
-|--------------------------------------------------------------------|
-| 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                     |
-|--------------------------------------------------------------------|
-| 3eb0c6f7a0b5ed8d | 0.000001                  |                     |
-|--------------------------------------------------------------------|
-| 41b3de4355555553 | 333333333.3333332         |                     |
-|--------------------------------------------------------------------|
-| 41b3de4355555554 | 333333333.33333325        |                     |
-|--------------------------------------------------------------------|
-| 41b3de4355555555 | 333333333.3333333         |                     |
-|--------------------------------------------------------------------|
-| 41b3de4355555556 | 333333333.3333334         |                     |
-|--------------------------------------------------------------------|
-| 41b3de4355555557 | 333333333.33333343        |                     |
-|--------------------------------------------------------------------|
-| becbf647612f3696 | -0.0000033333333333333333 |                     |
-|--------------------------------------------------------------------|
-| 43143ff3c1cb0959 | 1424953923781206.2        | Round to even   (4) |
-|--------------------------------------------------------------------|]]></artwork>
+      <artwork type="ascii-art" align="left" alt=""><![CDATA[|===================================================================|
+|     IEEE-754     |    JSON Representation    |      Comment       |
+|===================================================================|
+| 0000000000000000 | 0                         | Zero               |
+|-------------------------------------------------------------------|
+| 8000000000000000 | 0                         | Minus zero         |
+|-------------------------------------------------------------------|
+| 0000000000000001 | 5e-324                    | Min pos number     |
+|-------------------------------------------------------------------|
+| 8000000000000001 | -5e-324                   | Min neg number     |
+|-------------------------------------------------------------------|
+| 7fefffffffffffff | 1.7976931348623157e+308   | Max pos number     |
+|-------------------------------------------------------------------|
+| ffefffffffffffff | -1.7976931348623157e+308  | Max neg number     |
+|-------------------------------------------------------------------|
+| 4340000000000000 | 9007199254740992          | Max pos int    (1) |
+|-------------------------------------------------------------------|
+| c340000000000000 | -9007199254740992         | Max neg int    (1) |
+|-------------------------------------------------------------------|
+| 4430000000000000 | 295147905179352830000     | ~2**68         (2) |
+|-------------------------------------------------------------------|
+| 7fffffffffffffff |                           | NaN            (3) |
+|-------------------------------------------------------------------|
+| 7ff0000000000000 |                           | Infinity       (3) |
+|-------------------------------------------------------------------|
+| 44b52d02c7e14af5 | 9.999999999999997e+22     |                    |
+|-------------------------------------------------------------------|
+| 44b52d02c7e14af6 | 1e+23                     |                    |
+|-------------------------------------------------------------------|
+| 44b52d02c7e14af7 | 1.0000000000000001e+23    |                    |
+|-------------------------------------------------------------------|
+| 444b1ae4d6e2ef4e | 999999999999999700000     |                    |
+|-------------------------------------------------------------------|
+| 444b1ae4d6e2ef4f | 999999999999999900000     |                    |
+|-------------------------------------------------------------------|
+| 444b1ae4d6e2ef50 | 1e+21                     |                    |
+|-------------------------------------------------------------------|
+| 3eb0c6f7a0b5ed8c | 9.999999999999997e-7      |                    |
+|-------------------------------------------------------------------|
+| 3eb0c6f7a0b5ed8d | 0.000001                  |                    |
+|-------------------------------------------------------------------|
+| 41b3de4355555553 | 333333333.3333332         |                    |
+|-------------------------------------------------------------------|
+| 41b3de4355555554 | 333333333.33333325        |                    |
+|-------------------------------------------------------------------|
+| 41b3de4355555555 | 333333333.3333333         |                    |
+|-------------------------------------------------------------------|
+| 41b3de4355555556 | 333333333.3333334         |                    |
+|-------------------------------------------------------------------|
+| 41b3de4355555557 | 333333333.33333343        |                    |
+|-------------------------------------------------------------------|
+| becbf647612f3696 | -0.0000033333333333333333 |                    |
+|-------------------------------------------------------------------|
+| 43143ff3c1cb0959 | 1424953923781206.2        | Round to even  (4) |
+|-------------------------------------------------------------------|]]></artwork>
 
       <t>
         Notes:
@@ -1374,6 +1380,12 @@
         </li>
         <li>
           Changed all &lt;artwork&gt; to: type="ascii-art" and removed name="".
+        </li>
+      </ul>
+      <t>Version 16:</t>
+      <ul spacing="normal">
+        <li>
+          Updated section 2 according to AD's wish.
         </li>
       </ul>
     </section>
