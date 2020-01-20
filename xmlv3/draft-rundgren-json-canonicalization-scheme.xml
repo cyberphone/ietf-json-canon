@@ -11,7 +11,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
      category="info"
      tocDepth="4"
-     docName="draft-rundgren-json-canonicalization-scheme-16" 
+     docName="draft-rundgren-json-canonicalization-scheme-17" 
      ipr="trust200902"
      obsoletes="" 
      updates="" 
@@ -22,7 +22,7 @@
     <title abbrev="draft-rundgren-json-canonicalization-scheme">
       JSON Canonicalization Scheme (JCS)
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-16"/>
+    <seriesInfo name="Internet-Draft" value="draft-rundgren-json-canonicalization-scheme-17"/>
     <author fullname="Anders Rundgren" initials="A." surname="Rundgren">
       <organization>Independent</organization>
       <address>
@@ -35,16 +35,16 @@
       </address>
     </author>
     <author fullname="Bret Jordan" initials="B." surname="Jordan">
-      <organization>Symantec Corporation</organization>
+      <organization>Broadcom</organization>
       <address>
         <postal>
-          <street>350 Ellis Street</street>
+          <street>1320 Ridder Park Drive</street>
           <region>CA</region>
-          <code>94043</code>
-          <city>Mountain View</city>
+          <code>95131</code>
+          <city>San Jose</city>
           <country>USA</country>
         </postal>
-        <email>bret_jordan@symantec.com</email>
+        <email>bret.jordan@broadcom.com</email>
       </address>
     </author>
     <author fullname="Samuel Erdtman" initials="S." surname="Erdtman">
@@ -59,7 +59,7 @@
         <email>erdtman@spotify.com</email>
       </address>
     </author>
-    <date year="2019"/>
+    <date year="2020"/>
     <area>Security</area>
     <workgroup/>
     <keyword>
@@ -169,7 +169,7 @@
     <section anchor="Terminology" numbered="true" toc="default">
       <name>Terminology</name>
       <t>
-        While this document does not describe a standard, a conformant
+        Note that this document is not on the IETF standards track. However, a conformant
         implementation is supposed to adhere to the specified behavior for
         security and interoperability reasons.  This text uses BCP 14 to
         describe that necessary behavior.
@@ -1386,6 +1386,15 @@
       <ul spacing="normal">
         <li>
           Updated section 2 according to AD's wish.
+        </li>
+      </ul>
+      <t>Version 17:</t>
+      <ul spacing="normal">
+        <li>
+          Updated section 2 after IESG input.
+        </li>
+        <li>
+          Author affiliation update.
         </li>
       </ul>
     </section>
