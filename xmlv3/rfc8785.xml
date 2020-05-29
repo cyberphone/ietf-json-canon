@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 
 <!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent">
 
@@ -94,10 +94,11 @@ Perhaps:
    This document describes the JSON Canonicalization Scheme (JCS).  This
    specification defines how to create a canonical representation ...
 -->
+<!-- [editor] DONE -->
 
       <t>
         This document describes the JSON Canonicalization Scheme (JCS).
-        The JCS specification defines how to create a canonical representation
+        This specification defines how to create a canonical representation
         of JSON data by building on the strict serialization methods for
         JSON primitives defined by ECMAScript, constraining JSON data to
         the Internet JSON (I-JSON) subset, and by using deterministic property sorting.
@@ -109,10 +110,10 @@ Perhaps:
       <name>Introduction</name>
       <t>
         This document describes the JSON Canonicalization Scheme (JCS).
-        The JCS specification defines how to create a canonical representation
+        This specification defines how to create a canonical representation
         of JSON <xref target="RFC8259" format="default"/> data by building
         on the strict serialization methods for
-        JSON primitives defined by ECMAScript <xref target="ES6" format="default"/>,
+        JSON primitives defined by ECMAScript <xref target="ECMA-262" format="default"/>,
         constraining JSON data to the I-JSON <xref target="RFC7493" format="default"/>
         subset, and by using deterministic property sorting. The output from JCS is a
         "hashable" representation of JSON data that can be used by cryptographic methods.
@@ -127,6 +128,7 @@ Original:
 Updated:
    ...and fixed representation, like base64url [RFC4648].
 -->
+<!-- [editor] OK -->
       <t>
         Cryptographic operations like hashing and signing need the data to be
         expressed in an invariant format so that the operations are reliably
@@ -136,20 +138,19 @@ Updated:
         like base64url <xref target="RFC4648" format="default"/>.
         This is how JSON Web Signature (JWS) <xref target="RFC7515" format="default"/> addressed this issue.
         Another solution is to create a canonical version of the data,
-        similar to what was done for the XML Signature <xref target="XMLDSIG" format="default"/> standard.
+        similar to what was done for the XML signature <xref target="XMLDSIG" format="default"/> standard.
       </t>
 
       <t>  
         The primary advantage with a canonicalizing scheme is that data
         can be kept in its original form. This is the core rationale behind JCS.
-        Put another way, using canonicalization enables a JSON Object to remain a JSON Object
+        Put another way, using canonicalization enables a JSON object to remain a JSON object
         even after being signed. This can simplify system design, documentation, and logging.
       </t>
       <t>
         To avoid "reinventing the wheel", JCS relies on the serialization of JSON primitives
-        (strings, numbers, and literals), as defined by
-        ECMAScript (aka JavaScript) beginning with version 6 <xref target="ES6" format="default"/>,
-        hereafter referred to as "ES6".
+        (strings, numbers, and literals), as defined by ECMAScript (aka JavaScript)
+        <xref target="ECMA-262" format="default"/> beginning with version 6.
       </t>
       <t>
         Seasoned XML developers may recall difficulties getting XML signatures
@@ -184,14 +185,15 @@ Or:
       canonicalization.
 -->
 
+<!-- [editor] Taken with "adjustment" :)  It is JSON that does not have a namaspace concept -->
 
 <ul spacing="normal">
         <li>
-          The absence of a namespace concept and default values.
+          JSON does not have a namespace concept and default values.
         </li>
 
         <li>
-          Constraining data to the I&nbhy;JSON <xref target="RFC7493" format="default"/> subset.
+          Data is constrained to the I&nbhy;JSON <xref target="RFC7493" format="default"/> subset.
           This eliminates the need for specific parsers for dealing with canonicalization.
         </li>
 
@@ -220,7 +222,7 @@ Or:
       <t>
         The intended audiences of this document are JSON tool vendors as
         well as designers of JSON-based cryptographic solutions.
-        The reader is assumed to be knowledgeable in ECMAScript, including the <tt>JSON</tt> object.
+        The reader is assumed to be knowledgeable in ECMAScript, including the "JSON" object.
       </t>
     </section>
     <section anchor="Terminology" numbered="true" toc="default">
@@ -281,26 +283,26 @@ Or:
 <ul spacing="normal">
 
           <li>
-              JSON Objects <bcp14>MUST NOT</bcp14> exhibit duplicate property names.
+              JSON objects <bcp14>MUST NOT</bcp14> exhibit duplicate property names.
           </li>
 
           <li>
-              JSON String data <bcp14>MUST</bcp14> be expressible
+              JSON string data <bcp14>MUST</bcp14> be expressible
               as Unicode <xref target="UNICODE" format="default"/>.
           </li>
 
           <li>
-              JSON Number data <bcp14>MUST</bcp14> be expressible
+              JSON number data <bcp14>MUST</bcp14> be expressible
               as IEEE 754 <xref target="IEEE754" format="default"/> double-precision values.
             For applications needing higher precision or longer integers than
             offered by IEEE 754 double precision, it is <bcp14>RECOMMENDED</bcp14> to represent such
-            numbers as JSON Strings; see <xref target="json.bignumbers" format="default"/> for 
+            numbers as JSON strings; see <xref target="json.bignumbers" format="default"/> for 
               details on how this can be performed in an interoperable and extensible way.
           </li>
 </ul>
 
         <t>
-          An additional constraint is that parsed JSON String data <bcp14>MUST
+          An additional constraint is that parsed JSON string data <bcp14>MUST
           NOT</bcp14> be altered during subsequent serializations.  For more
           information, see <xref target="string.subtypes" format="default"/>.
         </t>
@@ -313,11 +315,12 @@ Original:
    (https://www.unicode.org/reports/tr15/), JCS-compliant string processing
    does not...
 -->
+<!-- [editor] Made it a refernce -->
         <t>
           Note: Although the Unicode standard offers the possibility of
           rearranging certain character sequences, referred to as "Unicode
-          Normalization" (<eref target="https://www.unicode.org/reports/tr15/" brackets="angle"
-          />), JCS-compliant string processing does not take this into
+          Normalization" <xref target="UCNORM" format="default"/>,
+          JCS-compliant string processing does not take this into
           consideration. That is, all components involved in a scheme
           depending on JCS <bcp14>MUST</bcp14> preserve Unicode string data
           "as is".
@@ -332,7 +335,7 @@ Original:
         </t>
         <t>
           <xref target="canonicalize.js" format="default"/> shows sample code
-          for an ES6-based canonicalizer, matching the JCS specification.
+          for an ECMAScript-based canonicalizer, matching the JCS specification.
         </t>
         <section anchor="json.whitespace" numbered="true" toc="default">
               <name>Whitespace</name>
@@ -355,8 +358,9 @@ Perhaps:
 Or:
    Assume the following JSON object is parsed:
 -->
+<!-- [editor] took the last, thanx! -->
           <t>
-            Assume a JSON object as follows is parsed:
+            Assume the following JSON object is parsed:
           </t>
 <sourcecode type="json">
   {
@@ -368,7 +372,7 @@ Or:
 </sourcecode>
           <t>
             If the parsed data is subsequently serialized using a serializer
-            compliant with ES6's <tt>JSON.stringify()</tt>, the result would
+            compliant with ECMAScript's "JSON.stringify()", the result would
             (with a line wrap added for display purposes only) be rather
             divergent with respect to the original data:
           </t>
@@ -380,13 +384,13 @@ Or:
           <t>
             The reason for the difference between the parsed data and its
             serialized counterpart is due to a wide tolerance on input data (as defined
-            by JSON <xref target="RFC8259" format="default"/>), while output data (as defined by ES6)
+            by JSON <xref target="RFC8259" format="default"/>), while output data (as defined by ECMAScript)
             has a fixed representation.  As can be seen in the example,
             numbers are subject to rounding as well.
           </t>
           <t>
             The following subsections describe the serialization of primitive JSON data types
-            according to JCS.  This part is identical to that of ES6.
+            according to JCS.  This part is identical to that of ECMAScript.
             In the (unlikely) event that a future version of ECMAScript would
             invalidate any of the following serialization methods, it will be
             up to the developer community to
@@ -403,10 +407,10 @@ Or:
           <section anchor="json.ser.string" numbered="true" toc="default">
                   <name>Serialization of Strings</name>
             <t>
-              For JSON String data (which includes JSON Object property names
+              For JSON string data (which includes JSON object property names
               as well), each Unicode code point <bcp14>MUST</bcp14> be
               serialized as described below (see Section 24.3.2.2 of <xref
-              target="ES6" format="default"/>):
+              target="ECMA-262" format="default"/>):
             </t>
 
 <ul spacing="normal">
@@ -442,10 +446,10 @@ Or:
           <section anchor="json.ser.number" numbered="true" toc="default">
                   <name>Serialization of Numbers</name>
             <t>
-              ES6 builds on the IEEE 754 <xref target="IEEE754"
+              ECMAScript builds on the IEEE 754 <xref target="IEEE754"
               format="default"/> double-precision standard for representing
-              JSON Number data.  Such data <bcp14>MUST</bcp14> be serialized
-              according to Section 7.1.12.1 of <xref target="ES6"
+              JSON number data.  Such data <bcp14>MUST</bcp14> be serialized
+              according to Section 7.1.12.1 of <xref target="ECMA-262"
               format="default"/>, including the "Note 2" enhancement.
             </t>
             <t>
@@ -462,9 +466,9 @@ Or:
               corresponding JSON serialization.
             </t>
             <t>
-              Note: Since Not a Number (<tt>NaN</tt>) and <tt>Infinity</tt>
-              are not permitted in JSON, occurrences of <tt>NaN</tt> or
-              <tt>Infinity</tt> <bcp14>MUST</bcp14> cause a compliant JCS
+              Note: Since Not a Number (NaN) and Infinity
+              are not permitted in JSON, occurrences of NaN or
+              Infinity <bcp14>MUST</bcp14> cause a compliant JCS
               implementation to terminate with an appropriate error.
             </t>
           </section>
@@ -490,27 +494,27 @@ Or:
 
 
           <t>
-            The rules for lexicographic sorting of JSON Object
+            The rules for lexicographic sorting of JSON object
             properties according to JCS are as follows:
           </t>
 
 <ul spacing="normal">
 
             <li>
-                JSON Object properties <bcp14>MUST</bcp14> be sorted recursively,
+                JSON object properties <bcp14>MUST</bcp14> be sorted recursively,
                 which means that JSON child Objects
                 <bcp14>MUST</bcp14> have their properties sorted as well.
             </li>
 
             <li>
-              JSON Array data <bcp14>MUST</bcp14> also be scanned for the
-              presence of JSON Objects (if an object is found, then its properties <bcp14>MUST</bcp14> be sorted),
+              JSON array data <bcp14>MUST</bcp14> also be scanned for the
+              presence of JSON objects (if an object is found, then its properties <bcp14>MUST</bcp14> be sorted),
               but array element order <bcp14>MUST NOT</bcp14> be changed.
             </li>
 </ul>
 
           <t>
-            When a JSON Object is about to have its properties
+            When a JSON object is about to have its properties
             sorted, the following measures <bcp14>MUST</bcp14> be adhered to:
           </t>
 
@@ -762,15 +766,15 @@ Perhaps:
               <https://www.ecma-international.org/ecma-262/10.0/index.html>.
 -->
 
-        <reference anchor="ES6" target="https://www.ecma-international.org/ecma-262/6.0/index.html">
+        <reference anchor="ECMA-262" target="https://www.ecma-international.org/ecma-262/10.0/index.html">
           <front>
-            <title>ECMAScript 2015 Language Specification</title>
+            <title>ECMAScript 2019 Language Specification</title>
             <author>
               <organization>ECMA International</organization>
             </author>
-            <date year="2015" month="June"/>
+            <date year="2019" month="June"/>
           </front>
-<refcontent>Standard ECMA-262 6th Edition</refcontent>
+<refcontent>Standard ECMA-262 10th Edition</refcontent>
         </reference>
 
 
@@ -837,17 +841,24 @@ Or:
               <http://www.unicode.org/versions/latest/>.
 -->
 
-        <reference anchor="UNICODE" target="https://www.unicode.org/versions/Unicode12.1.0/">
+        <reference anchor="UNICODE" target="http://www.unicode.org/versions/latest/">
           <front>
-            <title>The Unicode Standard, Version 12.1.0</title>
+            <title>The Unicode Standard</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-
           </front>
-<refcontent>(Mountain View, CA: The Unicode Consortium, 2019. ISBN 978-1-936213-25-2)
-</refcontent>
         </reference>
+
+        <reference anchor="UCNORM" target="https://www.unicode.org/reports/tr15/">
+          <front>
+            <title>Unicode Normalization Forms</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+          </front>
+        </reference>
+
       </references>
       <references>
 
@@ -897,6 +908,7 @@ Updated:
    [RYU]      "Ryu floating point number serializing algorithm", commit
               27d3c55, May 2020, <https://github.com/ulfjack/ryu>.
 -->
+<!-- [editor] I wasn't aware of this guidance for GitHub but I have no problems with it -->
         <reference anchor="RYU" target="https://github.com/ulfjack/ryu">
           <front>
             <title>Ryu floating point number serializing algorithm</title>
@@ -956,14 +968,14 @@ Updated:
       </references>
     </references>
     <section anchor="canonicalize.js" numbered="true" toc="default">
-      <name>ES6 Sample Canonicalizer</name>
+      <name>ECMAScript Sample Canonicalizer</name>
 
 
       <t>
-        Below is an example of a JCS canonicalizer for usage with ES6-based systems:
+        Below is an example of a JCS canonicalizer for usage with ECMAScript-based systems:
       </t>
 
-<sourcecode type="json">
+<sourcecode type="javascript">
   ////////////////////////////////////////////////////////////
   // Since the primary purpose of this code is highlighting //
   // the core of the JCS algorithm, error handling and      //
@@ -979,7 +991,7 @@ Updated:
           if (object === null || typeof object !== 'object' ||
               object.toJSON != null) {
               /////////////////////////////////////////////////
-              // Primitive type or toJSON - Use ES6/JSON     //
+              // Primitive type or toJSON                    //
               /////////////////////////////////////////////////
               buffer += JSON.stringify(object);
 
@@ -1013,7 +1025,7 @@ Updated:
                   }
                   next = true;
                   ///////////////////////////////////////////////
-                  // Property names are strings - Use ES6/JSON //
+                  // Property names are strings                //
                   ///////////////////////////////////////////////
                   buffer += JSON.stringify(property);
                   buffer += ':';
@@ -1031,224 +1043,160 @@ Updated:
     <section anchor="json.ieee754.test" numbered="true" toc="default">
       <name>Number Serialization Samples</name>
       <t>
-        The following table holds a set of ES6-compatible Number serialization samples,
+        The following table holds a set of ECMAScript-compatible number serialization samples,
         including some edge cases.  The column
         "IEEE 754" refers to the internal
-        ES6 representation of the Number data type, which is based on the
+        ECMAScript representation of the Number data type, which is based on the
         IEEE 754 <xref target="IEEE754" format="default"/> standard using 64-bit (double-precision) values,
         here expressed in hexadecimal.
       </t>
 
 
 
-<table anchor="ES6-TABLE"> 
-  <name>ES6-Compatible Number Serialization Samples</name>  
+<table anchor="ECMAScript-TABLE"> 
+  <name>ECMAScript-Compatible JSON Number Serialization Samples</name>  
   <thead>
     <tr>
-      <th>IEEE 754</th>  
-      <th>JSON Representation</th>
-      <th>Comment</th>
+      <th align="center">IEEE 754</th>  
+      <th align="center">JSON Representation</th>
+      <th align="center">Comment</th>
     </tr>
   </thead>
   <tbody>       
+      <!--
+The HTML table didn't look great which it was ascii art in the original.
+The follwing is OK for HTML but must be changed for TXT and PDF by
+removing the <xml comment><tt> and <xml comment></tt>.
+-->
     <tr>
-      <td>0000000000000000</td>
-      <td>0</td>
-      <td>Zero</td>
+      <td><!--remove for TXT/PDF--><tt>0000000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>0<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Zero<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>8000000000000000</td>
-      <td>0</td>
-      <td>Minus zero</td>
+      <td><!--remove for TXT/PDF--><tt>8000000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>0<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Minus zero<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>0000000000000001</td>
-      <td>5e-324</td>
-      <td>Min pos number</td>
+      <td><!--remove for TXT/PDF--><tt>0000000000000001<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>5e-324<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Min pos number<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>8000000000000001
-      </td>
-      <td>-5e-324
-      </td>
-      <td>Min neg number
-      </td>
+      <td><!--remove for TXT/PDF--><tt>8000000000000001<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>-5e-324<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Min neg number<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>7fefffffffffffff
-      </td>
-      <td>1.7976931348623157e+308
-      </td>
-      <td>Max pos number
-      </td>
+      <td><!--remove for TXT/PDF--><tt>7fefffffffffffff<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>1.7976931348623157e+308<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Max pos number<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>ffefffffffffffff
-      </td>
-      <td>-1.7976931348623157e+308
-      </td>
-      <td>Max neg number
-      </td>
+      <td><!--remove for TXT/PDF--><tt>ffefffffffffffff<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>-1.7976931348623157e+308<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Max neg number<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>4340000000000000
-      </td>
-      <td>9007199254740992
-      </td>
-      <td>Max pos int    (1)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>4340000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>9007199254740992<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Max pos int&#xa0;&#xa0;&#xa0;&#xa0;(1)<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>c340000000000000
-      </td>
-      <td>-9007199254740992
-      </td>
-      <td>Max neg int    (1)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>c340000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>-9007199254740992<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Max neg int&#xa0;&#xa0;&#xa0;&#xa0;(1)<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>4430000000000000
-      </td>
-      <td>295147905179352830000
-      </td>
-      <td>~2**68         (2)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>4430000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>295147905179352830000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>~2**68&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;(2)<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>7fffffffffffffff
-      </td>
-      <td>
-      </td>
-      <td>NaN            (3)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>7fffffffffffffff<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>NaN&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;(3)<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>7ff0000000000000
-      </td>
-      <td>
-      </td>
-      <td>Infinity       (3)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>7ff0000000000000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Infinity&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;(3)<!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>44b52d02c7e14af5
-      </td>
-      <td>9.999999999999997e+22
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>44b52d02c7e14af5<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>9.999999999999997e+22<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>44b52d02c7e14af6
-      </td>
-      <td>1e+23
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>44b52d02c7e14af6<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>1e+23<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>44b52d02c7e14af7
-      </td>
-      <td>1.0000000000000001e+23
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>44b52d02c7e14af7<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>1.0000000000000001e+23<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>444b1ae4d6e2ef4e
-      </td>
-      <td>999999999999999700000
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>444b1ae4d6e2ef4e<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>999999999999999700000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>444b1ae4d6e2ef4f
-      </td>
-      <td>999999999999999900000
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>444b1ae4d6e2ef4f<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>999999999999999900000<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>444b1ae4d6e2ef50
-      </td>
-      <td>1e+21 
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>444b1ae4d6e2ef50<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>1e+21 <!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>3eb0c6f7a0b5ed8c
-      </td>
-      <td>9.999999999999997e-7
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>3eb0c6f7a0b5ed8c<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>9.999999999999997e-7<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>3eb0c6f7a0b5ed8d
-      </td>
-      <td>0.000001
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>3eb0c6f7a0b5ed8d<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>0.000001<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>41b3de4355555553
-      </td>
-      <td>333333333.3333332
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>41b3de4355555553<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>333333333.3333332<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>41b3de4355555554
-      </td>
-      <td>333333333.33333325
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>41b3de4355555554<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>333333333.33333325<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>41b3de4355555555
-      </td>
-      <td>333333333.3333333
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>41b3de4355555555<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>333333333.3333333<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>41b3de4355555556
-      </td>
-      <td>333333333.3333334
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>41b3de4355555556<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>333333333.3333334<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>41b3de4355555557
-      </td>
-      <td>333333333.33333343
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>41b3de4355555557<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>333333333.33333343<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>becbf647612f3696
-      </td>
-      <td>-0.0000033333333333333333
-      </td>
-      <td>
-      </td>
+      <td><!--remove for TXT/PDF--><tt>becbf647612f3696<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>-0.0000033333333333333333<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt><!--remove for TXT/PDF--></tt></td>
     </tr>
     <tr>
-      <td>43143ff3c1cb0959
-      </td>
-      <td>1424953923781206.2
-      </td>
-      <td>Round to even  (4)
-      </td>
+      <td><!--remove for TXT/PDF--><tt>43143ff3c1cb0959<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>1424953923781206.2<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Round to even&#xa0;&#xa0;(4)<!--remove for TXT/PDF--></tt></td>
     </tr>
 
   </tbody>
@@ -1259,14 +1207,14 @@ Updated:
       </t>
       <ol spacing="normal" type="(%d)">
         <li>
-          For maximum compliance with the ES6 <tt>JSON</tt> object,
+          For maximum compliance with the ECMAScript "JSON" object,
           values that are to be interpreted as true integers
           <bcp14>SHOULD</bcp14> be in the range -9007199254740991 to 9007199254740991.
           However, how numbers are used in applications does not affect the JCS algorithm.
         </li>
         <li>
           Although a set of specific integers like 2**68 could be regarded as having
-          extended precision, the JCS/ES6 number serialization
+          extended precision, the JCS/ECMAScript number serialization
           algorithm does not take this into consideration.
         </li>
 <!-- [rfced] Please review "value out range" in this sentence. Is "Values out
@@ -1319,12 +1267,12 @@ Updated:
    externally supplied JSON data already being canonicalized.
 -->
       <t>
-        In fact, the ES6 standard way of serializing objects using
-        <tt>JSON.stringify()</tt> produces a
+        In fact, the ECMAScript standard way of serializing objects using
+        "JSON.stringify()" produces a
         more "logical" format, where properties are
         kept in the order they were created or received.  The
         example below shows an address record that could benefit from
-        ES6 standard serialization:
+        ECMAScript standard serialization:
       </t>
 <sourcecode type="json">
   {
@@ -1348,7 +1296,7 @@ Updated:
       <name>Dealing with Big Numbers</name>
       <t>
         There are several issues associated with the
-        JSON Number type, here illustrated by the following
+        JSON number type, here illustrated by the following
         sample object:
       </t>
 <sourcecode type="json">
@@ -1368,30 +1316,30 @@ Updated:
       </t>
       <t>
         The established way of handling this kind of "overloading" of the
-        JSON Number type (at least in an extensible manner) is through
+        JSON number type (at least in an extensible manner) is through
         mapping mechanisms, instructing parsers what to do with different properties
         based on their name.  However, this greatly limits the value of using the
-        JSON Number type outside of its original, somewhat constrained JavaScript context.
-        The ES6 <tt>JSON</tt> object does not support mappings to the JSON Number either.
+        JSON number type outside of its original, somewhat constrained JavaScript context.
+        The ECMAScript "JSON" object does not support mappings to the JSON number type either.
       </t>
 <!-- [rfced] In the following sentence, was "Number type" meant instead of
 just "Number"?  
 
 Original:
-   The ES6 JSON object does not support mappings to JSON Number either.
+   The ECMAScript JSON object does not support mappings to JSON Number either.
 
 Perhaps:
-   The ES6 JSON object does not support mappings to JSON Number type either.
+   The ECMAScript JSON object does not support mappings to JSON Number type either.
 -->
       <t>
         Due to the above, numbers that do not have a natural place in the current
-        JSON ecosystem <bcp14>MUST</bcp14> be wrapped using the JSON String type.  This is close to
+        JSON ecosystem <bcp14>MUST</bcp14> be wrapped using the JSON string type.  This is close to
         a de facto standard for open systems.  This is also applicable for
-        other data types that do not have direct support in JSON, like <tt>DateTime</tt>
+        other data types that do not have direct support in JSON, like "DateTime"
         objects as described in <xref target="string.subtypes" format="default"/>.
       </t>
       <t>
-        Aided by a system using the JSON String type, be it programmatic like
+        Aided by a system using the JSON string type, be it programmatic like
       </t>
 <sourcecode type="">
   var obj = JSON.parse('{"giantNumber": "1.4e+9999"}');
@@ -1399,13 +1347,13 @@ Perhaps:
 </sourcecode>
       <t>
         or declarative schemes like OpenAPI <xref target="OPENAPI" format="default"/>,
-        JCS imposes no limits on applications, including when using ES6.
+        JCS imposes no limits on applications, including when using ECMAScript.
       </t>
     </section>
     <section anchor="string.subtypes" numbered="true" toc="default">
       <name>String Subtype Handling</name>
       <t>
-        Due to the limited set of data types featured in JSON, the JSON String
+        Due to the limited set of data types featured in JSON, the JSON string
         type is commonly used for holding subtypes.  This can, depending on
         JSON parsing method, lead to interoperability problems, which
         <bcp14>MUST</bcp14> be dealt with by JCS-compliant applications
@@ -1413,8 +1361,8 @@ Perhaps:
       </t>
       <t>
         Assume you want to parse a JSON object where the schema
-        designer assigned the property "big" for holding a <tt>BigInt</tt> subtype and
-        "time" for holding a <tt>DateTime</tt> subtype, while "val" is supposed to be a JSON Number
+        designer assigned the property "big" for holding a "BigInt" subtype and
+        "time" for holding a "DateTime" subtype, while "val" is supposed to be a JSON number
         compliant with JCS. The following example shows such an object:
       </t>
 <sourcecode type="json">
@@ -1425,7 +1373,7 @@ Perhaps:
   }
 </sourcecode>
 
-      <t>Parsing of this object can be accomplished by the following ES6 statement:</t>
+      <t>Parsing of this object can be accomplished by the following ECMAScript statement:</t>
 <sourcecode type="">
   var object = JSON.parse(JSON_object_featured_as_a_string); 
 </sourcecode>
@@ -1440,7 +1388,7 @@ Perhaps:
   ... = object.val;            // JSON/JS number
 </sourcecode>
       <t>
-        Note that the <tt>BigInt</tt> data type is currently only natively supported by V8 <xref target="V8" format="default"/>.
+        Note that the "BigInt" data type is currently only natively supported by V8 <xref target="V8" format="default"/>.
       </t>
       <t>
         Canonicalization of "object" using the sample code in <xref target="canonicalize.js" format="default"/> would return the
@@ -1489,12 +1437,12 @@ Perhaps:
       </t>
       <t>
         That is, stream- and schema-based parsing <bcp14>MUST</bcp14> treat
-        subtypes as "pure" (immutable) JSON String types and perform the
+        subtypes as "pure" (immutable) JSON string types and perform the
         actual conversion to the designated native type in a subsequent step.
         In modern programming platforms like Go, Java, and C#, this can be
         achieved with moderate efforts by combining annotations, getters, and
         setters.  Below is an example in C#/Json.NET showing a part of a class
-        that is serializable as a JSON Object:
+        that is serializable as a JSON object:
       </t>
 
 <sourcecode type="">
@@ -1523,7 +1471,7 @@ Perhaps:
       <section anchor="string.subtypes.arrays" numbered="true" toc="default">
           <name>Subtypes in Arrays</name>
         <t>
-          Since the JSON Array construct permits mixing arbitrary JSON data types,
+          Since the JSON array construct permits mixing arbitrary JSON data types,
           custom parsing and serialization code may be required
           to cope with subtypes anyway.
         </t>
@@ -1683,9 +1631,9 @@ Updated:
     <section anchor="Acknowledgements" numbered="false" toc="default">
       <name>Acknowledgements</name>
       <t>
-        Building on ES6 Number serialization was
+        Building on ECMAScript number serialization was
         originally proposed by <contact fullname="James Manger"/>. This ultimately led to the
-        adoption of the entire ES6 serialization scheme for JSON primitives.
+        adoption of the entire ECMAScript serialization scheme for JSON primitives.
       </t>
 
 
@@ -1693,6 +1641,7 @@ Updated:
 appear in alphabetic order. All other names appear in alphabetical order
 by last name.
 -->
+<!-- [editor] thanx!-->
       <t>
         Other people who have contributed with valuable input to this specification include
         <contact fullname="Scott Ananian"/>,
@@ -1776,6 +1725,9 @@ to ensure that these appear as you expect them to in the output files (i.e.,
 with quotation marks in the txt file but with constant-length font in the html
 and pdf files).
 --> 
+<!-- [editor]
+JSON Number -> JSON number etc.
+<tt> replaced by " -->
 
 
     </section>
