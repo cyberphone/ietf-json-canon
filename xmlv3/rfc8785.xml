@@ -128,7 +128,7 @@ Original:
 Updated:
    ...and fixed representation, like base64url [RFC4648].
 -->
-<!-- [editor] OK -->
+<!-- [editor] lgtm -->
       <t>
         Cryptographic operations like hashing and signing need the data to be
         expressed in an invariant format so that the operations are reliably
@@ -185,7 +185,7 @@ Or:
       canonicalization.
 -->
 
-<!-- [editor] Taken with "adjustment" :)  It is JSON that does not have a namaspace concept -->
+<!-- [editor] Taken with "adjustment" :)  It is JSON that does not have a namespace concept -->
 
 <ul spacing="normal">
         <li>
@@ -358,7 +358,7 @@ Perhaps:
 Or:
    Assume the following JSON object is parsed:
 -->
-<!-- [editor] took the last, thanx! -->
+<!-- [editor] took the last one, thanx! -->
           <t>
             Assume the following JSON object is parsed:
           </t>
@@ -580,6 +580,7 @@ Perhaps:
    The following JSON test data can be used for verifying the correctness of the
    sorting scheme in a JCS implementation:
 -->
+<!-- [editor] lgtm -->
           <t>
    The following JSON test data can be used for verifying the correctness of
    the sorting scheme in a JCS implementation:
@@ -631,14 +632,15 @@ Perhaps:
    outcome for JSON data like above would differ and thus be
    incompatible with this specification.
 -->
+<!-- [editor] lgtm -->
 
           <t>
             Note: For the purpose of obtaining a deterministic property order,
-            sorting on UTF-8- or UTF-32-encoded data would also work, but the
+            sorting of data encoded in UTF-8 or UTF-32 would also work, but the
             outcome for JSON data like above would differ and thus be
-            incompatible with this specification.  
+            incompatible with this specification.
 
-<!-- [rfced] Are "sort on" and "sorting on" correct here?
+              <!-- [rfced] Are "sort on" and "sorting on" correct here?
 
 Original:
    For the purpose of obtaining a deterministic property order,
@@ -658,8 +660,9 @@ Perhaps:
    sort string data in UTF-8 or UTF-32 format without conversion to
    UTF-16 and still be compatible with JCS.
 -->
+<!-- [editor] lgtm -->
 
-However, in practice,
+            However, in practice,
             property names are rarely defined outside of 7-bit ASCII, making it
             possible to sort on string data in UTF-8 or UTF-32 format without
             conversion to UTF-16 and still be compatible with JCS.  Whether
@@ -765,6 +768,7 @@ Perhaps:
               Specification", Standard ECMA-262 10th Edition, June 2019,
               <https://www.ecma-international.org/ecma-262/10.0/index.html>.
 -->
+<!-- [editor] Changed ES6 to ECMAScript everywhere -->
 
         <reference anchor="ECMA-262" target="https://www.ecma-international.org/ecma-262/10.0/index.html">
           <front>
@@ -797,16 +801,17 @@ Perhaps:
               754-2019, DOI 10.1109/IEEESTD.2019.8766229,
               <https://ieeexplore.ieee.org/document/8766229>.
 -->
+<!-- [editor] took the perhaps -->
 
-        <reference anchor="IEEE754" target="https://ieeexplore.ieee.org/document/4610935">
+        <reference anchor="IEEE754" target="https://ieeexplore.ieee.org/document/8766229">
           <front>
             <title>IEEE Standard for Floating-Point Arithmetic</title>
-<seriesInfo name="DOI" value=" 10.1109/IEEESTD.2008.4610935"/>
+<seriesInfo name="DOI" value="10.1109/IEEESTD.2019.8766229"/>
             <author>
               <organization>IEEE</organization>
             </author>
           </front>
-<refcontent>IEEE 754-2008
+<refcontent>IEEE 754-2019
 </refcontent>
         </reference>
 
@@ -840,6 +845,7 @@ Or:
    [UNICODE]  The Unicode Consortium, "The Unicode Standard",
               <http://www.unicode.org/versions/latest/>.
 -->
+<!-- [editor] latest was referred to in RFC 8259 so we take that as well -->
 
         <reference anchor="UNICODE" target="http://www.unicode.org/versions/latest/">
           <front>
@@ -885,6 +891,7 @@ Original:
 Updated:
    [V8]    Google LLC, "What is V8?", <https://v8.dev/>. 
 -->
+<!-- [editor] lgtm -->
         <reference anchor="V8" target="https://v8.dev/">
           <front>
             <title>What is V8?</title>
@@ -991,7 +998,7 @@ Updated:
           if (object === null || typeof object !== 'object' ||
               object.toJSON != null) {
               /////////////////////////////////////////////////
-              // Primitive type or toJSON                    //
+              // Primitive type or toJSON, use "JSON"        //
               /////////////////////////////////////////////////
               buffer += JSON.stringify(object);
 
@@ -1024,9 +1031,9 @@ Updated:
                       buffer += ',';
                   }
                   next = true;
-                  ///////////////////////////////////////////////
-                  // Property names are strings                //
-                  ///////////////////////////////////////////////
+                  /////////////////////////////////////////////
+                  // Property names are strings, use "JSON"  //
+                  /////////////////////////////////////////////
                   buffer += JSON.stringify(property);
                   buffer += ':';
                   //////////////////////////////////////////
@@ -1046,7 +1053,7 @@ Updated:
         The following table holds a set of ECMAScript-compatible number serialization samples,
         including some edge cases.  The column
         "IEEE 754" refers to the internal
-        ECMAScript representation of the Number data type, which is based on the
+        ECMAScript representation of the "Number" data type, which is based on the
         IEEE 754 <xref target="IEEE754" format="default"/> standard using 64-bit (double-precision) values,
         here expressed in hexadecimal.
       </t>
@@ -1064,7 +1071,7 @@ Updated:
   </thead>
   <tbody>       
       <!--
-The HTML table didn't look great which it was ascii art in the original.
+The HTML table didn't look great which why it was ascii art in the original.
 The follwing is OK for HTML but must be changed for TXT and PDF by
 removing the <xml comment><tt> and <xml comment></tt>.
 -->
@@ -1226,9 +1233,10 @@ Original:
 Perhaps:
    (3)    Values out of range are not permitted in JSON. See Section 3.2.2.3.
 -->
+<!-- [editor] took the suggestion -->
         <li>
-          Value out range, not permitted in JSON.
-          See <xref target="json.ser.number" format="default"/>.
+            Values out of range are not permitted in JSON.
+            See <xref target="json.ser.number" format="default"/>.
         </li>
         <li>
           This number is exactly 1424953923781206.25 but will, after the "Note 2" rule
@@ -1266,6 +1274,7 @@ Updated:
    ...cryptographic schemes based on JCS, in most cases, would not depend on that
    externally supplied JSON data already being canonicalized.
 -->
+<!-- [editor] lgtm -->
       <t>
         In fact, the ECMAScript standard way of serializing objects using
         "JSON.stringify()" produces a
@@ -1331,6 +1340,7 @@ Original:
 Perhaps:
    The ECMAScript JSON object does not support mappings to JSON Number type either.
 -->
+<!-- [editor] lgtm -->
       <t>
         Due to the above, numbers that do not have a natural place in the current
         JSON ecosystem <bcp14>MUST</bcp14> be wrapped using the JSON string type.  This is close to
@@ -1606,6 +1616,7 @@ Original:
 Updated:
    The listed efforts all build on text-level JSON-to-JSON transformations.
  -->
+<!-- [editor] lgtm -->
       <t>
         The listed efforts all build on text-level JSON-to-JSON
         transformations. The primary feature of text-level canonicalization is
