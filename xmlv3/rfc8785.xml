@@ -811,8 +811,7 @@ Perhaps:
               <organization>IEEE</organization>
             </author>
           </front>
-<refcontent>IEEE 754-2019
-</refcontent>
+<refcontent>IEEE 754-2019</refcontent>
         </reference>
 
 
@@ -969,8 +968,7 @@ Updated:
             </author>
 <date month="April" year="2013"/>     
      </front>
-<refcontent>W3C Recommendation
-</refcontent>
+<refcontent>W3C Recommendation</refcontent>
         </reference>
       </references>
     </references>
