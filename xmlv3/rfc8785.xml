@@ -1203,7 +1203,7 @@ removing the <xml comment><tt> and <xml comment></tt>.
     <tr>
       <td><!--remove for TXT/PDF--><tt>43143ff3c1cb0959<!--remove for TXT/PDF--></tt></td>
       <td><!--remove for TXT/PDF--><tt>1424953923781206.2<!--remove for TXT/PDF--></tt></td>
-      <td><!--remove for TXT/PDF--><tt>Round to even&#xa0;&#xa0;(4)<!--remove for TXT/PDF--></tt></td>
+      <td><!--remove for TXT/PDF--><tt>Round to even &#xa0;(4)<!--remove for TXT/PDF--></tt></td>
     </tr>
 
   </tbody>
