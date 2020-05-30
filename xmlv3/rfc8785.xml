@@ -1441,7 +1441,7 @@ Perhaps:
       </t>
       <t>
         The reason for the deviation is that in stream- and schema-based JSON parsers,
-        the original "string" argument is typically replaced on the fly
+        the original string argument is typically replaced on the fly
         by the native subtype that, when serialized, may exhibit a different
         and platform-dependent pattern.
       </t>
